@@ -49,7 +49,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         return context.getClientUrl();
     }
     
-    function GetEntityPlural (entityName) {
+    WebApiClient.GetSetName = function (entityName) {
         var ending = entityName.slice(-1);
         
         switch(ending)
@@ -106,26 +106,44 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         WebApiClient.GetClientUrl() + "/api/data/v8.0/";
     }
     
-    WebApiClient.Create = function(entityName, entity) {
-        var url = WebApiClient.ApiUrl + GetEntityPlural(entityName);
+    WebApiClient.Create = function(params) {
+        var params = params || {};
         
-        return SendRequest("POST", url, entity);
+        if (!params.entityName || !params.entity) {
+            throw new Error("Entity name and entity object have to be passed!")
+        }
+        
+        var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName);
+        
+        return SendRequest("POST", url, params.entity);
     }
     
-    WebApiClient.Delete = function(entityName, entityId) {       
-        var url = WebApiClient.ApiUrl + GetEntityPlural(entityName) + "(" + entityId + ")";
+    WebApiClient.Delete = function(params) {   
+        var params = params || {};
+        
+        if (!params.entityName || !params.entityId) {
+            throw new Error("Entity name and entity id have to be passed!")
+        }
+        
+        var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName) + "(" + params.entityId + ")";
         
         return SendRequest("DELETE", url);
     }
     
-    WebApiClient.Retrieve = function(entityName, entityId, parameters) {
-        var url = WebApiClient.ApiUrl + GetEntityPlural(entityName);
-
-        if (entityId) {
-            url += "(" + entityId + ")";
+    WebApiClient.Retrieve = function(params) {
+        var params = params || {};
+        
+        if (!params.entityName) {
+            throw new Error("Entity name has to be passed!")
         }
         
-        url += parameters;
+        var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName);
+
+        if (params.entityId) {
+            url += "(" + params.entityId + ")";
+        }
+        
+        url += params.queryParams;
         
         return SendRequest("GET", url);
     }
