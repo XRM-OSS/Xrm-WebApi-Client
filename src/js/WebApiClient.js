@@ -51,6 +51,14 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         return context.getClientUrl();
     }
     
+    function RemoveIdBrackets (id) {
+        if (!id) {
+            return id;
+        }
+        
+        return id.replace("{", "").replace("}", "");
+    }
+    
     WebApiClient.SetApiVersion = function(version) {
         apiVersion = version;
     }
@@ -140,7 +148,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
 
         if (params.entityId) {
-            url += "(" + params.entityId + ")";
+            url += "(" + RemoveIdBrackets(params.entityId) + ")";
         }
         
         url += params.queryParams;
@@ -155,7 +163,8 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
             throw ("Entity name, ID and entity update object have to be passed!")
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + params.entityId + ")";
+        var url = WebApiClient.GetApiUrl() 
+            + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
         return SendRequest("PATCH", url, params.entity);
     }
@@ -167,7 +176,8 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
             throw ("Entity name and entity id have to be passed!")
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + params.entityId + ")";
+        var url = WebApiClient.GetApiUrl()
+            + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
         return SendRequest("DELETE", url);
     }
