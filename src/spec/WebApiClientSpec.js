@@ -1,6 +1,5 @@
 describe("WebApiClient", function() {
     var fakeUrl = "http://unit-test.local";
-    var fakeUrlRegex = fakeUrl.replace(".", "\.");
     var account;
     var xhr;
     
@@ -23,25 +22,25 @@ describe("WebApiClient", function() {
         xhr = sinon.fakeServer.create();
         
         // Respond to Create Request for account with No-Content response and created entity url in header
-        var createAccountUrl = new RegExp(RegExp.escape(fakeUrlRegex + "/api/data/v8\.0/accounts", "g"));
+        var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8\.0/accounts", "g"));
         xhr.respondWith("POST", createAccountUrl,
             [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, "{}"]
         );
         
         // Respond to Delete Request for account 
-        var retrieveAccountUrl = RegExp.escape(fakeUrlRegex + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
+        var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
             [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
         
         // Respond to Delete Request for account 
-        var updateAccountUrl = RegExp.escape(fakeUrlRegex + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
+        var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl, "g"),
             [204, { "Content-Type": "application/json" }, "{}"]
         );
         
         // Respond to Delete Request for account 
-        var deleteAccountUrl = RegExp.escape(fakeUrlRegex + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
+        var deleteAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("DELETE", new RegExp(deleteAccountUrl, "g"),
             [204, { "Content-Type": "application/json" }, "{}"]
         );
