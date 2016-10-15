@@ -40,21 +40,27 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
             return Xrm.Page.context;
         }
         
-        return null;
+        throw new Error("Failed to retrieve context");
     }
     
     function GetClientUrl () {
         var context = GetCrmContext();
         
-        if (!context) {
-            return null;
-        }
-        
         return context.getClientUrl();
     }
     
     function GetEntityPlural (entityName) {
-        return entityName + "s";
+        var ending = entityName.slice(-1);
+        
+        switch(ending)
+        {
+            case 's':
+                return entityName + "es"
+            case 'y':
+                return entityName.substring(0, entityName.length - 1) + "ies";
+            default:
+                return entityName + "s";
+        }
     }
     
     // Private function
@@ -96,33 +102,23 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         return promise;
     }
     
-    WebApiClient.BaseUrl = WebApiClient.BaseUrl || GetClientUrl();
-    WebApiClient.ApiUrl = WebApiClient.BaseUrl ? WebApiClient.BaseUrl + "/api/data/v8.0/" : null;
+    WebApiClient.ApiUrl = function() {
+        WebApiClient.GetClientUrl() + "/api/data/v8.0/";
+    }
     
     WebApiClient.Create = function(entityName, entity) {
-        if (!WebApiClient.ApiUrl) {
-            throw new Error("Failed to retrieve request URL");
-        }
-        
         var url = WebApiClient.ApiUrl + GetEntityPlural(entityName);
         
         return SendRequest("POST", url, entity);
     }
     
-    WebApiClient.Delete = function(entityName, entityId) {
-        if (!WebApiClient.ApiUrl) {
-            throw new Error("Failed to retrieve request URL");
-        }
-        
+    WebApiClient.Delete = function(entityName, entityId) {       
         var url = WebApiClient.ApiUrl + GetEntityPlural(entityName) + "(" + entityId + ")";
+        
         return SendRequest("DELETE", url);
     }
     
     WebApiClient.Retrieve = function(entityName, entityId, parameters) {
-        if (!WebApiClient.ApiUrl) {
-            throw new Error("Failed to retrieve request URL");
-        }
-        
         var url = WebApiClient.ApiUrl + GetEntityPlural(entityName);
 
         if (entityId) {
