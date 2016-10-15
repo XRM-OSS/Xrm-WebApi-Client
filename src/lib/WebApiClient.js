@@ -40,7 +40,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
             return Xrm.Page.context;
         }
         
-        throw new Error("Failed to retrieve context");
+        throw ("Failed to retrieve context");
     }
     
     function GetClientUrl () {
@@ -110,7 +110,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         var params = params || {};
         
         if (!params.entityName || !params.entity) {
-            throw new Error("Entity name and entity object have to be passed!")
+            throw ("Entity name and entity object have to be passed!")
         }
         
         var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName);
@@ -122,7 +122,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         var params = params || {};
         
         if (!params.entityName || !params.entityId) {
-            throw new Error("Entity name and entity id have to be passed!")
+            throw ("Entity name and entity id have to be passed!")
         }
         
         var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName) + "(" + params.entityId + ")";
@@ -134,7 +134,7 @@ if((0|e)!==e||0>e)return r("expecting a positive integer\n\n    See http://goo.g
         var params = params || {};
         
         if (!params.entityName) {
-            throw new Error("Entity name has to be passed!")
+            throw ("Entity name has to be passed!")
         }
         
         var url = WebApiClient.ApiUrl + WebApiClient.GetSetName(params.entityName);
