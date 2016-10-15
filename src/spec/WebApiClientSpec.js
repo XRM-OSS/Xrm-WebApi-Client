@@ -27,13 +27,19 @@ describe("WebApiClient", function() {
             [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, "{}"]
         );
         
-        // Respond to Delete Request for account 
+        // Respond to Retrieve by id Request for account 
         var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
             [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
         
-        // Respond to Delete Request for account 
+        // Respond to Retrieve by id Request for account 
+        var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null");
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
+            [200, { "Content-Type": "application/json" }, JSON.stringify([account])]
+        );
+        
+        // Respond to update Request for account 
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl, "g"),
             [204, { "Content-Type": "application/json" }, "{}"]
@@ -125,6 +131,25 @@ describe("WebApiClient", function() {
             WebApiClient.Retrieve({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
                 .then(function(response){
                     expect(response).toEqual(account);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should retrieve multiple with query params", function(done){
+            var request = {
+                entityName: "account", 
+                queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null"
+            };
+            
+            WebApiClient.Retrieve(request)
+                .then(function(response){
+                    expect(response).toEqual([account]);
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
