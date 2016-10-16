@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Sun Oct 16 2016 12:14:41 GMT+0200 (Mitteleuropäische Sommerzeit)
+// Generated on Sun Oct 16 2016 22:01:24 GMT+0200 (Mitteleuropäische Sommerzeit)
 
 module.exports = function(config) {
   config.set({
@@ -15,9 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.js',
-      'node_modules/bluebird/js/browser/bluebird.js',
-      'node_modules/sinon/pkg/sinon.js'
+      'node_modules/sinon/pkg/sinon.js',
+      'Publish/WebApiClient.js',
+      'src/spec/*.js'
     ],
 
 

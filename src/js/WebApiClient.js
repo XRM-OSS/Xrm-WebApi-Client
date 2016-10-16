@@ -1,4 +1,6 @@
 (function (WebApiClient, undefined) {
+    var Promise = require("bluebird");
+    
     var apiVersion = "8.0";
     
     function GetCrmContext() {
@@ -29,7 +31,7 @@
     
     WebApiClient.SetApiVersion = function(version) {
         apiVersion = version;
-    }
+    };
     
     WebApiClient.GetSetName = function (entityName) {
         var ending = entityName.slice(-1);
@@ -37,13 +39,13 @@
         switch(ending)
         {
             case 's':
-                return entityName + "es"
+                return entityName + "es";
             case 'y':
                 return entityName.substring(0, entityName.length - 1) + "ies";
             default:
                 return entityName + "s";
         }
-    }
+    };
     
     // Private function
     function SendRequest (method, url, payload) {
@@ -70,7 +72,7 @@
                 else { 
                     reject(xhr.statusText);
                 }
-            }
+            };
             xhr.onerror = function() {
                 reject(xhr.statusText);
             };
@@ -78,7 +80,7 @@
 
         xhr.open(method, url, true);
         
-        xhr.setRequestHeader("Accept", "application/json")
+        xhr.setRequestHeader("Accept", "application/json");
         xhr.setRequestHeader("OData-Version", "4.0");
         xhr.setRequestHeader("OData-MaxVersion", "4.0");
         
@@ -92,25 +94,25 @@
     
     WebApiClient.GetApiUrl = function() {
         return GetClientUrl() + "/api/data/v" + apiVersion + "/";
-    }
+    };
     
-    WebApiClient.Create = function(params) {
-        var params = params || {};
+    WebApiClient.Create = function(parameters) {
+        var params = parameters || {};
         
         if (!params.entityName || !params.entity) {
-            throw ("Entity name and entity object have to be passed!")
+            throw ("Entity name and entity object have to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
         
         return SendRequest("POST", url, params.entity);
-    }
+    };
     
-    WebApiClient.Retrieve = function(params) {
-        var params = params || {};
+    WebApiClient.Retrieve = function(parameters) {
+        var params = parameters || {};
         
         if (!params.entityName) {
-            throw ("Entity name has to be passed!")
+            throw ("Entity name has to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
@@ -122,31 +124,29 @@
         url += params.queryParams;
         
         return SendRequest("GET", url);
-    }
+    };
     
-    WebApiClient.Update = function(params) {
-        var params = params || {};
+    WebApiClient.Update = function(parameters) {
+        var params = parameters || {};
         
         if (!params.entityName || !params.entity || !params.entityId) {
-            throw ("Entity name, ID and entity update object have to be passed!")
+            throw ("Entity name, ID and entity update object have to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl() 
-            + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
+        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
         return SendRequest("PATCH", url, params.entity);
-    }
+    };
     
-    WebApiClient.Delete = function(params) {   
-        var params = params || {};
+    WebApiClient.Delete = function(parameters) {   
+        var params = parameters || {};
         
         if (!params.entityName || !params.entityId) {
-            throw ("Entity name and entity id have to be passed!")
+            throw ("Entity name and entity id have to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl()
-            + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
+        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
         return SendRequest("DELETE", url);
-    }
+    };
 } (window.WebApiClient = window.WebApiClient || {}));
