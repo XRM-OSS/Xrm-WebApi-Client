@@ -23,6 +23,6 @@
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",
     "uglify": "uglifyjs Publish/WebApiClient.js -o Publish/WebApiClient.min.js",
-    "build": "npm run test && npm run uglify"
+    "build": "npm run test && npm run uglify && zip Publish/release.zip Publish/*"
   }
 }
