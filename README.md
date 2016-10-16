@@ -6,6 +6,12 @@ It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framewo
 The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
 For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
 
+## How to obtain it
+You can always download the browserified version of this framework by downloading the release.zip file from the latest release.
+
+## Build Status
+[![Build Status](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client.svg?branch=master)](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client)
+
 ## Operations
 
 ### Create
