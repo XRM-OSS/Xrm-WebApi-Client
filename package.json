@@ -22,7 +22,7 @@
     "prebuild-js": "npm run lint && mkdir -p Publish",
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",
-    "uglify": "uglifyjs Publish/WebApiClient.js -o Publish/WebApiClient.min.js",
+    "uglify": "uglifyjs Publish/WebApiClient.js --no-dead-code --comments /@preserve.*/ -o Publish/WebApiClient.min.js",
     "build": "npm run test && npm run uglify && zip Publish/release.zip Publish/*"
   }
 }
