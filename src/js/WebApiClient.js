@@ -25,7 +25,7 @@
 (function (WebApiClient, undefined) {
     var Promise = require("bluebird");
     
-    var apiVersion = "8.0";
+    var ApiVersion = "8.0";
     
     function GetCrmContext() {
         if (typeof (GetGlobalContext) !== "undefined") {
@@ -53,8 +53,12 @@
         return id.replace("{", "").replace("}", "");
     }
     
+    WebApiClient.GetApiVersion = function() {
+        return ApiVersion;
+    };
+    
     WebApiClient.SetApiVersion = function(version) {
-        apiVersion = version;
+        ApiVersion = version;
     };
     
     WebApiClient.GetSetName = function (entityName) {
@@ -71,8 +75,50 @@
         }
     };
     
+    var DefaultHeaders = [
+        { key: "Accept", value: "application/json" },
+        { key: "OData-Version", value: "4.0" },
+        { key: "OData-MaxVersion", value: "4.0" },
+        // Prevent caching since it sometimes sends old data as unmodified
+        { key: "If-None-Match", value: null }
+    ];
+    
+    WebApiClient.GetDefaultHeaders = function() {
+        return DefaultHeaders;
+    };
+    
+    function VerifyHeader(header) {
+        if (!header.key || typeof(header.value) === "undefined") {
+            throw "Each request header needs a key and a value!";
+        }
+    }
+    
+    WebApiClient.AppendToDefaultHeaders = function () {
+        if (!arguments) {
+            return;
+        }
+        
+        for(var i = 0; i < arguments.length; i++) {
+            var argument = arguments[i];
+            
+            DefaultHeaders.push(arguments[i]);
+        }
+    };
+    
+    function AppendHeaders(xhr, headers) {
+        if (headers) {
+            for (var i = 0; i < headers.length; i++) {
+                var header = headers[i];
+                
+                VerifyHeader(header);
+                
+                xhr.setRequestHeader(header.key, header.value);
+            }
+        }
+    }
+    
     // Private function
-    function SendRequest (method, url, payload) {
+    function SendRequest (method, url, payload, requestHeaders) {
         var xhr = new XMLHttpRequest();
       
         var promise = new Promise(function(resolve, reject) {
@@ -104,12 +150,8 @@
 
         xhr.open(method, url, true);
         
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader("OData-Version", "4.0");
-        xhr.setRequestHeader("OData-MaxVersion", "4.0");
-        
-        // Prevent caching since it sometimes sends old data as unmodified
-        xhr.setRequestHeader("If-None-Match", null);
+        AppendHeaders(xhr, WebApiClient.DefaultHeaders);
+        AppendHeaders(xhr, requestHeaders);
         
         xhr.send(JSON.stringify(payload));
         
@@ -117,7 +159,7 @@
     }
     
     WebApiClient.GetApiUrl = function() {
-        return GetClientUrl() + "/api/data/v" + apiVersion + "/";
+        return GetClientUrl() + "/api/data/v" + ApiVersion + "/";
     };
     
     WebApiClient.Create = function(parameters) {
@@ -129,7 +171,7 @@
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
         
-        return SendRequest("POST", url, params.entity);
+        return SendRequest("POST", url, params.entity, params.headers);
     };
     
     WebApiClient.Retrieve = function(parameters) {
@@ -147,7 +189,7 @@
         
         url += params.queryParams;
         
-        return SendRequest("GET", url);
+        return SendRequest("GET", url, null, params.headers);
     };
     
     WebApiClient.Update = function(parameters) {
@@ -159,7 +201,7 @@
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
-        return SendRequest("PATCH", url, params.entity);
+        return SendRequest("PATCH", url, params.entity, params.headers);
     };
     
     WebApiClient.Delete = function(parameters) {   
@@ -171,6 +213,6 @@
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
         
-        return SendRequest("DELETE", url);
+        return SendRequest("DELETE", url, null, params.headers);
     };
 } (window.WebApiClient = window.WebApiClient || {}));

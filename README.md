@@ -107,3 +107,39 @@ WebApiClient.Delete(request)
         // Handle error
     });
 ```
+
+## Headers
+
+### Header Format
+Headers are represented as objects containing a key and a value property:
+
+```JavaScript
+var header = { key: "headerKey", value: "headerValue" };
+```
+
+### Default Headers
+By default there is a defined set of default headers, that will be sent with each request.
+You can however manipulate the default headers by accessing the WebApiClient.DefaultHeaders array property.
+
+### Request Headers
+You can also attach headers per request, all request parameters have a headers property, that can be used for passing per-request headers.
+
+This could look something like this:
+``` JavaScript
+// Parameters for create request
+var request = {
+    entityName: "account", 
+    entity: {name: "Adventure Works"},
+    headers: [ { key: "headerKey", value: "headerValue" }]
+};
+
+Note: Currently your request headers are simply added after the default headers. Watch out for interferences.
+```
+
+### API Version
+The default API version is 8.0.
+You can however change it to 8.1 if needed by using 
+
+```JavaScript
+WebApiClient.SetApiVersion("8.1");
+```

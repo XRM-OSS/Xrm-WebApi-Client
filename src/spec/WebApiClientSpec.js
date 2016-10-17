@@ -222,4 +222,31 @@ describe("WebApiClient", function() {
             xhr.respond();
         });
     });
+    
+    describe("Headers", function() {
+        it("should set default headers", function(){
+            expect(WebApiClient.GetDefaultHeaders()).toBeDefined();
+        });
+        
+        it("should allow to add own default headers", function(){
+            var testHeader = {key: "newHeader", value: "newValue"};
+            WebApiClient.AppendToDefaultHeaders (testHeader);
+            
+            var defaultHeaders = WebApiClient.GetDefaultHeaders();
+            
+            expect(defaultHeaders[defaultHeaders.length - 1]).toEqual(testHeader);
+        });
+    });
+    
+    describe("API Version", function() {
+        it("should default to 8.0", function() {
+            expect(WebApiClient.GetApiVersion()).toEqual("8.0");
+        }); 
+        
+        it("should be editable", function() {
+            WebApiClient.SetApiVersion("8.1")
+            
+            expect(WebApiClient.GetApiVersion()).toEqual("8.1");
+        }); 
+    });
 });
