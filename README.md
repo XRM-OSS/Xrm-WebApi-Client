@@ -119,7 +119,14 @@ var header = { key: "headerKey", value: "headerValue" };
 
 ### Default Headers
 By default there is a defined set of default headers, that will be sent with each request.
-You can however manipulate the default headers by accessing the WebApiClient.DefaultHeaders array property.
+The default headers can be retrieved using the WebApiClient.GetDefaultHeaders function.
+You can however add own default headers by using the WebApiClient.AppendToDefaultHeaders function, which takes as much headers as dynamic arguments as you like.
+
+Example:
+```JavaScript
+var header = {key: "newHeader", value: "newValue"};
+WebApiClient.AppendToDefaultHeaders (header);
+```
 
 ### Request Headers
 You can also attach headers per request, all request parameters have a headers property, that can be used for passing per-request headers.
