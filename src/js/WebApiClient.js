@@ -80,7 +80,8 @@
         { key: "OData-Version", value: "4.0" },
         { key: "OData-MaxVersion", value: "4.0" },
         // Prevent caching since it sometimes sends old data as unmodified
-        { key: "If-None-Match", value: null }
+        { key: "If-None-Match", value: null },
+        { key: "Content-Type", value: "application/json; charset=utf-8" }
     ];
     
     WebApiClient.GetDefaultHeaders = function() {
@@ -150,7 +151,7 @@
 
         xhr.open(method, url, true);
         
-        AppendHeaders(xhr, WebApiClient.DefaultHeaders);
+        AppendHeaders(xhr, DefaultHeaders);
         AppendHeaders(xhr, requestHeaders);
         
         xhr.send(JSON.stringify(payload));
@@ -187,7 +188,9 @@
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
         }
         
-        url += params.queryParams;
+        if (params.queryParams) {
+            url += params.queryParams;
+        }
         
         return SendRequest("GET", url, null, params.headers);
     };
