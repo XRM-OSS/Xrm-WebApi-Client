@@ -36,7 +36,7 @@
             return Xrm.Page.context;
         }
         
-        throw ("Failed to retrieve context");
+        throw new Error("Failed to retrieve context");
     }
     
     function GetClientUrl () {
@@ -90,7 +90,7 @@
     
     function VerifyHeader(header) {
         if (!header.key || typeof(header.value) === "undefined") {
-            throw "Each request header needs a key and a value!";
+            throw new Error("Each request header needs a key and a value!");
         }
     }
     
@@ -141,11 +141,11 @@
                     }
                 }
                 else { 
-                    reject(xhr.statusText);
+                    reject(new Error(xhr.statusText));
                 }
             };
             xhr.onerror = function() {
-                reject(xhr.statusText);
+                reject(new Error(xhr.statusText));
             };
         });
 
@@ -167,7 +167,7 @@
         var params = parameters || {};
         
         if (!params.entityName || !params.entity) {
-            throw ("Entity name and entity object have to be passed!");
+            throw new Error("Entity name and entity object have to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
@@ -179,7 +179,7 @@
         var params = parameters || {};
         
         if (!params.entityName) {
-            throw ("Entity name has to be passed!");
+            throw new Error("Entity name has to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
@@ -199,7 +199,7 @@
         var params = parameters || {};
         
         if (!params.entityName || !params.entity || !params.entityId) {
-            throw ("Entity name, ID and entity update object have to be passed!");
+            throw new Error("Entity name, ID and entity update object have to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
@@ -211,7 +211,7 @@
         var params = parameters || {};
         
         if (!params.entityName || !params.entityId) {
-            throw ("Entity name and entity id have to be passed!");
+            throw new Error("Entity name and entity id have to be passed!");
         }
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
