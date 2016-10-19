@@ -23,6 +23,8 @@
  *
 */
 (function (WebApiClient, undefined) {
+    "use strict";
+    
     var Promise = require("bluebird");
     
     var ApiVersion = "8.0";
