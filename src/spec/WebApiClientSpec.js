@@ -1,4 +1,4 @@
-describe("WebApiClient", function() {
+describe("XrmWebApi.Client", function() {
     var fakeUrl = "http://unit-test.local";
     var account;
     var xhr;
@@ -58,36 +58,36 @@ describe("WebApiClient", function() {
     
     describe("Operations", function() {
         it("should know the create operation", function() {
-            expect(WebApiClient.Create).toBeDefined();
+            expect(XrmWebApi.Client.Create).toBeDefined();
         }); 
       
         it("should know the retrieve operation", function() {
-            expect(WebApiClient.Retrieve).toBeDefined();
+            expect(XrmWebApi.Client.Retrieve).toBeDefined();
         });
         
         it("should know the update operation", function() {
-            expect(WebApiClient.Update).toBeDefined();
+            expect(XrmWebApi.Client.Update).toBeDefined();
         });
         
         it("should know the delete operation", function() {
-            expect(WebApiClient.Delete).toBeDefined();
+            expect(XrmWebApi.Client.Delete).toBeDefined();
         });
     });
     
     describe("SetNames", function() {
         it("should append s if no special ending", function() {
-            var accountSet = WebApiClient.GetSetName("account");
+            var accountSet = XrmWebApi.Client.GetSetName("account");
             expect(accountSet).toEqual("accounts");
         }); 
         
         it("should append ies if ends in y", function() {
-            var citySet = WebApiClient.GetSetName("city");
+            var citySet = XrmWebApi.Client.GetSetName("city");
             expect(citySet).toEqual("cities");
         });
         
         it("should append es if ends in s", function() {
-            // I know that this is grammatically incorrect, WebApi does this however
-            var settingsSet = WebApiClient.GetSetName("settings");
+            // I know that this is grammatically incorrect, XrmWebApi does this however
+            var settingsSet = XrmWebApi.Client.GetSetName("settings");
             expect(settingsSet).toEqual("settingses");
         });
     });
@@ -95,18 +95,18 @@ describe("WebApiClient", function() {
     describe("Create", function() {      
         it("should fail if no entity name passed", function(){
             expect(function() {
-                WebApiClient.Create({entity: account});
+                XrmWebApi.Client.Create({entity: account});
             }).toThrow();
         });
         
         it("should fail if no update entity passed", function(){
             expect(function() {
-                WebApiClient.Create({entityName: "account"});
+                XrmWebApi.Client.Create({entityName: "account"});
             }).toThrow();
         });
         
         it("should create record and return record URL", function(done){
-            WebApiClient.Create({entityName: "account", entity: account})
+            XrmWebApi.Client.Create({entityName: "account", entity: account})
                 .then(function(response){
                     expect(response).toEqual("Fake-Account-Url");
                 })
@@ -123,12 +123,12 @@ describe("WebApiClient", function() {
     describe("Retrieve", function() {      
         it("should fail if no entity name passed", function(){
             expect(function() {
-                WebApiClient.Retrieve({});
+                XrmWebApi.Client.Retrieve({});
             }).toThrow();
         });
         
         it("should retrieve by id", function(done){
-            WebApiClient.Retrieve({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
+            XrmWebApi.Client.Retrieve({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
                 .then(function(response){
                     expect(response).toEqual(account);
                 })
@@ -147,7 +147,7 @@ describe("WebApiClient", function() {
                 queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null"
             };
             
-            WebApiClient.Retrieve(request)
+            XrmWebApi.Client.Retrieve(request)
                 .then(function(response){
                     expect(response).toEqual([account]);
                 })
@@ -164,24 +164,24 @@ describe("WebApiClient", function() {
     describe("Update", function() {
         it("should fail if no entity Id passed", function(){
             expect(function() {
-                WebApiClient.Update({entityName: "account", entity: account});
+                XrmWebApi.Client.Update({entityName: "account", entity: account});
             }).toThrow();
         });
         
         it("should fail if no entity name passed", function(){
             expect(function() {
-                WebApiClient.Update({entityId: "00000000-0000-0000-0000-000000000001", entity: account});
+                XrmWebApi.Client.Update({entityId: "00000000-0000-0000-0000-000000000001", entity: account});
             }).toThrow();
         });
         
         it("should fail if no update entity passed", function(){
             expect(function() {
-                WebApiClient.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"});
+                XrmWebApi.Client.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"});
             }).toThrow();
         });
         
         it("should update record and return", function(done){
-            WebApiClient.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001",  entity: account})
+            XrmWebApi.Client.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001",  entity: account})
                 .then(function(response){
                     expect(response).toBeDefined();
                 })
@@ -198,18 +198,18 @@ describe("WebApiClient", function() {
     describe("Delete", function() {
         it("should fail if no entity Id passed", function(){
             expect(function() {
-                WebApiClient.Delete({entityName: "account"});
+                XrmWebApi.Client.Delete({entityName: "account"});
             }).toThrow();
         });
         
         it("should fail if no entity name passed", function(){
             expect(function() {
-                WebApiClient.Delete({entityId: "00000000-0000-0000-0000-000000000001"});
+                XrmWebApi.Client.Delete({entityId: "00000000-0000-0000-0000-000000000001"});
             }).toThrow();
         });
         
         it("should delete record and return", function(done){
-            WebApiClient.Delete({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
+            XrmWebApi.Client.Delete({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
                 .then(function(response){
                     expect(response).toBeDefined();
                 })
@@ -225,14 +225,14 @@ describe("WebApiClient", function() {
     
     describe("Headers", function() {
         it("should set default headers", function(){
-            expect(WebApiClient.GetDefaultHeaders()).toBeDefined();
+            expect(XrmWebApi.Client.GetDefaultHeaders()).toBeDefined();
         });
         
         it("should allow to add own default headers", function(){
             var testHeader = {key: "newHeader", value: "newValue"};
-            WebApiClient.AppendToDefaultHeaders (testHeader);
+            XrmWebApi.Client.AppendToDefaultHeaders (testHeader);
             
-            var defaultHeaders = WebApiClient.GetDefaultHeaders();
+            var defaultHeaders = XrmWebApi.Client.GetDefaultHeaders();
             
             expect(defaultHeaders[defaultHeaders.length - 1]).toEqual(testHeader);
         });
@@ -240,13 +240,13 @@ describe("WebApiClient", function() {
     
     describe("API Version", function() {
         it("should default to 8.0", function() {
-            expect(WebApiClient.GetApiVersion()).toEqual("8.0");
+            expect(XrmWebApi.Client.GetApiVersion()).toEqual("8.0");
         }); 
         
         it("should be editable", function() {
-            WebApiClient.SetApiVersion("8.1")
+            XrmWebApi.Client.SetApiVersion("8.1")
             
-            expect(WebApiClient.GetApiVersion()).toEqual("8.1");
+            expect(XrmWebApi.Client.GetApiVersion()).toEqual("8.1");
         }); 
     });
 });
