@@ -22,11 +22,10 @@
  * SOFTWARE.
  *
 */
-(function (undefined) {
+(function (WebApiClient, Promise, undefined) {
     "use strict";
     
-    var Promise = require("bluebird");
-    var WebApiClient = {};
+    Promise = require("bluebird");
     
     var ApiVersion = "8.0";
     
@@ -221,9 +220,4 @@
         
         return SendRequest("DELETE", url, null, params.headers);
     };
-    
-    module.exports = {
-        Client: WebApiClient,
-        Promise: Promise
-    };
-} ());
+} (window.WebApiClient = window.WebApiClient || {}, window.Promise = window.Promise || {}));
