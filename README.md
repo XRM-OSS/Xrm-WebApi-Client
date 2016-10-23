@@ -180,7 +180,13 @@ var payload = {
     }
 };
 
-WebApiClient.SendRequest("POST", url, payload);
+WebApiClient.SendRequest("POST", url, payload)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
 ```
 
 ### Promises
