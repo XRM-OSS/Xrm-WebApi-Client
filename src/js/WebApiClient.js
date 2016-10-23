@@ -22,11 +22,9 @@
  * SOFTWARE.
  *
 */
-(function (WebApiClient, Promise, undefined) {
+(function (WebApiClient, undefined) {
     "use strict";
-    
-    Promise = require("bluebird");
-    
+       
     var ApiVersion = "8.0";
     
     function GetCrmContext() {
@@ -220,4 +218,4 @@
         
         return SendRequest("DELETE", url, null, params.headers);
     };
-} (window.WebApiClient = window.WebApiClient || {}, window.Promise = window.Promise || {}));
+} (window.WebApiClient = window.WebApiClient || {}));

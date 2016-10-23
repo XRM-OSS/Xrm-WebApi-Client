@@ -18,7 +18,7 @@
   },
   "scripts": {
     "lint": "jshint src/js/WebApiClient.js",
-    "build-js": "browserify src/js/WebApiClient.js -o Publish/WebApiClient.js",
+    "build-js": "browserify src/js/globals.js src/js/WebApiClient.js -d -o Publish/WebApiClient.js",
     "prebuild-js": "npm run lint && mkdir -p Publish",
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",
