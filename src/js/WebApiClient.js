@@ -122,8 +122,12 @@
         }
     }
     
+    function GetRecordUrl (entityName, entityId) {
+        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(entityName) + "(" + RemoveIdBrackets(entityId) + ")";
+    }
+    
     // Private function
-    function SendRequest (method, url, payload, requestHeaders) {
+    WebApiClient.SendRequest = function (method, url, payload, requestHeaders) {
         var xhr = new XMLHttpRequest();
       
         var promise = new Promise(function(resolve, reject) {
@@ -161,11 +165,7 @@
         xhr.send(JSON.stringify(payload));
         
         return promise;
-    }
-    
-    function GetRecordUrl (entityName, entityId) {
-        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(entityName) + "(" + RemoveIdBrackets(entityId) + ")";
-    }
+    };
     
     WebApiClient.GetApiUrl = function() {
         return GetClientUrl() + "/api/data/v" + ApiVersion + "/";
@@ -180,7 +180,7 @@
         
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
         
-        return SendRequest("POST", url, params.entity, params.headers);
+        return WebApiClient.SendRequest("POST", url, params.entity, params.headers);
     };
     
     WebApiClient.Retrieve = function(parameters) {
@@ -200,7 +200,7 @@
             url += params.queryParams;
         }
         
-        return SendRequest("GET", url, null, params.headers);
+        return WebApiClient.SendRequest("GET", url, null, params.headers);
     };
     
     WebApiClient.Update = function(parameters) {
@@ -212,7 +212,7 @@
         
         var url = GetRecordUrl(params.entityName, params.entityId);
         
-        return SendRequest("PATCH", url, params.entity, params.headers);
+        return WebApiClient.SendRequest("PATCH", url, params.entity, params.headers);
     };
     
     WebApiClient.Delete = function(parameters) {   
@@ -224,7 +224,7 @@
         
         var url = GetRecordUrl(params.entityName, params.entityId);
         
-        return SendRequest("DELETE", url, null, params.headers);
+        return WebApiClient.SendRequest("DELETE", url, null, params.headers);
     };
     
     WebApiClient.Associate = function(parameters) {
@@ -249,7 +249,7 @@
         
         var payload = { "@odata.id": GetRecordUrl(params.source.entityName, params.source.entityId) };
 
-        return SendRequest("POST", url, payload, params.headers);
+        return WebApiClient.SendRequest("POST", url, payload, params.headers);
     };
     
     WebApiClient.Disassociate = function(parameters) {
@@ -272,6 +272,6 @@
         
         var url = targetUrl + relationShip;
 
-        return SendRequest("DELETE", url, null, params.headers);
+        return WebApiClient.SendRequest("DELETE", url, null, params.headers);
     };
 } (window.WebApiClient = window.WebApiClient || {}));
