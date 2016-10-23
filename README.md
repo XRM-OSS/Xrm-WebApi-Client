@@ -164,6 +164,25 @@ WebApiClient.Disassociate(request)
     });
 ```
 
+### Not yet implemented requests
+If you need to use requests, that are not yet implemented, you can use the ```WebApiClient.SendRequest``` function.
+In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
+
+An example of a custom implementation of the WinOpportunity request:
+```Javascript
+var url = WebApiClient.GetApiUrl() + "WinOpportunity";
+var opportunityId = "00000000-0000-0000-0000-000000000001";
+var payload = {
+    "Status": 3,
+    "OpportunityClose": {
+        "subject": "Won Opportunity",
+        "opportunityid@odata.bind": "/" + WebApiClient.GetSetName("opportunity") + "(" + opportunityId + ")"
+    }
+};
+
+WebApiClient.SendRequest("POST", url, payload);
+```
+
 ### Promises
 This client uses bluebird for handling promises in a cross-browser compliant way.
 For this reason bluebird is exported as global implementation of promises (and also overrides browser native Promises).
