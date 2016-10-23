@@ -108,6 +108,88 @@ WebApiClient.Delete(request)
     });
 ```
 
+### Associate
+Associate requests are supported. You have to pass the relationship name, a source and a target entity.
+This example associates an opportuntiy to an account:
+
+```JavaScript
+var request = {
+    relationShip: "opportunity_customer_accounts",
+    source: 
+        {
+            entityName: "opportunity",
+            entityId: "00000000-0000-0000-0000-000000000001"
+        },
+    target: 
+        {
+            entityName: "account",
+            entityId: "00000000-0000-0000-0000-000000000002"
+        }
+};
+
+WebApiClient.Associate(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+### Disassociate
+Disassociate requests are supported. You have to pass the relationship name, a source and a target entity.
+This example disassociates an opportuntiy from an account:
+
+```JavaScript
+var request = {
+    relationShip: "opportunity_customer_accounts",
+    source: 
+        {
+            entityName: "opportunity",
+            entityId: "00000000-0000-0000-0000-000000000001"
+        },
+    target: 
+        {
+            entityName: "account",
+            entityId: "00000000-0000-0000-0000-000000000002"
+        }
+};
+
+WebApiClient.Disassociate(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+### Promises
+This client uses bluebird for handling promises in a cross-browser compliant way.
+For this reason bluebird is exported as global implementation of promises (and also overrides browser native Promises).
+The decision to override native Promises was made to give you a constant usage experience across all browsers.
+
+Using promises you can do something like this, too:
+```Javascript
+var requests = [];
+
+for (var i = 0; i < 5; i++) {
+    var request = {
+        entityName: "account", 
+        entity: {name: "Adventure Works Nr. " + i}
+    };
+    requests.push(WebApiClient.Create(request));
+}
+
+Promise.all(requests)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
 ## Headers
 
 ### Header Format
@@ -139,9 +221,8 @@ var request = {
     entity: {name: "Adventure Works"},
     headers: [ { key: "headerKey", value: "headerValue" }]
 };
-
-Note: Currently your request headers are simply added after the default headers. Watch out for interferences.
 ```
+Note: Currently your request headers are simply added after the default headers. Watch out for interferences.
 
 ### API Version
 The default API version is 8.0.
