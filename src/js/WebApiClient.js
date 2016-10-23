@@ -27,6 +27,10 @@
        
     var ApiVersion = "8.0";
     
+    // Override promise locally. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
+    // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
+    var Promise = require("bluebird");
+    
     function GetCrmContext() {
         if (typeof (GetGlobalContext) !== "undefined") {
             return GetGlobalContext();
@@ -159,6 +163,10 @@
         return promise;
     }
     
+    function GetRecordUrl (entityName, entityId) {
+        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(entityName) + "(" + RemoveIdBrackets(entityId) + ")";
+    }
+    
     WebApiClient.GetApiUrl = function() {
         return GetClientUrl() + "/api/data/v" + ApiVersion + "/";
     };
@@ -202,7 +210,7 @@
             throw new Error("Entity name, ID and entity update object have to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
+        var url = GetRecordUrl(params.entityName, params.entityId);
         
         return SendRequest("PATCH", url, params.entity, params.headers);
     };
@@ -214,8 +222,56 @@
             throw new Error("Entity name and entity id have to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName) + "(" + RemoveIdBrackets(params.entityId) + ")";
+        var url = GetRecordUrl(params.entityName, params.entityId);
         
+        return SendRequest("DELETE", url, null, params.headers);
+    };
+    
+    WebApiClient.Associate = function(parameters) {
+        var params = parameters || {};
+        
+        if (!params.relationShip) {
+            throw new Error("Relationship has to be passed!");
+        }
+        
+        if (!params.source || !params.target) {
+            throw new Error("Source and target have to be passed!");
+        }
+        
+        if (!params.source.entityName || !params.target.entityName || !params.source.entityId || !params.target.entityId) {
+            throw new Error("Source and target both need to have entityName and entityId set!");
+        }
+        
+        var targetUrl = GetRecordUrl(params.target.entityName, params.target.entityId);
+        var relationShip = "/" + params.relationShip + "/$ref";
+        
+        var url = targetUrl + relationShip;
+        
+        var payload = { "@odata.id": GetRecordUrl(params.source.entityName, params.source.entityId) };
+
+        return SendRequest("POST", url, payload, params.headers);
+    };
+    
+    WebApiClient.Disassociate = function(parameters) {
+        var params = parameters || {};
+        
+        if (!params.relationShip) {
+            throw new Error("Relationship has to be passed!");
+        }
+        
+        if (!params.source || !params.target) {
+            throw new Error("Source and target have to be passed!");
+        }
+        
+        if (!params.source.entityName || !params.target.entityName || !params.source.entityId || !params.target.entityId) {
+            throw new Error("Source and target both need to have entityName and entityId set!");
+        }
+        
+        var targetUrl = GetRecordUrl(params.target.entityName, params.target.entityId);
+        var relationShip = "/" + params.relationShip + "(" + RemoveIdBrackets(params.source.entityId) + ")/$ref";
+        
+        var url = targetUrl + relationShip;
+
         return SendRequest("DELETE", url, null, params.headers);
     };
 } (window.WebApiClient = window.WebApiClient || {}));

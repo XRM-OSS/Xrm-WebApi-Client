@@ -42,13 +42,25 @@ describe("WebApiClient", function() {
         // Respond to update Request for account 
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{}"]
+            [204, { "Content-Type": "application/json" }, "{operation: 'Update'}"]
         );
         
         // Respond to Delete Request for account 
         var deleteAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("DELETE", new RegExp(deleteAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{}"]
+            [204, { "Content-Type": "application/json" }, "{operation: 'Delete'}"]
+        );
+        
+        // Respond to Associate Request for account 
+        var associateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts/$ref");
+        xhr.respondWith("POST", new RegExp(associateAccountUrl, "g"),
+            [204, { "Content-Type": "application/json" }, "{operation: 'Associate'}"]
+        );
+        
+        // Respond to Delete Request for account 
+        var disassociateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000001)/$ref");
+        xhr.respondWith("DELETE", new RegExp(disassociateAccountUrl, "g"),
+            [204, { "Content-Type": "application/json" }, "{operation: 'Disassociate'}"]
         );
     });
     
@@ -210,6 +222,156 @@ describe("WebApiClient", function() {
         
         it("should delete record and return", function(done){
             WebApiClient.Delete({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"})
+                .then(function(response){
+                    expect(response).toBeDefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+    });
+    
+    describe("Associate", function() {
+        it("should fail if no target passed", function(){
+            expect(function() {
+                WebApiClient.Associate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        }
+                });
+            }).toThrow();
+        });
+        
+        it("should fail if no source passed", function(){
+            expect(function() {
+                WebApiClient.Associate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                });
+            }).toThrow();
+        });
+        
+        it("should fail if no relationShip passed", function(){
+            expect(function() {
+                WebApiClient.Associate(
+                {
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        },
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                });
+            }).toThrow();
+        });
+        
+        it("should associate record and return", function(done){
+            WebApiClient.Associate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        },
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                })
+                .then(function(response){
+                    expect(response).toBeDefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+    });
+    
+    describe("Disassociate", function() {
+        it("should fail if no target passed", function(){
+            expect(function() {
+                WebApiClient.Disassociate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        }
+                });
+            }).toThrow();
+        });
+        
+        it("should fail if no source passed", function(){
+            expect(function() {
+                WebApiClient.Disassociate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                });
+            }).toThrow();
+        });
+        
+        it("should fail if no relationShip passed", function(){
+            expect(function() {
+                WebApiClient.Disassociate(
+                {
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        },
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                });
+            }).toThrow();
+        });
+                
+        it("should disassociate record and return", function(done){
+            WebApiClient.Disassociate(
+                {
+                    relationShip: "opportunity_customer_accounts",
+                    source: 
+                        {
+                            entityName: "opportunity",
+                            entityId: "00000000-0000-0000-0000-000000000001"
+                        },
+                    target: 
+                        {
+                            entityName: "account",
+                            entityId: "00000000-0000-0000-0000-000000000002"
+                        }
+                })
                 .then(function(response){
                     expect(response).toBeDefined();
                 })
