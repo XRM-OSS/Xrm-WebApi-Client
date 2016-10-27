@@ -195,6 +195,22 @@
         if (params.entityId) {
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
         }
+        else if (params.alternateKey) {
+            url += "(";
+            
+            for (var i = 0; i < params.alternateKey.length; i++) {
+                var key = params.alternateKey[i];
+                
+                url += key.property + "='" + key.value + "'";
+                
+                if (i + 1 === params.alternateKey.length) {
+                    url += ")";
+                }
+                else {
+                    url += ",";
+                }
+            }
+        }
         
         if (params.queryParams) {
             url += params.queryParams;

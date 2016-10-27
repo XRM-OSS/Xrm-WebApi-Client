@@ -1,6 +1,7 @@
 describe("WebApiClient", function() {
     var fakeUrl = "http://unit-test.local";
     var account;
+    var contact;
     var xhr;
     
     Xrm = {};
@@ -17,6 +18,10 @@ describe("WebApiClient", function() {
     beforeEach(function() {
         account = { 
             Name: "Adventure Works"
+        };
+        
+        contact = {
+            FirstName: "Joe"
         };
 
         xhr = sinon.fakeServer.create();
@@ -37,6 +42,12 @@ describe("WebApiClient", function() {
         var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null");
         xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
             [200, { "Content-Type": "application/json" }, JSON.stringify([account])]
+        );
+        
+        // Respond to Retrieve Request for contact with alternate key 
+        var retrieveByAlternateKeyUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contacts(firstname='Joe',emailaddress1='abc@example.com')");
+        xhr.respondWith("GET", new RegExp(retrieveByAlternateKeyUrl, "g"),
+            [200, { "Content-Type": "application/json" }, JSON.stringify(contact)]
         );
         
         // Respond to update Request for account 
@@ -168,6 +179,28 @@ describe("WebApiClient", function() {
                 })
                 // Wait for promise
                 .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should retrieve by alternative key", function(done){
+            WebApiClient.Retrieve(
+            {
+                entityName: "contact", 
+                alternateKey: 
+                    [
+                        { property: "firstname", value: "Joe" },
+                        { property: "emailaddress1", value: "abc@example.com"}
+                    ]
+            })
+            .then(function(response){
+                expect(response).toEqual(contact);
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            // Wait for promise
+            .finally(done);
             
             xhr.respond();
         });
