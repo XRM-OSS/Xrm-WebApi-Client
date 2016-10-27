@@ -186,6 +186,26 @@ WebApiClient.Disassociate(request)
     });
 ```
 
+### Set Names
+Set names are automatically generated according to WebApi rules and based on the entityName parameter in your request.
+However there are some set names, that are not generated according to naming rules, for example ContactLeads becomes contactleadscollection. For handling those corner cases, each request allows to pass an overriddenSetName instead of the entity name, so that you can directly pass those set names that break naming rules. This should happen very rarely.
+Example of passing overriddenSetName:
+
+```JavaScript
+var request = {
+    overriddenSetName: "contactleadscollection",
+    entity: {name: "Contoso"}
+};
+
+WebApiClient.Create(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
 ### Not yet implemented requests
 If you need to use requests, that are not yet implemented, you can use the ```WebApiClient.SendRequest``` function.
 In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
