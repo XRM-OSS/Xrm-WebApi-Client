@@ -3,6 +3,9 @@ describe("WebApiClient", function() {
     var account;
     var contact;
     var xhr;
+    var successMock = {
+        result: "Success"
+    };
     
     Xrm = {};
     Xrm.Page = {};
@@ -27,9 +30,9 @@ describe("WebApiClient", function() {
         xhr = sinon.fakeServer.create();
         
         // Respond to Create Request for account with No-Content response and created entity url in header
-        var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8\.0/accounts", "g"));
+        var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8.0/accounts", "g"));
         xhr.respondWith("POST", createAccountUrl,
-            [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, "{}"]
+            [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, JSON.stringify(successMock)]
         );
         
         // Respond to Retrieve by id Request for account 
@@ -53,25 +56,61 @@ describe("WebApiClient", function() {
         // Respond to update Request for account 
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{operation: 'Update'}"]
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Delete Request for account 
         var deleteAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("DELETE", new RegExp(deleteAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{operation: 'Delete'}"]
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Associate Request for account 
         var associateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts/$ref");
         xhr.respondWith("POST", new RegExp(associateAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{operation: 'Associate'}"]
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Delete Request for account 
         var disassociateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000001)/$ref");
         xhr.respondWith("DELETE", new RegExp(disassociateAccountUrl, "g"),
-            [204, { "Content-Type": "application/json" }, "{operation: 'Disassociate'}"]
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        // Respond to overridden set name requests
+        var boundOverriddenSetUrl = fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)";
+        var unboundOverriddenSetUrl = fakeUrl + "/api/data/v8.0/contactleadscollection";
+        
+        xhr.respondWith("GET", boundOverriddenSetUrl,
+            [200, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        xhr.respondWith("POST", boundOverriddenSetUrl,
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        xhr.respondWith("POST", unboundOverriddenSetUrl,
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        xhr.respondWith("PATCH", boundOverriddenSetUrl,
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        xhr.respondWith("DELETE", boundOverriddenSetUrl,
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        // Respond to Associate Request for account 
+        var associateOverriddenUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)/opportunity_customer_accounts/$ref");
+        xhr.respondWith("POST", new RegExp(associateOverriddenUrl, "g"),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        // Respond to Delete Request for account 
+        var disassociateOverriddenUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000003)/$ref");
+        xhr.respondWith("DELETE", new RegExp(disassociateOverriddenUrl, "g"),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
     });
     
@@ -95,6 +134,14 @@ describe("WebApiClient", function() {
         it("should know the delete operation", function() {
             expect(WebApiClient.Delete).toBeDefined();
         });
+        
+        it("should know the associate operation", function() {
+            expect(WebApiClient.Associate).toBeDefined();
+        });
+        
+        it("should know the disassociate operation", function() {
+            expect(WebApiClient.Disassociate).toBeDefined();
+        });
     });
     
     describe("SetNames", function() {
@@ -112,6 +159,74 @@ describe("WebApiClient", function() {
             // I know that this is grammatically incorrect, WebApi does this however
             var settingsSet = WebApiClient.GetSetName("settings");
             expect(settingsSet).toEqual("settingses");
+        });
+        
+        it("should allow to override set names for all requests", function(done) {
+            var requests = [];
+            
+            var createRequest = {
+                overriddenSetName: "contactleadscollection",
+                entity: {name: "Contoso"}
+            };
+            requests.push(WebApiClient.Create(createRequest));
+            
+            var retrieveRequest = {
+                overriddenSetName: "contactleadscollection",
+                entityId: "00000000-0000-0000-0000-000000000003"
+            };
+            requests.push(WebApiClient.Retrieve(retrieveRequest));
+            
+            var updateRequest = {
+                overriddenSetName: "contactleadscollection",
+                entityId: "00000000-0000-0000-0000-000000000003",
+                entity: {name: "Contoso"}
+            };
+            requests.push(WebApiClient.Update(updateRequest));
+            
+            var deleteRequest = {
+                overriddenSetName: "contactleadscollection",
+                entityId: "00000000-0000-0000-0000-000000000003"
+            };
+            requests.push(WebApiClient.Delete(deleteRequest));
+            
+            var associateRequest = {
+                relationShip: "opportunity_customer_accounts",
+                source: 
+                    {
+                        overriddenSetName: "contactleadscollection",
+                        entityId: "00000000-0000-0000-0000-000000000003"
+                    },
+                target: 
+                    {
+                        overriddenSetName: "contactleadscollection",
+                        entityId: "00000000-0000-0000-0000-000000000003"
+                    }
+            };
+            requests.push(WebApiClient.Associate(associateRequest));
+            
+            var disassociateRequest = {
+                relationShip: "opportunity_customer_accounts",
+                source: 
+                    {
+                        overriddenSetName: "contactleadscollection",
+                        entityId: "00000000-0000-0000-0000-000000000003"
+                    },
+                target: 
+                    {
+                        overriddenSetName: "contactleadscollection",
+                        entityId: "00000000-0000-0000-0000-000000000003"
+                    }
+            };
+            requests.push(WebApiClient.Disassociate(disassociateRequest));
+            
+            Promise.all(requests)
+            .then(function (results){})
+            .catch(function (error) {
+                expect(error).toBeUndefined();
+            })
+            .finally(done);
+            
+            xhr.respond();
         });
     });
     

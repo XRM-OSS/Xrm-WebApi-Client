@@ -65,7 +65,11 @@
         ApiVersion = version;
     };
     
-    WebApiClient.GetSetName = function (entityName) {
+    WebApiClient.GetSetName = function (entityName, overriddenSetName) {
+        if (overriddenSetName) {
+            return overriddenSetName;
+        }
+        
         var ending = entityName.slice(-1);
         
         switch(ending)
@@ -122,8 +126,14 @@
         }
     }
     
-    function GetRecordUrl (entityName, entityId) {
-        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(entityName) + "(" + RemoveIdBrackets(entityId) + ")";
+    function GetRecordUrl (parameters) {
+        var params = parameters || {};
+        
+        if ((!params.entityName && !params.overriddenSetName) || !params.entityId) {
+            throw new Error("Need entity name or overridden set name and entity id for getting record url!");
+        }
+        
+        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName) + "(" + RemoveIdBrackets(params.entityId) + ")";
     }
     
     // Private function
@@ -174,11 +184,11 @@
     WebApiClient.Create = function(parameters) {
         var params = parameters || {};
         
-        if (!params.entityName || !params.entity) {
+        if ((!params.entityName && !params.overriddenSetName) || !params.entity) {
             throw new Error("Entity name and entity object have to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
+        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
         
         return WebApiClient.SendRequest("POST", url, params.entity, params.headers);
     };
@@ -186,11 +196,11 @@
     WebApiClient.Retrieve = function(parameters) {
         var params = parameters || {};
         
-        if (!params.entityName) {
+        if (!params.entityName && !params.overriddenSetName) {
             throw new Error("Entity name has to be passed!");
         }
         
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName);
+        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
 
         if (params.entityId) {
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
@@ -222,23 +232,18 @@
     WebApiClient.Update = function(parameters) {
         var params = parameters || {};
         
-        if (!params.entityName || !params.entity || !params.entityId) {
-            throw new Error("Entity name, ID and entity update object have to be passed!");
+        if (!params.entity) {
+            throw new Error("Update object has to be passed!");
         }
         
-        var url = GetRecordUrl(params.entityName, params.entityId);
+        var url = GetRecordUrl(params);
         
         return WebApiClient.SendRequest("PATCH", url, params.entity, params.headers);
     };
     
     WebApiClient.Delete = function(parameters) {   
         var params = parameters || {};
-        
-        if (!params.entityName || !params.entityId) {
-            throw new Error("Entity name and entity id have to be passed!");
-        }
-        
-        var url = GetRecordUrl(params.entityName, params.entityId);
+        var url = GetRecordUrl(params);
         
         return WebApiClient.SendRequest("DELETE", url, null, params.headers);
     };
@@ -254,16 +259,12 @@
             throw new Error("Source and target have to be passed!");
         }
         
-        if (!params.source.entityName || !params.target.entityName || !params.source.entityId || !params.target.entityId) {
-            throw new Error("Source and target both need to have entityName and entityId set!");
-        }
-        
-        var targetUrl = GetRecordUrl(params.target.entityName, params.target.entityId);
+        var targetUrl = GetRecordUrl(params.target);
         var relationShip = "/" + params.relationShip + "/$ref";
         
         var url = targetUrl + relationShip;
         
-        var payload = { "@odata.id": GetRecordUrl(params.source.entityName, params.source.entityId) };
+        var payload = { "@odata.id": GetRecordUrl(params.source) };
 
         return WebApiClient.SendRequest("POST", url, payload, params.headers);
     };
@@ -279,11 +280,11 @@
             throw new Error("Source and target have to be passed!");
         }
         
-        if (!params.source.entityName || !params.target.entityName || !params.source.entityId || !params.target.entityId) {
-            throw new Error("Source and target both need to have entityName and entityId set!");
+        if (!params.source.entityId) {
+            throw new Error("Source needs entityId set!");
         }
         
-        var targetUrl = GetRecordUrl(params.target.entityName, params.target.entityId);
+        var targetUrl = GetRecordUrl(params.target);
         var relationShip = "/" + params.relationShip + "(" + RemoveIdBrackets(params.source.entityId) + ")/$ref";
         
         var url = targetUrl + relationShip;
