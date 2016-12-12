@@ -98,12 +98,12 @@ Retrieve by FetchXml:
 ```JavaScript
 var request = {
     entityName: "account", 
-    fetchXml: "<fetch mapping='logical'> 
-                <entity name='account'> 
-                    <attribute name='accountid'/> 
-                    <attribute name='name'/> 
-                </entity> 
-               </fetch>"
+    fetchXml: "<fetch mapping='logical'>" +
+                "<entity name='account'>" +
+                    "<attribute name='accountid'/>" +
+                    "<attribute name='name'/>" +
+                "</entity>" +
+              "</fetch>"
 };
 
 WebApiClient.Retrieve(request)
