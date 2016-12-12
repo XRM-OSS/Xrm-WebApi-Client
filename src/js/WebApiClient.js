@@ -58,14 +58,23 @@
     }
     
     WebApiClient.GetApiVersion = function() {
+	    /// <summary>Returns the API version that is currently set.</summary>
+	    /// <returns>String containing API version, such as "8.0".</returns>
         return ApiVersion;
     };
     
     WebApiClient.SetApiVersion = function(version) {
+	    /// <summary>Sets the API version that will be used when sending requests.</summary>
+	    /// <param name="version" type="String">The version that should be used when sending requests, such as "8.0"</param>
+	    /// <returns>Void.</returns>
         ApiVersion = version;
     };
     
     WebApiClient.GetSetName = function (entityName, overriddenSetName) {
+    	/// <summary>Gets the set name for the given entity name that is used for requests.</summary>
+	    /// <param name="entityName" type="String">The name of the entity for which the set name is desired, such as "account".</param>
+	    /// <param name="overriddenSetName" type="String">Override set name for entities that don't follow the rules, such as "contactleadscollection".</param>
+	    /// <returns>Returns the overridden set name if passed, or the appropriate set name otherwise, such as "accounts".</returns>
         if (overriddenSetName) {
             return overriddenSetName;
         }
@@ -93,6 +102,8 @@
     ];
     
     WebApiClient.GetDefaultHeaders = function() {
+    	/// <summary>Gets the default headers which are currently used.</summary>
+	    /// <returns>Returns the array of default headers that are currently used.</returns>
         return DefaultHeaders;
     };
     
@@ -103,6 +114,9 @@
     }
     
     WebApiClient.AppendToDefaultHeaders = function () {
+    	/// <summary>Appends the given headers to the default headers, where headers are passed as dynamic parameters.</summary>
+	    /// <param name="params" type="Key-Value Object">Pass an object with key property set to your key and value property set to your value.</param>
+	    /// <returns>Void.</returns>
         if (!arguments) {
             return;
         }
@@ -135,9 +149,14 @@
         
         return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName) + "(" + RemoveIdBrackets(params.entityId) + ")";
     }
-    
-    // Private function
+
     WebApiClient.SendRequest = function (method, url, payload, requestHeaders) {
+    	/// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
+	    /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
+	    /// <param name="url" type="String">URL target for request.</param>
+	    /// <param name="payload" type="Object">Payload for request.</param>
+	    /// <param name="requestHeaders" type="Array">Array of headers that consist of objects with key and value property.</param>
+	    /// <returns>Promise for sent request.</returns>
         var xhr = new XMLHttpRequest();
       
         var promise = new Promise(function(resolve, reject) {
@@ -178,10 +197,15 @@
     };
     
     WebApiClient.GetApiUrl = function() {
+    	/// <summary>Gets the current base API url that is used.</summary>
+	    /// <returns>Base  URL that is currently used.</returns>
         return GetClientUrl() + "/api/data/v" + ApiVersion + "/";
     };
     
     WebApiClient.Create = function(parameters) {
+    	/// <summary>Creates a given record in CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entity' (record) and optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
         if ((!params.entityName && !params.overriddenSetName) || !params.entity) {
@@ -194,6 +218,9 @@
     };
     
     WebApiClient.Retrieve = function(parameters) {
+    	/// <summary>Retrieves records from CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', one of 'entityId', 'alternateKey' or 'queryParams' and optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
         if (!params.entityName && !params.overriddenSetName) {
@@ -230,6 +257,9 @@
     };
     
     WebApiClient.Update = function(parameters) {
+    	/// <summary>Updates a given record in CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entityId', 'entity' (record) and optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
         if (!params.entity) {
@@ -241,7 +271,10 @@
         return WebApiClient.SendRequest("PATCH", url, params.entity, params.headers);
     };
     
-    WebApiClient.Delete = function(parameters) {   
+    WebApiClient.Delete = function(parameters) {
+    	/// <summary>Deletes a given record in CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entityId' and optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>   
         var params = parameters || {};
         var url = GetRecordUrl(params);
         
@@ -249,6 +282,9 @@
     };
     
     WebApiClient.Associate = function(parameters) {
+    	/// <summary>Associates two given records in CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'relationShip' name, 'source' and 'target' that both have 'entityName' or 'overriddenSetName' and 'entityId' set. Optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
         if (!params.relationShip) {
@@ -270,6 +306,9 @@
     };
     
     WebApiClient.Disassociate = function(parameters) {
+    	/// <summary>Disassociates two given records in CRM.</summary>
+	    /// <param name="parameters" type="Object">Object that contains 'relationShip' name, 'source' and 'target' that both have 'entityName' or 'overriddenSetName' and 'entityId' set. Optional 'headers'.</param>
+	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
         if (!params.relationShip) {
