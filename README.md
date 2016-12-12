@@ -33,12 +33,12 @@ WebApiClient.Create(request)
 ```
 
 ### Retrieve
-The client supports retrieving of records by Id, by alternate key and retrieve multiple.
+The client supports retrieving of records by Id, by alternate key, fetchXml and query expressions.
 For retrieving by alternate key, pass an array of objects that each have a property and a value property.
 You have to pass at least the entity logical name.
 You can always pass query parameters which will be appended to your retrieve requests.
 
-Retrieve:
+Retrieve by ID:
 
 ```JavaScript
 var request = {
@@ -76,12 +76,34 @@ WebApiClient.Retrieve(request)
     });
 ```
 
-Retrieve Multiple:
+Retrieve by query expression:
 
 ```JavaScript
 var request = {
     entityName: "account", 
     queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null"
+};
+
+WebApiClient.Retrieve(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+Retrieve by FetchXml:
+
+```JavaScript
+var request = {
+    entityName: "account", 
+    fetchXml: "<fetch mapping='logical'> 
+                <entity name='account'> 
+                    <attribute name='accountid'/> 
+                    <attribute name='name'/> 
+                </entity> 
+               </fetch>"
 };
 
 WebApiClient.Retrieve(request)
