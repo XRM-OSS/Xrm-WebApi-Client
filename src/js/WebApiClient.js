@@ -219,7 +219,7 @@
     
     WebApiClient.Retrieve = function(parameters) {
     	/// <summary>Retrieves records from CRM.</summary>
-	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', one of 'entityId', 'alternateKey' or 'queryParams' and optional 'headers'.</param>
+	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', one of 'entityId', 'alternateKey', 'fetchXml' or 'queryParams' and optional 'headers'.</param>
 	    /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         
@@ -231,6 +231,9 @@
 
         if (params.entityId) {
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
+        }
+        else if (params.fetchXml) {
+        	url += "?fetchXml=" + escape(params.fetchXml);
         }
         else if (params.alternateKey) {
             url += "(";

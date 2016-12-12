@@ -36,8 +36,15 @@ describe("WebApiClient", function() {
         );
         
         // Respond to Retrieve by id Request for account 
-        var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
-        xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
+        var retrieveAccountByIdUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
+        xhr.respondWith("GET", new RegExp(retrieveAccountByIdUrl, "g"),
+            [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
+        );
+
+        // Respond to Retrieve by fetchXml Request for account 
+        var accountFetch = "%3Cfetch%20mapping%3D%27logical%27%3E%3Centity%20name%3D%27account%27%3E%3Cattribute%20name%3D%27accountid%27/%3E%3Cattribute%20name%3D%27name%27/%3E%3C/entity%3E%3C/fetch%3E";
+        var retrieveAccountByFetchUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?fetchXml=" + accountFetch);
+        xhr.respondWith("GET", new RegExp(retrieveAccountByFetchUrl, "g"),
             [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
         
@@ -316,6 +323,27 @@ describe("WebApiClient", function() {
             })
             // Wait for promise
             .finally(done);
+            
+            xhr.respond();
+        });
+
+        it("should retrieve by fetch", function(done){
+        	var fetchXml = "<fetch mapping='logical'>" +
+        						"<entity name='account'>" +
+      								"<attribute name='accountid'/>" +
+      								"<attribute name='name'/>" +
+								"</entity>" +
+						   "</fetch>";
+
+            WebApiClient.Retrieve({entityName: "account", fetchXml: fetchXml})
+                .then(function(response){
+                    expect(response).toEqual(account);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
             
             xhr.respond();
         });
