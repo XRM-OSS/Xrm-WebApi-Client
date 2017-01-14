@@ -87,7 +87,7 @@ WebApiClient.ReturnAllPages = true;
 
 By setting this to true, each retrieve multiple request will check for an @odata.nextLink property inside the response, call the next page and concatenate the results, until all records have been retrieved.
 
-Retrieve by query expression:
+##### Retrieve by query expression:
 
 ```JavaScript
 var request = {
@@ -104,7 +104,7 @@ WebApiClient.Retrieve(request)
     });
 ```
 
-Retrieve by FetchXml:
+##### Retrieve by FetchXml:
 
 ```JavaScript
 var request = {
