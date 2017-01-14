@@ -78,7 +78,7 @@ WebApiClient.Retrieve(request)
 ```
 
 #### Retrieve multiple records
-Retrieve of multiple records uses paging. Per default you can set a [page size on your requests] (#### Page size), however this is limited to 5000 records.
+Retrieve of multiple records uses paging. Per default you can set a [page size on your requests] (#page-size), however this is limited to 5000 records.
 If you want to really retrieve all records, set WebApiClient.ReturnAllPages to true, as it is by default false.
 By setting this to true, each retrieve multiple request will check for an @odata.nextLink property inside the response, call the next page and concatenate the results, until all records have been retrieved.
 
