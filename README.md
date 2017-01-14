@@ -38,7 +38,8 @@ For retrieving by alternate key, pass an array of objects that each have a prope
 You have to pass at least the entity logical name.
 You can always pass query parameters which will be appended to your retrieve requests.
 
-Retrieve by ID:
+#### Retrieve single records
+##### Retrieve by ID:
 
 ```JavaScript
 var request = {
@@ -55,7 +56,7 @@ WebApiClient.Retrieve(request)
     });
 ```
 
-Retrieve by alternate key:
+##### Retrieve by alternate key:
 
 ```JavaScript
 var request = {
@@ -75,6 +76,11 @@ WebApiClient.Retrieve(request)
         // Handle error
     });
 ```
+
+#### Retrieve multiple records
+Retrieve of multiple records uses paging. Per default you can set a [page size on your requests] (#### Page size), however this is limited to 5000 records.
+If you want to really retrieve all records, set WebApiClient.ReturnAllPages to true, as it is by default false.
+By setting this to true, each retrieve multiple request will check for an @odata.nextLink property inside the response, call the next page and concatenate the results, until all records have been retrieved.
 
 Retrieve by query expression:
 
@@ -313,10 +319,17 @@ var request = {
 ```
 Note: Currently your request headers are simply added after the default headers. Watch out for interferences.
 
+#### Page size
+If you want to set a max page size for your request (supported are up to 5000 records per rage), you can pass the following header:
+
+``` JavaScript
+headers: [ { key: "Prefer", value: "odata.maxpagesize=5000" }]
+```
+
 ### API Version
 The default API version is 8.0.
 You can however change it to 8.1 if needed by using 
 
 ```JavaScript
-WebApiClient.SetApiVersion("8.1");
+WebApiClient.ApiVersion = "8.1";
 ```

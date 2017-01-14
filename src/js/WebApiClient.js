@@ -24,8 +24,12 @@
 */
 (function (WebApiClient, undefined) {
     "use strict";
-       
-    var ApiVersion = "8.0";
+    
+	/// <summary>The API version that will be used when sending requests. Default is "8.0"</summary>    
+    WebApiClient.ApiVersion = "8.0";
+    
+    /// <summary>Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.</summary>
+    WebApiClient.ReturnAllPages = false;
     
     // Override promise locally. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
@@ -49,6 +53,26 @@
         return context.getClientUrl();
     }
     
+    function MergeResults (firstResponse, secondResponse) {
+        if (!firstResponse && !secondResponse) {
+            return null;
+        }
+        
+        if (firstResponse && !secondResponse) {
+            return firstResponse;
+        }
+        
+        if (!firstResponse && secondResponse) {
+            return secondResponse;
+        }
+        
+        firstResponse.value = firstResponse.value.concat(secondResponse.value);
+        
+        delete firstResponse["@odata.nextLink"];
+        
+        return firstResponse;
+    }
+    
     function RemoveIdBrackets (id) {
         if (!id) {
             return id;
@@ -56,19 +80,6 @@
         
         return id.replace("{", "").replace("}", "");
     }
-    
-    WebApiClient.GetApiVersion = function() {
-	    /// <summary>Returns the API version that is currently set.</summary>
-	    /// <returns>String containing API version, such as "8.0".</returns>
-        return ApiVersion;
-    };
-    
-    WebApiClient.SetApiVersion = function(version) {
-	    /// <summary>Sets the API version that will be used when sending requests.</summary>
-	    /// <param name="version" type="String">The version that should be used when sending requests, such as "8.0"</param>
-	    /// <returns>Void.</returns>
-        ApiVersion = version;
-    };
     
     WebApiClient.GetSetName = function (entityName, overriddenSetName) {
     	/// <summary>Gets the set name for the given entity name that is used for requests.</summary>
@@ -150,7 +161,7 @@
         return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName) + "(" + RemoveIdBrackets(params.entityId) + ")";
     }
 
-    WebApiClient.SendRequest = function (method, url, payload, requestHeaders) {
+    WebApiClient.SendRequest = function (method, url, payload, requestHeaders, previousResponse) {
     	/// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
 	    /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
 	    /// <param name="url" type="String">URL target for request.</param>
@@ -166,7 +177,18 @@
                 }
 
                 if(xhr.status === 200){
-                    resolve(JSON.parse(xhr.responseText));
+                    var response = JSON.parse(xhr.responseText);
+                    var nextLink = response["@odata.nextLink"];
+                    
+                    response = MergeResults(previousResponse, response);
+                    
+                    // Results are paged, we don't have all results at this point
+                    if (nextLink && WebApiClient.ReturnAllPages) {
+                        resolve(WebApiClient.SendRequest("GET", nextLink, null, requestHeaders, response));
+                    }
+                    else {            
+                        resolve(response);
+                    }
                 }
                 else if (xhr.status === 204) {
                     if (method.toLowerCase() === "post") {
@@ -199,7 +221,7 @@
     WebApiClient.GetApiUrl = function() {
     	/// <summary>Gets the current base API url that is used.</summary>
 	    /// <returns>Base  URL that is currently used.</returns>
-        return GetClientUrl() + "/api/data/v" + ApiVersion + "/";
+        return GetClientUrl() + "/api/data/v" + WebApiClient.ApiVersion + "/";
     };
     
     WebApiClient.Create = function(parameters) {

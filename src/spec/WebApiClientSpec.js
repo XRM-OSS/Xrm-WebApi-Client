@@ -28,6 +28,7 @@ describe("WebApiClient", function() {
         };
 
         xhr = sinon.fakeServer.create();
+        xhr.autoRespond = true;
         
         // Respond to Create Request for account with No-Content response and created entity url in header
         var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8.0/accounts", "g"));
@@ -52,6 +53,23 @@ describe("WebApiClient", function() {
         var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null");
         xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
             [200, { "Content-Type": "application/json" }, JSON.stringify([account])]
+        );
+        
+        // Respond to Retrieve with only first page 
+        var retrieveAccountUrlFirstPage = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestfirst");
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlFirstPage, "g"),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({ 
+                value: [ { Name: "Adventure Works1" } ],
+                "@odata.nextLink": fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestsecond"
+            })]
+        );
+        
+        // Second page for retrieve
+        var retrieveAccountUrlSecondPage = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestsecond");
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlSecondPage, "g"),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({ 
+                value: [ { Name: "Adventure Works2" } ]
+            })]
         );
         
         // Respond to Retrieve Request for contact with alternate key 
@@ -227,7 +245,9 @@ describe("WebApiClient", function() {
             requests.push(WebApiClient.Disassociate(disassociateRequest));
             
             Promise.all(requests)
-            .then(function (results){})
+            .then(function (results){
+                expect(results).toBeDefined();
+            })
             .catch(function (error) {
                 expect(error).toBeUndefined();
             })
@@ -295,6 +315,46 @@ describe("WebApiClient", function() {
             WebApiClient.Retrieve(request)
                 .then(function(response){
                     expect(response).toEqual([account]);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should per default only retrieve first page", function(done){
+            var request = {
+                entityName: "account", 
+                queryParams: "?$select=pagingtestfirst"
+            };
+            
+            WebApiClient.Retrieve(request)
+                .then(function(response){
+                    expect(response.value.length).toEqual(1);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should retrieve all pages if wanted", function(done){
+            WebApiClient.ReturnAllPages = true;
+            
+            var request = {
+                entityName: "account", 
+                queryParams: "?$select=pagingtestfirst"
+            };
+            
+            WebApiClient.Retrieve(request)
+                .then(function(response){
+                    expect(response.value.length).toEqual(2);
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
@@ -578,13 +638,13 @@ describe("WebApiClient", function() {
     
     describe("API Version", function() {
         it("should default to 8.0", function() {
-            expect(WebApiClient.GetApiVersion()).toEqual("8.0");
+            expect(WebApiClient.ApiVersion).toEqual("8.0");
         }); 
         
         it("should be editable", function() {
-            WebApiClient.SetApiVersion("8.1")
+            WebApiClient.ApiVersion = "8.1";
             
-            expect(WebApiClient.GetApiVersion()).toEqual("8.1");
+            expect(WebApiClient.ApiVersion).toEqual("8.1");
         }); 
     });
 });
