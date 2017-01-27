@@ -222,7 +222,7 @@ WebApiClient.Disassociate(request)
 ### Errors
 If errors occur during processing of requests, the WebAPI client by default throws an error with the text that follows this format: xhr.statusText: xhr.response.message, i.e. "Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName".
 
-For returning the whole stringified response including a custom xhrStatusText property, set
+For returning the whole stringified JSON response including a custom xhrStatusText property, set
 
 ```JavaScript
 WebApiClient.PrettifyErrors = false;
