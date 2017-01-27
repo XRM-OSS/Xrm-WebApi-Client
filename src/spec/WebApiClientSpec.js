@@ -7,6 +7,8 @@ describe("WebApiClient", function() {
         result: "Success"
     };
     
+    var errorJson = "{\r\n  \"error\":{\r\n    \"code\":\"\",\"message\":\"The function parameter 'EntityMoniker' cannot be found.\\r\\nParameter name: parameterName\",\"innererror\":{\r\n      \"message\":\"The function parameter 'EntityMoniker' cannot be found.\\r\\nParameter name: parameterName\",\"type\":\"System.ArgumentException\",\"stacktrace\":\"   at System.Web.OData.Routing.UnboundFunctionPathSegment.GetParameterValue(String parameterName)\\r\\n   at Microsoft.Crm.Extensibility.OData.CrmODataRouteDataProvider.FillUnboundFunctionData(UnboundFunctionPathSegment unboundFunctionPathSegment, HttpControllerContext controllerContext)\\r\\n   at Microsoft.Crm.Extensibility.OData.CrmODataRoutingConvention.SelectAction(ODataPath odataPath, HttpControllerContext controllerContext, ILookup`2 actionMap)\\r\\n   at System.Web.OData.Routing.ODataActionSelector.SelectAction(HttpControllerContext controllerContext)\\r\\n   at System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)\\r\\n   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()\"\r\n    }\r\n  }\r\n}";
+    
     Xrm = {};
     Xrm.Page = {};
     Xrm.Page.context = {};
@@ -136,6 +138,12 @@ describe("WebApiClient", function() {
         var disassociateOverriddenUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000003)/$ref");
         xhr.respondWith("DELETE", new RegExp(disassociateOverriddenUrl, "g"),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        // Respond with error 
+        var errorUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/errors");
+        xhr.respondWith("GET", new RegExp(errorUrl, "g"),
+            [500, { "Content-Type": "application/json" }, errorJson]
         );
     });
     
@@ -613,6 +621,46 @@ describe("WebApiClient", function() {
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+    });
+    
+    describe("Errors", function() {
+        it("should be prettified by default", function(done){
+            WebApiClient.PrettifyErrors = true;
+
+            WebApiClient.Retrieve({entityName: "error"})
+                .then(function(response){
+                    expect(response).toBeUndefined();
+                })
+                .catch(function(error) {
+                    expect(error).replace("\r", "").replace("\n", "")
+                        .toBe("Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName");
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should return the response json as error when prettifying is deactivated", function(done){
+            WebApiClient.PrettifyErrors = false;
+            
+            WebApiClient.Retrieve({entityName: "error"})
+                .then(function(response){
+                    expect(response).toBeUndefined();
+                })
+                .catch(function(error) {
+                    var json = JSON.parse(errorJson);
+                    json.xhrStatusText = "Internal Server Error";
+                    
+                    var expectedError = json.stringify(json);
+                    
+                    expect(error).toBe(expectedError);
                 })
                 // Wait for promise
                 .finally(done);

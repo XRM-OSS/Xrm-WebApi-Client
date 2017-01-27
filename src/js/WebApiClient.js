@@ -31,6 +31,9 @@
     /// <summary>Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.</summary>
     WebApiClient.ReturnAllPages = false;
     
+    /// <summary>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</message>
+    WebApiClient.PrettifyErrors = true;
+    
     // Override promise locally. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
     var Promise = require("bluebird");
@@ -161,6 +164,28 @@
         return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName) + "(" + RemoveIdBrackets(params.entityId) + ")";
     }
 
+    function FormatError (xhr) {
+        if (xhr) {
+            var json = JSON.parse(xhr.response);
+            
+            if (!WebApiClient.PrettifyErrors) {               
+                json.xhrStatusText = xhr.statusText;
+                
+                return JSON.stringify(json);
+            } else {
+                var error = "";
+                
+                if (json.error) {
+                    error = json.error.message;
+                }
+                
+                return xhr.statusText + ": " + error;
+            }
+        }
+        
+        return "";
+    }
+    
     WebApiClient.SendRequest = function (method, url, payload, requestHeaders, previousResponse) {
     	/// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
 	    /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
@@ -200,11 +225,11 @@
                     }
                 }
                 else { 
-                    reject(new Error(xhr.statusText));
+                    reject(new Error(FormatError(xhr)));
                 }
             };
             xhr.onerror = function() {
-                reject(new Error(xhr.statusText));
+                reject(new Error(FormatError(xhr)));
             };
         });
 
