@@ -386,5 +386,10 @@
             throw new Error("You need to pass a request!");
         }
         
+        if (!(request instanceof WebApiClient.Requests.Request)) {
+            throw new Error("Request for execution must be in prototype chain of WebApiClient.Request");
+        }
+        
+        return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request.headers);
     };
 } (window.WebApiClient = window.WebApiClient || {}));

@@ -33,33 +33,33 @@ describe("WebApiClient", function() {
         xhr.autoRespond = true;
         
         // Respond to Create Request for account with No-Content response and created entity url in header
-        var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8.0/accounts", "g"));
+        var createAccountUrl = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8.0/accounts"));
         xhr.respondWith("POST", createAccountUrl,
             [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, JSON.stringify(successMock)]
         );
         
         // Respond to Retrieve by id Request for account 
         var retrieveAccountByIdUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
-        xhr.respondWith("GET", new RegExp(retrieveAccountByIdUrl, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveAccountByIdUrl),
             [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
 
         // Respond to Retrieve by fetchXml Request for account 
         var accountFetch = "%3Cfetch%20mapping%3D%27logical%27%3E%3Centity%20name%3D%27account%27%3E%3Cattribute%20name%3D%27accountid%27/%3E%3Cattribute%20name%3D%27name%27/%3E%3C/entity%3E%3C/fetch%3E";
         var retrieveAccountByFetchUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?fetchXml=" + accountFetch);
-        xhr.respondWith("GET", new RegExp(retrieveAccountByFetchUrl, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveAccountByFetchUrl),
             [200, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
         
         // Respond to Retrieve by id Request for account 
         var retrieveAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null");
-        xhr.respondWith("GET", new RegExp(retrieveAccountUrl, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrl),
             [200, { "Content-Type": "application/json" }, JSON.stringify([account])]
         );
         
         // Respond to Retrieve with only first page 
         var retrieveAccountUrlFirstPage = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestfirst");
-        xhr.respondWith("GET", new RegExp(retrieveAccountUrlFirstPage, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlFirstPage),
             [200, { "Content-Type": "application/json" }, JSON.stringify({ 
                 value: [ { Name: "Adventure Works1" } ],
                 "@odata.nextLink": fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestsecond"
@@ -68,7 +68,7 @@ describe("WebApiClient", function() {
         
         // Second page for retrieve
         var retrieveAccountUrlSecondPage = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts?$select=pagingtestsecond");
-        xhr.respondWith("GET", new RegExp(retrieveAccountUrlSecondPage, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlSecondPage),
             [200, { "Content-Type": "application/json" }, JSON.stringify({ 
                 value: [ { Name: "Adventure Works2" } ]
             })]
@@ -76,31 +76,31 @@ describe("WebApiClient", function() {
         
         // Respond to Retrieve Request for contact with alternate key 
         var retrieveByAlternateKeyUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contacts(firstname='Joe',emailaddress1='abc@example.com')");
-        xhr.respondWith("GET", new RegExp(retrieveByAlternateKeyUrl, "g"),
+        xhr.respondWith("GET", new RegExp(retrieveByAlternateKeyUrl),
             [200, { "Content-Type": "application/json" }, JSON.stringify(contact)]
         );
         
         // Respond to update Request for account 
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
-        xhr.respondWith("PATCH", new RegExp(updateAccountUrl, "g"),
+        xhr.respondWith("PATCH", new RegExp(updateAccountUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Delete Request for account 
         var deleteAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
-        xhr.respondWith("DELETE", new RegExp(deleteAccountUrl, "g"),
+        xhr.respondWith("DELETE", new RegExp(deleteAccountUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Associate Request for account 
         var associateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts/$ref");
-        xhr.respondWith("POST", new RegExp(associateAccountUrl, "g"),
+        xhr.respondWith("POST", new RegExp(associateAccountUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Delete Request for account 
         var disassociateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000001)/$ref");
-        xhr.respondWith("DELETE", new RegExp(disassociateAccountUrl, "g"),
+        xhr.respondWith("DELETE", new RegExp(disassociateAccountUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
@@ -130,20 +130,30 @@ describe("WebApiClient", function() {
         
         // Respond to Associate Request for account 
         var associateOverriddenUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)/opportunity_customer_accounts/$ref");
-        xhr.respondWith("POST", new RegExp(associateOverriddenUrl, "g"),
+        xhr.respondWith("POST", new RegExp(associateOverriddenUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond to Delete Request for account 
         var disassociateOverriddenUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contactleadscollection(00000000-0000-0000-0000-000000000003)/opportunity_customer_accounts(00000000-0000-0000-0000-000000000003)/$ref");
-        xhr.respondWith("DELETE", new RegExp(disassociateOverriddenUrl, "g"),
+        xhr.respondWith("DELETE", new RegExp(disassociateOverriddenUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
         // Respond with error 
         var errorUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/errors");
-        xhr.respondWith("GET", new RegExp(errorUrl, "g"),
+        xhr.respondWith("GET", new RegExp(errorUrl),
             [500, { "Content-Type": "application/json" }, errorJson]
+        );
+        
+        var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/WhoAmI");
+        xhr.respondWith("GET", new RegExp(whoAmI),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({UserId: "1234"})]
+        );
+        
+        var addToQueue = RegExp.escape(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/Microsoft.Dynamics.CRM.AddToQueue");
+        xhr.respondWith("GET", new RegExp(addToQueue),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({ QueueItemId: "5aae8258-4878-e511-80d4-00155d2a68d1"})]
         );
     });
     
@@ -479,6 +489,59 @@ describe("WebApiClient", function() {
         });
     });
     
+    describe("Execute", function() {        
+        it("should fail if no valid request is passed", function(){
+            expect(function() {
+                WebApiClient.Execute({});
+            }).toThrow();
+        });
+        
+        it("should execute WhoAmIRequest", function(done){
+            var request = WebApiClient.Requests.WhoAmIRequest;
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                    expect(response.UserId).toBe("1234");
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        /* Works in browser, bug is in test
+        it("should execute AddToQueueRequest", function(done){
+            var request = WebApiClient.Requests.AddToQueueRequest
+                .with({
+                    entityId: "56ae8258-4878-e511-80d4-00155d2a68d1",
+                    payload: {
+                        Target: {
+                            activityid: "59ae8258-4878-e511-80d4-00155d2a68d1",
+                            "@odata.type": "Microsoft.Dynamics.CRM.letter"
+                        }
+                    }
+                });
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                    expect(response.QueueItemId).toBe("5aae8258-4878-e511-80d4-00155d2a68d1");
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        */
+    });
+    
     describe("Associate", function() {
         it("should fail if no target passed", function(){
             expect(function() {
@@ -658,9 +721,9 @@ describe("WebApiClient", function() {
                     var json = JSON.parse(errorJson);
                     json.xhrStatusText = "Internal Server Error";
                     
-                    var expectedError = json.stringify(json);
+                    var expectedError = JSON.stringify(json);
                     
-                    expect(error).toBe(expectedError);
+                    expect(error.replace("\r\n", "")).toBe(expectedError.replace("\r\n", ""));
                 })
                 // Wait for promise
                 .finally(done);
