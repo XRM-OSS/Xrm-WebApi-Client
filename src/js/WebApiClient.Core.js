@@ -386,5 +386,5 @@
             throw new Error("You need to pass a request!");
         }
         
-    }
+    };
 } (window.WebApiClient = window.WebApiClient || {}));
