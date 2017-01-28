@@ -219,6 +219,15 @@ WebApiClient.Disassociate(request)
     });
 ```
 
+### Errors
+If errors occur during processing of requests, the WebAPI client by default throws an error with the text that follows this format: xhr.statusText: xhr.response.message, i.e. "Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName".
+
+For returning the whole stringified JSON response including a custom xhrStatusText property, set
+
+```JavaScript
+WebApiClient.PrettifyErrors = false;
+```
+
 ### Set Names
 Set names are automatically generated according to WebApi rules and based on the entityName parameter in your request.
 However there are some set names, that are not generated according to naming rules, for example ContactLeads becomes contactleadscollection. For handling those corner cases, each request allows to pass an overriddenSetName instead of the entity name, so that you can directly pass those set names that break naming rules. This should happen very rarely.
