@@ -6,6 +6,15 @@ It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framewo
 The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
 For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
 
+## Requirements
+### CRM
+This framework targets the Dynamics CRM WebApi, therefore CRM 2016 (>= v8.0) is needed.
+
+### Browser
+Although using Promises, some legacy browsers are still supported, since bluebird is used as Promise polyfill.
+Bluebird is automatically included in the bundled release, no additional steps required.
+For a list of supported browsers, check the bluebird [plattform support](http://bluebirdjs.com/docs/install.html#supported-platforms).
+
 ## How to obtain it
 You can always download the browserified version of this framework by downloading the release.zip file from the latest release.
 
@@ -218,6 +227,64 @@ WebApiClient.Disassociate(request)
         // Handle error
     });
 ```
+
+### Execute
+There is support for executing actions / functions without having to use SendRequest.
+The WebApiClient has a function WebApiClient.Execute, which takes a request as parameter.
+Requests are objects that base on the WebApiClient.Requests.Request base request.
+When wanting to send an already implemented request using Execute, you can either use the blank request (such as the WhoAmIRequest, that does not need any parameters), or in case it needs parameters, extend an existing request.
+
+#### No parameter request
+The WhoAmI request does not need any parameters, therefore we can just pass the blank request:
+
+```JavaScript
+var request = WebApiClient.Requests.WhoAmIRequest;
+            
+WebApiClient.Execute(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+#### Parametrized request
+Most requests need further parameters for being sent.
+When needing to send those requests, start with the blank request and call the function "with" on it, passing the needed parameters as object to it. Your passed-in parameters override possibly existing parameters with the same name.
+
+The following parameters are supported:
+- method - HTTP method for request (Required, but defined by request)
+- name - Name of the request as used for the URL (Required, but defined by request)
+- bound - Pass true if request is bound to a record, false if not. Has consequences for automatic URL building
+- entityName - Name of the request's target entity
+- entityId - ID of the request's target record
+- payload - Object that is sent as payload for the request
+- headers - Headers that should be set on the request
+- urlParams - Any parameters that have to be embedded in the request URL, as described [here](https://msdn.microsoft.com/en-us/library/gg309638.aspx#Anchor_2)
+
+Sample request for AddToQueue:
+```JavaScript
+var request = WebApiClient.Requests.AddToQueueRequest
+    .with({
+        entityId: "56ae8258-4878-e511-80d4-00155d2a68d1",
+        payload: {
+            Target: {
+                activityid: "59ae8258-4878-e511-80d4-00155d2a68d1",
+                "@odata.type": "Microsoft.Dynamics.CRM.letter"
+            }
+        }
+    });
+
+WebApiClient.Execute(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
 
 ### Errors
 If errors occur during processing of requests, the WebAPI client by default throws an error with the text that follows this format: xhr.statusText: xhr.response.message, i.e. "Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName".
