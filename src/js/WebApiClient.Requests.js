@@ -92,15 +92,6 @@
         return url;
     };
     
-    WebApiClient.Requests.WhoAmIRequest = Object.create(WebApiClient.Requests.Request.prototype, {
-        method: {
-            value: "GET"
-        },
-        name: {
-            value: "WhoAmI"
-        }
-    });
-    
     WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
@@ -113,6 +104,42 @@
         },
         entityName: {
             value: "queue"
+        }
+    });
+    
+    WebApiClient.Requests.PublishXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "POST"
+        },
+        name: {
+            value: "PublishXml"
+        }
+    });
+    
+    WebApiClient.Requests.RetrieveLocLabelsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "GET"
+        },
+        name: {
+            value: "RetrieveLocLabels"
+        }
+    });
+    
+    WebApiClient.Requests.SetLocLabelsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "POST"
+        },
+        name: {
+            value: "SetLocLabels"
+        }
+    });
+    
+    WebApiClient.Requests.WhoAmIRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "GET"
+        },
+        name: {
+            value: "WhoAmI"
         }
     });
     

@@ -155,6 +155,21 @@ describe("WebApiClient", function() {
         xhr.respondWith("POST", new RegExp(addToQueue),
             [200, { "Content-Type": "application/json" }, JSON.stringify({ QueueItemId: "5aae8258-4878-e511-80d4-00155d2a68d1"})]
         );
+        
+        var retrieveLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/RetrieveLocLabels(EntityMoniker=@p1,AttributeName=@p2,IncludeUnpublished=@p3)?@p1={'@odata.id':'savedqueries(31089fd8-596a-47be-9c9c-3ff82c7a8f8c)'}&@p2='name'&@p3=true");
+        xhr.respondWith("GET", new RegExp(retrieveLocLabels),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({Labels: "Here be labels"})]
+        );
+        
+        var setLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/SetLocLabels()");
+        xhr.respondWith("POST", new RegExp(setLocLabels),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+        
+        var publishXml = RegExp.escape(fakeUrl + "/api/data/v8.0/PublishXml()");
+        xhr.respondWith("POST", new RegExp(publishXml),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
     });
     
     afterEach(function() {
@@ -496,23 +511,6 @@ describe("WebApiClient", function() {
             }).toThrow();
         });
         
-        it("should execute WhoAmIRequest", function(done){
-            var request = WebApiClient.Requests.WhoAmIRequest;
-            
-            WebApiClient.Execute(request)
-                .then(function(response){
-                    expect(response).toBeDefined();
-                    expect(response.UserId).toBe("1234");
-                })
-                .catch(function(error) {
-                    expect(error).toBeUndefined();
-                })
-                // Wait for promise
-                .finally(done);
-            
-            xhr.respond();
-        });
-        
         it("should execute AddToQueueRequest", function(done){
             var request = WebApiClient.Requests.AddToQueueRequest
                 .with({
@@ -529,6 +527,97 @@ describe("WebApiClient", function() {
                 .then(function(response){
                     expect(response).toBeDefined();
                     expect(response.QueueItemId).toBe("5aae8258-4878-e511-80d4-00155d2a68d1");
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should execute PublishXmlRequest", function(done){
+            var viewId = "31089fd8-596a-47be-9c9c-3ff82c7a8f8c";
+            var request = WebApiClient.Requests.PublishXmlRequest
+                .with({
+                    payload: {
+                        ParameterXml: "SomeXML"
+                    }
+                });
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should execute RetrieveLocLabelsRequest", function(done){
+            var viewId = "31089fd8-596a-47be-9c9c-3ff82c7a8f8c";
+            var request = WebApiClient.Requests.RetrieveLocLabelsRequest
+                .with({
+                    urlParams: {
+                        EntityMoniker: "{'@odata.id':'savedqueries(" + viewId + ")'}",
+                        AttributeName: "'name'",
+                        IncludeUnpublished: true
+                    }
+                });
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                    expect(response.Labels).toBe("Here be labels");
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should execute SetLocLabelsRequest", function(done){
+            var viewId = "31089fd8-596a-47be-9c9c-3ff82c7a8f8c";
+            var request = WebApiClient.Requests.SetLocLabelsRequest
+                .with({
+                    payload: {
+                        Labels: [],
+                        EntityMoniker: {
+                            "@odata.type": "Microsoft.Dynamics.CRM.savedquery",
+                            savedqueryid: viewId
+                        },
+                        AttributeName: "name"
+                    }
+                });
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+            
+            xhr.respond();
+        });
+        
+        it("should execute WhoAmIRequest", function(done){
+            var request = WebApiClient.Requests.WhoAmIRequest;
+            
+            WebApiClient.Execute(request)
+                .then(function(response){
+                    expect(response).toBeDefined();
+                    expect(response.UserId).toBe("1234");
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
