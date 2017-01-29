@@ -234,6 +234,8 @@ The WebApiClient has a function WebApiClient.Execute, which takes a request as p
 Requests are objects that base on the WebApiClient.Requests.Request base request.
 When wanting to send an already implemented request using Execute, you can either use the blank request (such as the WhoAmIRequest, that does not need any parameters), or in case it needs parameters, extend an existing request.
 
+Check the [wiki](https://github.com/DigitalFlow/Xrm-WebApi-Client/wiki) for a list of requests that are implemented in the current release and examples on how to send them!
+
 #### No parameter request
 The WhoAmI request does not need any parameters, therefore we can just pass the blank request:
 
