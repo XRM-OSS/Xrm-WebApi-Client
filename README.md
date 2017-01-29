@@ -318,7 +318,30 @@ WebApiClient.Create(request)
 ```
 
 ### Not yet implemented requests
-If you need to use requests, that are not yet implemented, you can use the ```WebApiClient.SendRequest``` function.
+If you need to use requests, that are not yet implemented, you can create an executor for the missing request and append it to the WebApiClient.Requests object. Be sure to create your missing request by calling Object.create on the base request object.
+This might look something like this:
+
+```JavaScript
+WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+    method: {
+        value: "POST"
+    },
+    name: {
+        value: "Microsoft.Dynamics.CRM.AddToQueue"
+    },
+    bound: {
+        value: true
+    },
+    entityName: {
+        value: "queue"
+    }
+});
+
+```
+For further explanations regarding these requests, please check [here](#execute).
+Feel free to send PRs with the missing request definitions, I'll happily include them in the project.
+
+Alternatively, you can use the ```WebApiClient.SendRequest``` function.
 In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
 
 An example of a custom implementation of the WinOpportunity request:
