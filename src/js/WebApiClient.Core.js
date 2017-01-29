@@ -165,7 +165,7 @@
     }
 
     function FormatError (xhr) {
-        if (xhr) {
+        if (xhr && xhr.response) {
             var json = JSON.parse(xhr.response);
             
             if (!WebApiClient.PrettifyErrors) {               

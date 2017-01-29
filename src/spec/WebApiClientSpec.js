@@ -146,13 +146,13 @@ describe("WebApiClient", function() {
             [500, { "Content-Type": "application/json" }, errorJson]
         );
         
-        var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/WhoAmI");
+        var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/WhoAmI()");
         xhr.respondWith("GET", new RegExp(whoAmI),
             [200, { "Content-Type": "application/json" }, JSON.stringify({UserId: "1234"})]
         );
         
-        var addToQueue = RegExp.escape(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/Microsoft.Dynamics.CRM.AddToQueue");
-        xhr.respondWith("GET", new RegExp(addToQueue),
+        var addToQueue = RegExp.escape(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/Microsoft.Dynamics.CRM.AddToQueue()");
+        xhr.respondWith("POST", new RegExp(addToQueue),
             [200, { "Content-Type": "application/json" }, JSON.stringify({ QueueItemId: "5aae8258-4878-e511-80d4-00155d2a68d1"})]
         );
     });
@@ -513,7 +513,6 @@ describe("WebApiClient", function() {
             xhr.respond();
         });
         
-        /* Works in browser, bug is in test
         it("should execute AddToQueueRequest", function(done){
             var request = WebApiClient.Requests.AddToQueueRequest
                 .with({
@@ -539,7 +538,6 @@ describe("WebApiClient", function() {
             
             xhr.respond();
         });
-        */
     });
     
     describe("Associate", function() {
