@@ -13,7 +13,7 @@ This framework targets the Dynamics CRM WebApi, therefore CRM 2016 (>= v8.0) is 
 ### Browser
 Although using Promises, some legacy browsers are still supported, since bluebird is used as Promise polyfill.
 Bluebird is automatically included in the bundled release, no additional steps required.
-For a list of supported browsers, check the bluebird [plattform support](http://bluebirdjs.com/docs/install.html#supported-platforms).
+For a list of supported browsers, check the bluebird [platform support](http://bluebirdjs.com/docs/install.html#supported-platforms).
 
 ## How to obtain it
 You can always download the browserified version of this framework by downloading the release.zip file from the latest release.
@@ -234,6 +234,8 @@ The WebApiClient has a function WebApiClient.Execute, which takes a request as p
 Requests are objects that base on the WebApiClient.Requests.Request base request.
 When wanting to send an already implemented request using Execute, you can either use the blank request (such as the WhoAmIRequest, that does not need any parameters), or in case it needs parameters, extend an existing request.
 
+Check the [wiki](https://github.com/DigitalFlow/Xrm-WebApi-Client/wiki) for a list of requests that are implemented in the current release and examples on how to send them! Missing requests can be implemented as described [here](#not-yet-implemented-requests).
+
 #### No parameter request
 The WhoAmI request does not need any parameters, therefore we can just pass the blank request:
 
@@ -256,12 +258,12 @@ When needing to send those requests, start with the blank request and call the f
 The following parameters are supported:
 - method - HTTP method for request (Required, but defined by request)
 - name - Name of the request as used for the URL (Required, but defined by request)
-- bound - Pass true if request is bound to a record, false if not. Has consequences for automatic URL building
-- entityName - Name of the request's target entity
+- bound - Pass true if request is bound to a record, false if not. Has consequences for automatic URL building. By default false and defined by request.
+- entityName - Name of the request's target entity. Defined by request if always the same.
 - entityId - ID of the request's target record
 - payload - Object that is sent as payload for the request
 - headers - Headers that should be set on the request
-- urlParams - Any parameters that have to be embedded in the request URL, as described [here](https://msdn.microsoft.com/en-us/library/gg309638.aspx#Anchor_2)
+- urlParams - Any parameters that have to be embedded in the request URL, as described [here](https://msdn.microsoft.com/en-us/library/gg309638.aspx#Anchor_2). Pass an object with parameter names as keys and the corresponding values.
 
 Sample request for AddToQueue:
 ```JavaScript
@@ -316,7 +318,30 @@ WebApiClient.Create(request)
 ```
 
 ### Not yet implemented requests
-If you need to use requests, that are not yet implemented, you can use the ```WebApiClient.SendRequest``` function.
+If you need to use requests, that are not yet implemented, you can create an executor for the missing request and append it to the WebApiClient.Requests object. Be sure to create your missing request by calling Object.create on the base request object.
+This might look something like this:
+
+```JavaScript
+WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+    method: {
+        value: "POST"
+    },
+    name: {
+        value: "Microsoft.Dynamics.CRM.AddToQueue"
+    },
+    bound: {
+        value: true
+    },
+    entityName: {
+        value: "queue"
+    }
+});
+
+```
+For further explanations regarding these requests, please check [here](#execute).
+Feel free to send PRs with the missing request definitions, I'll happily include them in the project.
+
+Alternatively, you can use the ```WebApiClient.SendRequest``` function.
 In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
 
 An example of a custom implementation of the WinOpportunity request:
