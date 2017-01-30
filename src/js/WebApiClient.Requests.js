@@ -525,7 +525,7 @@
         },
         name: {
             value: "RetrieveBusinessHierarchyBusinessUnit"
-        ,
+        },
         bound: {
             value: true
         },
