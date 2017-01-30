@@ -75,7 +75,7 @@
         var baseUrl = WebApiClient.GetApiUrl();
         var url = "";
         
-        if (this.bound) {
+        if (this.bound && this.entityId) {
             var entityId = this.entityId.replace("{", "").replace("}", "");
             url = baseUrl + WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/" + this.name; 
         } else {
