@@ -1242,80 +1242,107 @@
 
     // Actions
     
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607569.aspx
+	// Adds an item to a campaign.
     WebApiClient.Requests.AddItemCampaignRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddItemCampaign"
+        },
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN:https://msdn.microsoft.com/en-us/library/mt607559.aspx
+	// Adds an item to a campaign activity. 
     WebApiClient.Requests.AddItemCampaignActivityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddItemCampaignActivity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607641.aspx
+	// Adds members to a list. 
     WebApiClient.Requests.AddListMembersListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddListMembersList"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607495.aspx
+	// Adds a member to a list (marketing list). 
     WebApiClient.Requests.AddMemberListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddMemberList"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "list"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607496.aspx
+	// Adds members to a team. 
     WebApiClient.Requests.AddMembersTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddMembersTeam"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "team"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593089.aspx
+	// Adds the specified principal to the list of queue members. 
     WebApiClient.Requests.AddPrincipalToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddPrincipalToQueue"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "queue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607862.aspx
+	// Adds a set of existing privileges to an existing role. 
     WebApiClient.Requests.AddPrivilegesRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddPrivilegesRole"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "role"
         }
     });
 
