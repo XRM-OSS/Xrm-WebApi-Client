@@ -1346,30 +1346,36 @@
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607566.aspx
+	// Adds recurrence information to an existing appointment. 
     WebApiClient.Requests.AddRecurrenceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddRecurrence"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "appointment"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593057.aspx
+	// Adds a solution component to an unmanaged solution. 
     WebApiClient.Requests.AddSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddSolutionComponent"
         }
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt607880.aspx
-    //
+    // Moves an entity record from a source queue to a destination queue.
     WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
@@ -1385,509 +1391,605 @@
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607951.aspx
+	// Adds a user to the auto created access team for the specified record. 
     WebApiClient.Requests.AddUserToRecordTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AddUserToRecordTeam"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608069.aspx
+	// Applies record creation and update rules to activities in 365 created as a result of the integration with external applications. 
     WebApiClient.Requests.ApplyRecordCreationAndUpdateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ApplyRecordCreationAndUpdateRule"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608125.aspx
+	// Applies the active routing rule to an incident. 
     WebApiClient.Requests.ApplyRoutingRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ApplyRoutingRule"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607766.aspx
+	// Generates a new set of attribute mappings based on the metadata. 
     WebApiClient.Requests.AutoMapEntityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "AutoMapEntity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt718079.aspx
+	// Schedules or "books" an appointment, recurring appointment, or service appointment (service activity). 
     WebApiClient.Requests.BookRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "Book"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491158.aspx
+	// Submits a bulk delete job that deletes selected records in bulk. This job runs asynchronously in the background without blocking other activities.
     WebApiClient.Requests.BulkDeleteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "BulkDelete"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491162.aspx
+	// Submits an asynchronous system job that detects and logs multiple duplicate records.
     WebApiClient.Requests.BulkDetectDuplicatesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "BulkDetectDuplicates"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607988.aspx
+	// Calculates the value of an opportunity that is in the "Won" state. 
     WebApiClient.Requests.CalculateActualValueOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CalculateActualValueOpportunity"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "opportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608012.aspx
+	// Calculates price in an opportunity, quote, order, and invoice.
     WebApiClient.Requests.CalculatePriceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CalculatePrice"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593059.aspx
+	// Checks whether the specified entity can be the primary entity (one) in a one-to-many relationship. 
     WebApiClient.Requests.CanBeReferencedRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CanBeReferenced"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607578.aspx
+	// Checkes whether an entity can be the referencing entity in a one-to-many relationship. 
     WebApiClient.Requests.CanBeReferencingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CanBeReferencing"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607610.aspx
+	// Cancels a contract. 
     WebApiClient.Requests.CancelContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CancelContract"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "contract"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607587.aspx
+	// Cancels a sales order. 
     WebApiClient.Requests.CancelSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CancelSalesOrder"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607577.aspx
+	// Checks whether an entity can participate in a many-to-many relationship. 
     WebApiClient.Requests.CanManyToManyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CanManyToMany"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607802.aspx
+	// Creates a solution patch from a managed or unmanaged solution.
     WebApiClient.Requests.CloneAsPatchRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloneAsPatch"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607806.aspx
+	// Creates a new copy of an unmanged solution that contains the original solution plus all of its patches.
     WebApiClient.Requests.CloneAsSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloneAsSolution"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607895.aspx
+	// Copies an existing contract and its line items. 
     WebApiClient.Requests.CloneContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloneContract"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "contract"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt718080.aspx
+	// For internal use only. 
     WebApiClient.Requests.CloneMobileOfflineProfileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloneMobileOfflineProfile"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "mobileofflineprofile"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608030.aspx
+	// Copies an existing product family, product, or bundle under the same parent record. 
     WebApiClient.Requests.CloneProductRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloneProduct"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "product"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607498.aspx
+	// Closes an incident (case).
     WebApiClient.Requests.CloseIncidentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloseIncident"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607685.aspx
+	// Closes a quote. 
     WebApiClient.Requests.CloseQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CloseQuote"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608088.aspx
+	// Updates a duplicate rule (duplicate detection rule) and its related duplicate rule conditions. 
     WebApiClient.Requests.CompoundUpdateDuplicateDetectionRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CompoundUpdateDuplicateDetectionRule"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607749.aspx
+	// Converts a team of type owner to a team of type access. 
     WebApiClient.Requests.ConvertOwnerTeamToAccessTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ConvertOwnerTeamToAccessTeam"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "team"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607933.aspx
+	// Converts a product to a kit. 
     WebApiClient.Requests.ConvertProductToKitRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ConvertProductToKit"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607842.aspx
+	// Converts a quote to a sales order. 
     WebApiClient.Requests.ConvertQuoteToSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ConvertQuoteToSalesOrder"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607736.aspx
+	// Converts a sales order to an invoice. 
     WebApiClient.Requests.ConvertSalesOrderToInvoiceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ConvertSalesOrderToInvoice"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607820.aspx
+	// Copies a campaign. 
     WebApiClient.Requests.CopyCampaignRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CopyCampaign"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "campaign"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607655.aspx
+	// Creates a copy of a campaign response
     WebApiClient.Requests.CopyCampaignResponseRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CopyCampaignResponse"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "campaignresponse"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593064.aspx
+	// Creates a static list from the specified dynamic list and add the members that satisfy the dynamic list query criteria to the static list. 
     WebApiClient.Requests.CopyDynamicListToStaticRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CopyDynamicListToStatic"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "list"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607620.aspx 
+	// Copies the members from the source list to the target list without creating duplicates. 
     WebApiClient.Requests.CopyMembersListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CopyMembersList"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "list"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608044.aspx
+	// Creates a new entity form that is based on an existing entity form. 
     WebApiClient.Requests.CopySystemFormRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CopySystemForm"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemform"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607931.aspx
+	// Creates a quick campaign to distribute an activity to members of a list (marketing list). 
     WebApiClient.Requests.CreateActivitiesListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateActivitiesList"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491161.aspx
+	// Creates a new customer lookup attribute, and optionally, to add it to a specified unmanaged solution.
     WebApiClient.Requests.CreateCustomerRelationshipsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateCustomerRelationships"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593100.aspx
+	// Creates an exception for the recurring appointment instance. 
     WebApiClient.Requests.CreateExceptionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateException"
+        },
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608070.aspx
+	// Creates future unexpanded instances for the recurring appointment master. 
     WebApiClient.Requests.CreateInstanceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateInstance"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607622.aspx
+	// Creates translation of a knowledge article instance.
     WebApiClient.Requests.CreateKnowledgeArticleTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateKnowledgeArticleTranslation"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607825.aspx
+	// Creates a major or minor version of a knowledge article instance.
     WebApiClient.Requests.CreateKnowledgeArticleVersionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateKnowledgeArticleVersion"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622404.aspx
+	// Creates a workflow (process) from a workflow template. 
     WebApiClient.Requests.CreateWorkflowFromTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "CreateWorkflowFromTemplate"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "workflow"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607488.aspx
+	// Replaces managed solution (A) plus all of its patches with managed solution (B) that is the clone of (A) and all of its patches.
     WebApiClient.Requests.DeleteAndPromoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeleteAndPromote"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607758.aspx
+	// Deletes all audit data records up until a specified end date. 
     WebApiClient.Requests.DeleteAuditDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeleteAuditData"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608051.aspx
+	// Deletes instances of a recurring appointment master that have an “Open” state. 
     WebApiClient.Requests.DeleteOpenInstancesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeleteOpenInstances"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607754.aspx
+	// Deletes an option value in a global or local option set. 
     WebApiClient.Requests.DeleteOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeleteOptionValue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607515.aspx
+	// Creates an email activity record from an incoming email message. 
     WebApiClient.Requests.DeliverIncomingEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeliverIncomingEmail"
+        },
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608033.aspx
+	// Creates an email activity record from the specified email message 
     WebApiClient.Requests.DeliverPromoteEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeliverPromoteEmail"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "email"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608078.aspx
+	// Deprovisions a language. 
     WebApiClient.Requests.DeprovisionLanguageRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DeprovisionLanguage"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607926.aspx
+	// Creates a bulk operation that distributes a campaign activity. 
     WebApiClient.Requests.DistributeCampaignActivityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "DistributeCampaignActivity"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "campaignactivity"
         }
     });
 
