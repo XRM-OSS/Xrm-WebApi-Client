@@ -327,7 +327,7 @@ WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Re
         value: "POST"
     },
     name: {
-        value: "Microsoft.Dynamics.CRM.AddToQueue"
+        value: "AddToQueue"
     },
     bound: {
         value: true
@@ -339,7 +339,7 @@ WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Re
 
 ```
 For further explanations regarding these requests, please check [here](#execute).
-Feel free to send PRs with the missing request definitions, I'll happily include them in the project.
+All requests should be implemented basically by now, in case of any errors in the implementations, you can override any property using the ```with``` function as described [here](#execute).
 
 Alternatively, you can use the ```WebApiClient.SendRequest``` function.
 In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
