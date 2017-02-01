@@ -287,6 +287,16 @@ WebApiClient.Execute(request)
     });
 ```
 
+### Configuration
+When having to set multiple configuration settings for the WebApiClient, you can use the ```Configure``` function, which gets an object passed with keys and values, that get projected onto the WebApiClient:
+
+```JavaScript
+WebApiClient.Configure({
+    ApiVersion: "8.2",
+    ReturnAllPages: true,
+    PrettifyErrors: false
+});
+```
 
 ### Errors
 If errors occur during processing of requests, the WebAPI client by default throws an error with the text that follows this format: xhr.statusText: xhr.response.message, i.e. "Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName".
