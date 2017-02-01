@@ -151,7 +151,7 @@ describe("WebApiClient", function() {
             [200, { "Content-Type": "application/json" }, JSON.stringify({UserId: "1234"})]
         );
         
-        var addToQueue = RegExp.escape(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/Microsoft.Dynamics.CRM.AddToQueue()");
+        var addToQueue = RegExp.escape(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/AddToQueue()");
         xhr.respondWith("POST", new RegExp(addToQueue),
             [200, { "Content-Type": "application/json" }, JSON.stringify({ QueueItemId: "5aae8258-4878-e511-80d4-00155d2a68d1"})]
         );
@@ -816,6 +816,28 @@ describe("WebApiClient", function() {
                 .finally(done);
             
             xhr.respond();
+        });
+    });
+    
+    describe("Configure", function() {
+        it("should apply values", function(){
+            var before = {
+                ApiVersion: WebApiClient.ApiVersion,
+                ReturnAllPages: WebApiClient.ReturnAllPages,
+                PrettifyErrors: WebApiClient.PrettifyErrors
+            };
+            
+            WebApiClient.Configure({
+                ApiVersion: "8.2",
+                ReturnAllPages: true,
+                PrettifyErrors: false
+            });
+            
+            expect(WebApiClient.ApiVersion).toBe("8.2");
+            expect(WebApiClient.ReturnAllPages).toBe(true);
+            expect(WebApiClient.PrettifyErrors).toBe(false);
+            
+            WebApiClient.Configure(before);
         });
     });
     

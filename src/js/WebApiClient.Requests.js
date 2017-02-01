@@ -1381,7 +1381,7 @@
             value: "POST"
         },
         name: {
-            value: "Microsoft.Dynamics.CRM.AddToQueue"
+            value: "AddToQueue"
         },
         bound: {
             value: true
@@ -1993,425 +1993,528 @@
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491159.aspx
+	// Executes a workflow.
     WebApiClient.Requests.ExecuteWorkflowRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ExecuteWorkflow"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "workflow"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622402.aspx
+	// Exports a data map as an XML formatted data. 
     WebApiClient.Requests.ExportMappingsImportMapRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ExportMappingsImportMap"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "importmap"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607590.aspx
+	// Exports a solution. 
     WebApiClient.Requests.ExportSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ExportSolution"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608097.aspx
+	// Exports all translations for a specific solution to a compressed file. 
     WebApiClient.Requests.ExportTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
-        }
-    });
-
-	// MSDN: 
-	//
-    WebApiClient.Requests.FullTextSearchKnowledgeArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
-        method: {
-            value: "POST"
+            value: "ExportTranslation"
         },
-        name: {
-            value: "RequestName"
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607784.aspx
+	// Fulfills a sales order.
     WebApiClient.Requests.FulfillSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "FulfillSalesOrder"
+        },
+        bound: {
+            value: true
+        }
+    });
+    
+    // MSDN: https://msdn.microsoft.com/en-us/library/mt491160.aspx
+	// Performs a full-text search on knowledge articles in Dynamics 365 using the specified search text.
+    WebApiClient.Requests.FullTextSearchKnowledgeArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "POST"
+        },
+        name: {
+            value: "FullTextSearchKnowledgeArticle"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593066.aspx
+	// Generates an invoice from an opportunity. 
     WebApiClient.Requests.GenerateInvoiceFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GenerateInvoiceFromOpportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607591.aspx
+	// Generates a quote from an opportunity. 
     WebApiClient.Requests.GenerateQuoteFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GenerateQuoteFromOpportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607659.aspx
+	// Generates a sales order (order) from an opportunity. 
     WebApiClient.Requests.GenerateSalesOrderFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GenerateSalesOrderFromOpportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593014.aspx
+	// Returns an existing social profile record if one exists, otherwise generates a new one and returns it. 
     WebApiClient.Requests.GenerateSocialProfileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GenerateSocialProfile"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "socialprofile"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607526.aspx
+	// Retrieves the products from an opportunity and copy them to the invoice. 
     WebApiClient.Requests.GetInvoiceProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GetInvoiceProductsFromOpportunity"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "invoice"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607548.aspx
+	// Retrieves the products from an opportunity and copy them to the quote. 
     WebApiClient.Requests.GetQuoteProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GetQuoteProductsFromOpportunity"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "quote"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607869.aspx
+	// Retrieves the products from an opportunity and copy them to the sales order. 
     WebApiClient.Requests.GetSalesOrderProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GetSalesOrderProductsFromOpportunity"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "salesorder"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593007.aspx
+	// Returns a tracking token that can then be passed as a parameter to the SendEmailRequest message. 
     WebApiClient.Requests.GetTrackingTokenEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "GetTrackingTokenEmail"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608013.aspx
+	// Imports translations from a compressed file.
     WebApiClient.Requests.ImportFieldTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ImportFieldTranslation"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607768.aspx
+	// Imports the XML representation of a data map and create an import map (data map) based on this data. 
     WebApiClient.Requests.ImportMappingsImportMapRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ImportMappingsImportMap"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622418.aspx
+	// Submits an asynchronous job that uploads the transformed data into Microsoft Dynamics 365.
     WebApiClient.Requests.ImportRecordsImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ImportRecordsImport"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "import"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608117.aspx
+	// Imports a solution. 
     WebApiClient.Requests.ImportSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ImportSolution"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607744.aspx
+	// Imports translations from a compressed file. 
     WebApiClient.Requests.ImportTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ImportTranslation"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607647.aspx
+	// Inserts a new option value for a global or local option set. 
     WebApiClient.Requests.InsertOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "InsertOptionValue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607839.aspx
+	// Inserts a new option into a StatusAttributeMetadata attribute. 
     WebApiClient.Requests.InsertStatusValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "InsertStatusValue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608101.aspx
+	// Installs the sample data. 
     WebApiClient.Requests.InstallSampleDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "InstallSampleData"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607877.aspx
+	// Instantiates a set of filters for Dynamics 365 for Outlook for the specified user. 
     WebApiClient.Requests.InstantiateFiltersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "InstantiateFilters"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt592993.aspx
+	// Creates an email message from a template (email template). 
     WebApiClient.Requests.InstantiateTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "InstantiateTemplate"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607781.aspx
+	// Locks the total price of products and services that are specified in the invoice. 
     WebApiClient.Requests.LockInvoicePricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "LockInvoicePricing"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "invoice"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607804.aspx
+	// Locks the total price of products and services that are specified in the sales order (order). 
     WebApiClient.Requests.LockSalesOrderPricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "LockSalesOrderPricing"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "salesorder"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607618.aspx
+	// Sets the state of an opportunity to Lost. 
     WebApiClient.Requests.LoseOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "LoseOpportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607669.aspx
+	// Merges the information from two entity records of the same type. 
     WebApiClient.Requests.MergeRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "Merge"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607483.aspx
+	// Sets the order for an option set. 
     WebApiClient.Requests.OrderOptionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "OrderOption"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622440.aspx
+	// Submits an asynchronous job that parses all import files that are associated with the specified import (data import). 
     WebApiClient.Requests.ParseImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ParseImport"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "import"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593071.aspx
+	// Assigns a queue item to a user and optionally remove the queue item from the queue. 
     WebApiClient.Requests.PickFromQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PickFromQueue"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "queueitem"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607787.aspx
+	// Processes the email responses from a marketing campaign. 
     WebApiClient.Requests.ProcessInboundEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ProcessInboundEmail"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "email"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491163.aspx
+	// Creates a quick campaign to distribute an activity to accounts, contacts, or leads that are selected by a query. 
     WebApiClient.Requests.PropagateByExpressionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PropagateByExpression"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608077.aspx
+	// Provisions a new language. 
     WebApiClient.Requests.ProvisionLanguageRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ProvisionLanguage"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607699.aspx
+	// Publishes all changes to solution components. 
     WebApiClient.Requests.PublishAllXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PublishAllXml"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622423.aspx
+	// Submits an asynchronous job to publish a duplicate rule. 
     WebApiClient.Requests.PublishDuplicateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PublishDuplicateRule"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "duplicaterule"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593011.aspx
+	// Publishes a product family record and all its child records. 
     WebApiClient.Requests.PublishProductHierarchyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PublishProductHierarchy"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "product"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608018.aspx
+	// Publishes a theme and set it as the current theme. 
     WebApiClient.Requests.PublishThemeRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "PublishTheme"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "theme"
         }
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt593076.aspx
+    // Publishes specified solution components. 
     WebApiClient.Requests.PublishXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
@@ -2421,348 +2524,430 @@
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491164.aspx
+	// Qualifies a lead and create account, contact, and opportunity records that are linked to the originating lead record. 
     WebApiClient.Requests.QualifyLeadRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "QualifyLead"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "lead"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607614.aspx
+	// Qualifies the specified list and either override the list members or remove them according to the specified option. 
     WebApiClient.Requests.QualifyMemberListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "QualifyMemberList"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "list"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491165.aspx
+	// Converts a QueryExpression query to its equivalent FetchXML query
     WebApiClient.Requests.QueryExpressionToFetchXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "QueryExpressionToFetchXml"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607627.aspx
+	// Reassigns all records that are owned by the security principal (user or team) to another security principal (user or team). 
     WebApiClient.Requests.ReassignObjectsOwnerRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ReassignObjectsOwner"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607965.aspx
+	// Reassigns all records that are owned by a specified user to another security principal (user or team). 
     WebApiClient.Requests.ReassignObjectsSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ReassignObjectsSystemUser"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607675.aspx
+	// Recalculate system-computed values for rollup fields in the goal hierarchy. 
     WebApiClient.Requests.RecalculateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "Recalculate"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "goal"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593031.aspx
+	// Assigns a queue item back to the queue owner so others can pick it. 
     WebApiClient.Requests.ReleaseToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ReleaseToQueue"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "queueitem"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607534.aspx
+	// Removes a queue item from a queue. 
     WebApiClient.Requests.RemoveFromQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemoveFromQueue"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "queueitem"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607537.aspx
+	// Removes members from a team.
     WebApiClient.Requests.RemoveMembersTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemoveMembersTeam"
+        },
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607528.aspx
+	// Removes the parent for a system user (user) record. 
     WebApiClient.Requests.RemoveParentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemoveParent"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593107.aspx
+	// Removes a privilege from an existing role. 
     WebApiClient.Requests.RemovePrivilegeRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemovePrivilegeRole"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "role"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608116.aspx
+	// Removes a component from an unmanaged solution. 
     WebApiClient.Requests.RemoveSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemoveSolutionComponent"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607735.aspx
+	// Removes a user from the auto created access team for the specified record. 
     WebApiClient.Requests.RemoveUserFromRecordTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RemoveUserFromRecordTeam"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593084.aspx
+	// Renews a contract and create the contract details for a new contract. 
     WebApiClient.Requests.RenewContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RenewContract"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "contract"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607893.aspx
+	// Renews an entitlement. 
     WebApiClient.Requests.RenewEntitlementRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RenewEntitlement"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "entitlement"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607752.aspx
+	// Replaces the privilege set of an existing role. 
     WebApiClient.Requests.ReplacePrivilegesRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
-        }
-    });
-
-	// MSDN: 
-	//
-    WebApiClient.Requests.ResetUserFiltersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
-        method: {
-            value: "POST"
+            value: "ReplacePrivilegesRole"
         },
-        name: {
-            value: "RequestName"
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "role"
         }
     });
 
-	// MSDN: 
-	//
+    // MSDN: https://msdn.microsoft.com/en-us/library/mt718082.aspx
+	// Reschedules an appointment, recurring appointment, or service appointment (service activity). 
     WebApiClient.Requests.RescheduleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "Reschedule"
+        }
+    });
+    
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607633.aspx
+	// Resets the offline data filters for the calling user to the default filters for the organization. 
+    WebApiClient.Requests.ResetUserFiltersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
+        method: {
+            value: "POST"
+        },
+        name: {
+            value: "ResetUserFilters"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608006.aspx
+	// Reverts changes done to properties of a product family, product, or bundle record, and set it back to its last published (active) state. 
     WebApiClient.Requests.RevertProductRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RevertProduct"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607543.aspx
+	// Sets the state of a quote to Draft. 
     WebApiClient.Requests.ReviseQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ReviseQuote"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607505.aspx
+	// Replaces the access rights on the target record for the specified security principal (user or team). 
     WebApiClient.Requests.RevokeAccessRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RevokeAccess"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607729.aspx
+	// Routes a queue item to a queue, a user, or a team. 
     WebApiClient.Requests.RouteToRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "RouteTo"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491166.aspx
+	// Sends bulk email messages.
     WebApiClient.Requests.SendBulkMailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SendBulkMail"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608061.aspx
+	// Sends an e-mail message. 
     WebApiClient.Requests.SendEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SendEmail"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "email"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607523.aspx
+	// Sends an e-mail message to a recipient using an e-mail template. 
     WebApiClient.Requests.SendEmailFromTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SendEmailFromTemplate"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607670.aspx
+	// Sends a fax. 
     WebApiClient.Requests.SendFaxRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SendFax"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607717.aspx
+	// Sends a bulk email message that is created from a template. 
     WebApiClient.Requests.SendTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SendTemplate"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608087.aspx
+	// Assigns equipment (facility/equipment) to a specific business unit. 
     WebApiClient.Requests.SetBusinessEquipmentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetBusinessEquipment"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593023.aspx
+	// Moves a system user (user) to a different business unit. 
     WebApiClient.Requests.SetBusinessSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetBusinessSystemUser"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608039.aspx
+	// Sets or restore the data encryption key. 
     WebApiClient.Requests.SetDataEncryptionKeyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetDataEncryptionKey"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491167.aspx
+	// TODO: SetFeatureStatus Action Description (Obviously no description yet)
     WebApiClient.Requests.SetFeatureStatusRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetFeatureStatus"
         }
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt607609.aspx
+    // Sets localized labels for a limited set of entity attributes. 
     WebApiClient.Requests.SetLocLabelsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
@@ -2772,201 +2957,216 @@
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607617.aspx
+	// Sets a new parent system user (user) for the specified user. 
     WebApiClient.Requests.SetParentSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetParentSystemUser"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "systemuser"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607705.aspx
+	// Sets the process that associates with a given target entity. The user can set to another business process or specify null to clear out the current process.
     WebApiClient.Requests.SetProcessRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetProcess"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607765.aspx
+	// Links an instance of a report entity to related entities. 
     WebApiClient.Requests.SetReportRelatedRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "SetReportRelated"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608027.aspx
+	// Submits an asynchronous job that transforms the parsed data. 
     WebApiClient.Requests.TransformImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "TransformImport"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt622443.aspx
+	// Validates the configuration of a Microsoft Azure Service Bus solution’s service endpoint. 
     WebApiClient.Requests.TriggerServiceEndpointCheckRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "TriggerServiceEndpointCheck"
+        },
+        bound: {
+            value: true
+        },
+        entityName: {
+            value: "serviceendpoint"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608045.aspx
+	// Uninstalls the sample data.
     WebApiClient.Requests.UninstallSampleDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UninstallSampleData"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608015.aspx
+	// Unlocks pricing for an invoice. 
     WebApiClient.Requests.UnlockInvoicePricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UnlockInvoicePricing"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt608026.aspx
+	// Unlocks pricing for a sales order (order). 
     WebApiClient.Requests.UnlockSalesOrderPricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UnlockSalesOrderPricing"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt593018.aspx
+	// Submits an asynchronous job to unpublish a duplicate rule. 
     WebApiClient.Requests.UnpublishDuplicateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UnpublishDuplicateRule"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt491168.aspx
+	// TODO: UpdateFeatureConfig Action Description (Missing)
     WebApiClient.Requests.UpdateFeatureConfigRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UpdateFeatureConfig"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607949.aspx
+	// Updates an option value in a global or local option set. 
     WebApiClient.Requests.UpdateOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UpdateOptionValue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607561.aspx
+	// Updates values of the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice. 
     WebApiClient.Requests.UpdateProductPropertiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UpdateProductProperties"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607611.aspx
+	// Updates a component in an unmanaged solution.
     WebApiClient.Requests.UpdateSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UpdateSolutionComponent"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607556.aspx
+	// Updates an option set value in for a StateAttributeMetadata attribute. 
     WebApiClient.Requests.UpdateStateValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "UpdateStateValue"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607767.aspx
+	// Verifies that an appointment or service appointment (service activity) has valid available resources for the activity, duration, and site, as appropriate. 
     WebApiClient.Requests.ValidateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "Validate"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607945.aspx
+	// Validates a saved query.
     WebApiClient.Requests.ValidateSavedQueryRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "ValidateSavedQuery"
+        },
+        bound: {
+            value: true
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607971.aspx
+	// Sets the state of an opportunity to Won. 
     WebApiClient.Requests.WinOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "WinOpportunity"
         }
     });
 
-	// MSDN: 
-	//
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607710.aspx
+	// Sets the state of a quote to Won. 
     WebApiClient.Requests.WinQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
             value: "POST"
         },
         name: {
-            value: "RequestName"
+            value: "WinQuote"
         }
     });
 

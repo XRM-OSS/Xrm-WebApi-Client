@@ -31,7 +31,7 @@
     /// <summary>Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.</summary>
     WebApiClient.ReturnAllPages = false;
     
-    /// <summary>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</message>
+    /// <summary>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</summary>
     WebApiClient.PrettifyErrors = true;
     
     // Override promise locally. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
@@ -241,6 +241,16 @@
         xhr.send(JSON.stringify(payload));
         
         return promise;
+    };
+    
+    WebApiClient.Configure = function (configuration) {
+        for (var property in configuration) {
+            if (!configuration.hasOwnProperty(property)) {
+                continue;
+            }
+            
+            WebApiClient[property] = configuration[property];
+        }
     };
     
     WebApiClient.GetApiUrl = function() {
