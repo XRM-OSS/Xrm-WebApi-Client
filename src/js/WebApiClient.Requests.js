@@ -73,14 +73,17 @@
     
     WebApiClient.Requests.Request.prototype.buildUrl = function() {
         var baseUrl = WebApiClient.GetApiUrl();
-        var url = "";
+        var url = baseUrl;
         
         if (this.bound && this.entityId) {
             var entityId = this.entityId.replace("{", "").replace("}", "");
-            url = baseUrl + WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/" + this.name; 
-        } else {
-            url = baseUrl + this.name;
+            url += WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/"; 
+        } 
+        
+        if (this.name.indexOf("Microsoft.Dynamics.CRM.") === -1) {
+            url += "Microsoft.Dynamics.CRM.";
         }
+        url += this.name;
         
         if (this.urlParams) {
             url = AppendRequestParams(url, this.urlParams);
@@ -98,10 +101,12 @@
     // Calculates the value of a rollup attribute. 
     WebApiClient.Requests.CalculateRollupFieldRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "CalculateRollupField"
+            value: "CalculateRollupField",
+            writeable: true
         }
     });
 
@@ -109,16 +114,20 @@
     // Calculates the total time, in minutes, that you used while you worked on an incident (case). 
     WebApiClient.Requests.CalculateTotalTimeIncidentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "CalculateTotalTimeIncident"
+            value: "CalculateTotalTimeIncident",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "incident"
+            value: "incident",
+            writeable: true
         }
     });
 
@@ -126,10 +135,12 @@
     // Check whether the incoming email message is relevant to the Microsoft Dynamics 365 system. 
     WebApiClient.Requests.CheckIncomingEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "CheckIncomingEmail"
+            value: "CheckIncomingEmail",
+            writeable: true
         }
     });
 
@@ -137,10 +148,12 @@
     // Contains the data that is needed to check whether the incoming email message should be promoted to the Microsoft Dynamics 365 system. 
     WebApiClient.Requests.CheckPromoteEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "CheckPromoteEmail"
+            value: "CheckPromoteEmail",
+            writeable: true
         }
     });
 
@@ -148,16 +161,20 @@
     // Downloads a report definition. 
     WebApiClient.Requests.DownloadReportDefinitionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "DownloadReportDefinition"
+            value: "DownloadReportDefinition",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "report"
+            value: "report",
+            writeable: true
         }
     });
 
@@ -165,16 +182,20 @@
 	// Converts the calendar rules to an array of available time blocks for the specified period. 
     WebApiClient.Requests.ExpandCalendarRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "ExpandCalendar"
+            value: "ExpandCalendar",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "calendar"
+            value: "calendar",
+            writeable: true
         }
     });
 
@@ -182,10 +203,12 @@
 	// Exports localizable fields values to a compressed file. 
     WebApiClient.Requests.ExportFieldTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "ExportFieldTranslation"
+            value: "ExportFieldTranslation",
+            writeable: true
         }
     });
 
@@ -193,10 +216,12 @@
 	// Converts a query in FetchXML to a QueryExpression. 
     WebApiClient.Requests.FetchXmlToQueryExpressionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "FetchXmlToQueryExpression"
+            value: "FetchXmlToQueryExpression",
+            writeable: true
         }
     });
 
@@ -204,16 +229,20 @@
 	// Finds a parent resource group (scheduling group) for the specified resource groups (scheduling groups).
     WebApiClient.Requests.FindParentResourceGroupRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "FindParentResourceGroup"
+            value: "FindParentResourceGroup",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "resourcegroup"
+            value: "resourcegroup",
+            writeable: true
         }
     });
 
@@ -221,13 +250,16 @@
 	// Retrieves all the time zone definitions for the specified locale and to return only the display name attribute. 
     WebApiClient.Requests.GetAllTimeZonesWithDisplayNameRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetAllTimeZonesWithDisplayName"
+            value: "GetAllTimeZonesWithDisplayName",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -235,13 +267,16 @@
 	// Retrieves the default price level (price list) for the current user based on the user’s territory relationship with the price level. 
     WebApiClient.Requests.GetDefaultPriceLevelRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetDefaultPriceLevel"
+            value: "GetDefaultPriceLevel",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -249,16 +284,20 @@
 	// Retrieves distinct values from the parse table for a column in the source file that contains list values. 
     WebApiClient.Requests.GetDistinctValuesImportFileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetDistinctValuesImportFile"
+            value: "GetDistinctValuesImportFile",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "importfile"
+            value: "importfile",
+            writeable: true
         }
     });
 
@@ -266,16 +305,20 @@
 	// Retrieves the source-file column headings; or retrieve the system-generated column headings if the source file does not contain column headings. 
     WebApiClient.Requests.GetHeaderColumnsImportFileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetHeaderColumnsImportFile"
+            value: "GetHeaderColumnsImportFile",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "importfile"
+            value: "importfile",
+            writeable: true
         }
     });
 
@@ -283,13 +326,16 @@
 	// Gets the quantity decimal value of a product for the specified entity in the target. 
     WebApiClient.Requests.GetQuantityDecimalRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetQuantityDecimal"
+            value: "GetQuantityDecimal",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -297,16 +343,20 @@
 	// Retrieves the history limit for a report. 
     WebApiClient.Requests.GetReportHistoryLimitRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetReportHistoryLimit"
+            value: "GetReportHistoryLimit",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "report"
+            value: "report",
+            writeable: true
         }
     });
 
@@ -314,10 +364,12 @@
 	// Retrieves the time zone code for the specified localized time zone name. 
     WebApiClient.Requests.GetTimeZoneCodeByLocalizedNameRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetTimeZoneCodeByLocalizedName"
+            value: "GetTimeZoneCodeByLocalizedName",
+            writeable: true
         }
     });
 
@@ -325,10 +377,12 @@
 	// Retrieves a list of all the entities that can participate in a Many-to-Many entity relationship. 
     WebApiClient.Requests.GetValidManyToManyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetValidManyToMany"
+            value: "GetValidManyToMany",
+            writeable: true
         }
     });
 
@@ -336,10 +390,12 @@
 	// Retrieves a list of entity logical names that are valid as the primary entity (one) from the specified entity in a one-to-many relationship. 
     WebApiClient.Requests.GetValidReferencedEntitiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetValidReferencedEntities"
+            value: "GetValidReferencedEntities",
+            writeable: true
         }
     });
 
@@ -347,10 +403,12 @@
 	// Retrieves the set of entities that are valid as the related entity (many) to the specified entity in a one-to-many relationship. 
     WebApiClient.Requests.GetValidReferencingEntitiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "GetValidReferencingEntities"
+            value: "GetValidReferencingEntities",
+            writeable: true
         }
     });
 
@@ -358,10 +416,12 @@
 	// Increments the per day view count of a knowledge article record.
     WebApiClient.Requests.IncrementKnowledgeArticleViewCountRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "IncrementKnowledgeArticleViewCount"
+            value: "IncrementKnowledgeArticleViewCount",
+            writeable: true
         }
     });
 
@@ -369,10 +429,12 @@
 	// Initializes a new record from an existing record.
     WebApiClient.Requests.InitializeFromRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "InitializeFrom"
+            value: "InitializeFrom",
+            writeable: true
         }
     });
 
@@ -380,10 +442,12 @@
 	// Determines whether a solution component is customizable. 
     WebApiClient.Requests.IsComponentCustomizableRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "IsComponentCustomizable"
+            value: "IsComponentCustomizable",
+            writeable: true
         }
     });
 
@@ -391,10 +455,12 @@
 	// Determines whether data encryption is currently running (active or inactive). 
     WebApiClient.Requests.IsDataEncryptionActiveRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "IsDataEncryptionActive"
+            value: "IsDataEncryptionActive",
+            writeable: true
         }
     });
 
@@ -402,10 +468,12 @@
 	// Validates the state transition.
     WebApiClient.Requests.IsValidStateTransitionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "IsValidStateTransition"
+            value: "IsValidStateTransition",
+            writeable: true
         }
     });
 
@@ -413,10 +481,12 @@
 	// Searches multiple resources for available time block that matches the specified parameters.
     WebApiClient.Requests.QueryMultipleSchedulesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "QueryMultipleSchedules"
+            value: "QueryMultipleSchedules",
+            writeable: true
         }
     });
 
@@ -424,10 +494,12 @@
 	// Searches the specified resource for an available time block that matches the specified parameters. 
     WebApiClient.Requests.QueryScheduleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "QuerySchedule"
+            value: "QuerySchedule",
+            writeable: true
         }
     });
 
@@ -435,13 +507,16 @@
 	// Retrieves the absolute URL and the site collection URL for a SharePoint location record in Microsoft Dynamics 365. 
     WebApiClient.Requests.RetrieveAbsoluteAndSiteCollectionUrlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveAbsoluteAndSiteCollectionUrl"
+            value: "RetrieveAbsoluteAndSiteCollectionUrl",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -449,10 +524,12 @@
 	// TODO: RetrieveActivePath Function Description (No Joke, MS description)
     WebApiClient.Requests.RetrieveActivePathRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveActivePath"
+            value: "RetrieveActivePath",
+            writeable: true
         }
     });
 
@@ -460,16 +537,20 @@
 	// Retrieves the collection of users that report to the specified system user (user). 
     WebApiClient.Requests.RetrieveAllChildUsersSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveAllChildUsersSystemUser"
+            value: "RetrieveAllChildUsersSystemUser",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -477,10 +558,12 @@
 	// Retrieves metadata information about all the entities. 
     WebApiClient.Requests.RetrieveAllEntitiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveAllEntities"
+            value: "RetrieveAllEntities",
+            writeable: true
         }
     });
 
@@ -488,10 +571,12 @@
 	// Retrieve the data that defines the content and behavior of the application ribbon. 
     WebApiClient.Requests.RetrieveApplicationRibbonRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveApplicationRibbon"
+            value: "RetrieveApplicationRibbon",
+            writeable: true
         }
     });
 
@@ -499,10 +584,12 @@
 	// Retrieves the list of database partitions that are used to store audited history data. 
     WebApiClient.Requests.RetrieveAuditPartitionListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveAuditPartitionList"
+            value: "RetrieveAuditPartitionList",
+            writeable: true
         }
     });
 
@@ -510,10 +597,12 @@
 	// Retrieves the list of language packs that are installed and enabled on the server. 
     WebApiClient.Requests.RetrieveAvailableLanguagesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveAvailableLanguages"
+            value: "RetrieveAvailableLanguages",
+            writeable: true
         }
     });
 
@@ -521,16 +610,20 @@
 	// Retrieves all business units from the business unit hierarchy. 
     WebApiClient.Requests.RetrieveBusinessHierarchyBusinessUnitRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveBusinessHierarchyBusinessUnit"
+            value: "RetrieveBusinessHierarchyBusinessUnit",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "businessunit"
+            value: "businessunit",
+            writeable: true
         }
     });
 
@@ -538,16 +631,20 @@
 	// Retrieves all resources that are related to the specified resource group 
     WebApiClient.Requests.RetrieveByGroupResourceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveByGroupResource"
+            value: "RetrieveByGroupResource",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "resourcegroup"
+            value: "resourcegroup",
+            writeable: true
         }
     });
 
@@ -555,16 +652,20 @@
 	// Retrieves the resource groups (scheduling groups) that contain the specified resource. 
     WebApiClient.Requests.RetrieveByResourceResourceGroupRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveByResourceResourceGroup"
+            value: "RetrieveByResourceResourceGroup",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "resource"
+            value: "resource",
+            writeable: true
         }
     });
 
@@ -572,10 +673,12 @@
 	// Retrieve the collection of services that are related to the specified set of resources.
     WebApiClient.Requests.RetrieveByResourcesServiceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveByResourcesService"
+            value: "RetrieveByResourcesService",
+            writeable: true
         }
     });
 
@@ -583,16 +686,20 @@
 	// Retrieves the top-ten articles about a specified product from the knowledge base of articles for the organization 
     WebApiClient.Requests.RetrieveByTopIncidentProductKbArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveByTopIncidentProductKbArticle"
+            value: "RetrieveByTopIncidentProductKbArticle",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "product"
+            value: "product",
+            writeable: true
         }
     });
 
@@ -600,16 +707,20 @@
 	// Retrieves the top-ten articles about a specified subject from the knowledge base of articles for your organization. 
     WebApiClient.Requests.RetrieveByTopIncidentSubjectKbArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveByTopIncidentSubjectKbArticle"
+            value: "RetrieveByTopIncidentSubjectKbArticle",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "subject"
+            value: "subject",
+            writeable: true
         }
     });
 
@@ -617,10 +728,12 @@
 	// Retrieve information about the current organization. 
     WebApiClient.Requests.RetrieveCurrentOrganizationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveCurrentOrganization"
+            value: "RetrieveCurrentOrganization",
+            writeable: true
         }
     });
 
@@ -628,10 +741,12 @@
 	// Retrieves the data encryption key value. 
     WebApiClient.Requests.RetrieveDataEncryptionKeyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDataEncryptionKey"
+            value: "RetrieveDataEncryptionKey",
+            writeable: true
         }
     });
 
@@ -639,10 +754,12 @@
 	// Retrieves a collection of dependency records that describe any solution components that would prevent a solution component from being deleted. 
     WebApiClient.Requests.RetrieveDependenciesForDeleteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDependenciesForDelete"
+            value: "RetrieveDependenciesForDelete",
+            writeable: true
         }
     });
 
@@ -650,10 +767,12 @@
 	// Retrieves a list of the solution component dependencies that can prevent you from uninstalling a managed solution. 
     WebApiClient.Requests.RetrieveDependenciesForUninstallRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDependenciesForUninstall"
+            value: "RetrieveDependenciesForUninstall",
+            writeable: true
         }
     });
 
@@ -661,10 +780,12 @@
 	// Retrieves a list dependencies for solution components that directly depend on a solution component. 
     WebApiClient.Requests.RetrieveDependentComponentsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDependentComponents"
+            value: "RetrieveDependentComponents",
+            writeable: true
         }
     });
 
@@ -672,10 +793,12 @@
 	// Retrieves the type of license for a deployment of Microsoft Dynamics 365. 
     WebApiClient.Requests.RetrieveDeploymentLicenseTypeRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDeploymentLicenseType"
+            value: "RetrieveDeploymentLicenseType",
+            writeable: true
         }
     });
 
@@ -683,10 +806,12 @@
 	// Retrieves a list of language packs that are installed on the server that have been disabled. 
     WebApiClient.Requests.RetrieveDeprovisionedLanguagesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDeprovisionedLanguages"
+            value: "RetrieveDeprovisionedLanguages",
+            writeable: true
         }
     });
 
@@ -694,10 +819,12 @@
 	// Detects and retrieves duplicates for a specified record.
     WebApiClient.Requests.RetrieveDuplicatesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveDuplicates"
+            value: "RetrieveDuplicates",
+            writeable: true
         }
     });
 
@@ -705,10 +832,12 @@
 	// Retrieve the changes for an entity. 
     WebApiClient.Requests.RetrieveEntityChangesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveEntityChanges"
+            value: "RetrieveEntityChanges",
+            writeable: true
         }
     });
 
@@ -716,10 +845,12 @@
 	// Retrieves ribbon definitions for an entity. 
     WebApiClient.Requests.RetrieveEntityRibbonRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveEntityRibbon"
+            value: "RetrieveEntityRibbon",
+            writeable: true
         }
     });
 
@@ -727,10 +858,12 @@
 	// Retrieves the appointments for the current user for a specific date range from the exchange web service. 
     WebApiClient.Requests.RetrieveExchangeAppointmentsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveExchangeAppointments"
+            value: "RetrieveExchangeAppointments",
+            writeable: true
         }
     });
 
@@ -738,10 +871,12 @@
 	// Retrieves the exchange rate. 
     WebApiClient.Requests.RetrieveExchangeRateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveExchangeRate"
+            value: "RetrieveExchangeRate",
+            writeable: true
         }
     });
 
@@ -749,13 +884,16 @@
 	// Retrieves the entity forms that are available for a specified user. 
     WebApiClient.Requests.RetrieveFilteredFormsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveFilteredForms"
+            value: "RetrieveFilteredForms",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -763,10 +901,12 @@
 	// Retrieves the formatted results from an import job. 
     WebApiClient.Requests.RetrieveFormattedImportJobResultsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveFormattedImportJobResults"
+            value: "RetrieveFormattedImportJobResults",
+            writeable: true
         }
     });
 
@@ -774,10 +914,12 @@
 	// Retrieves the list of language packs that are installed on the server. 
     WebApiClient.Requests.RetrieveInstalledLanguagePacksRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveInstalledLanguagePacks"
+            value: "RetrieveInstalledLanguagePacks",
+            writeable: true
         }
     });
 
@@ -785,10 +927,12 @@
 	// Retrieves the version of an installed language pack. 
     WebApiClient.Requests.RetrieveInstalledLanguagePackVersionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveInstalledLanguagePackVersion"
+            value: "RetrieveInstalledLanguagePackVersion",
+            writeable: true
         }
     });
 
@@ -796,10 +940,12 @@
 	// Retrieves the number of used and available licenses for a deployment of Microsoft Dynamics 365. 
     WebApiClient.Requests.RetrieveLicenseInfoRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveLicenseInfo"
+            value: "RetrieveLicenseInfo",
+            writeable: true
         }
     });
 
@@ -807,10 +953,12 @@
     // Retrieves localized labels for a limited set of entity attributes.
     WebApiClient.Requests.RetrieveLocLabelsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveLocLabels"
+            value: "RetrieveLocLabels",
+            writeable: true
         }
     });
 
@@ -818,10 +966,12 @@
 	// Retrieves folder-level tracking rules for a mailbox. 
     WebApiClient.Requests.RetrieveMailboxTrackingFoldersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveMailboxTrackingFolders"
+            value: "RetrieveMailboxTrackingFolders",
+            writeable: true
         }
     });
 
@@ -829,16 +979,20 @@
 	// Retrieves the members of a bulk operation. 
     WebApiClient.Requests.RetrieveMembersBulkOperationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveMembersBulkOperation"
+            value: "RetrieveMembersBulkOperation",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "bulkoperation"
+            value: "bulkoperation",
+            writeable: true
         }
     });
 
@@ -846,10 +1000,12 @@
 	// Retrieves a list of missing components in the target organization. 
     WebApiClient.Requests.RetrieveMissingComponentsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveMissingComponents"
+            value: "RetrieveMissingComponents",
+            writeable: true
         }
     });
 
@@ -857,10 +1013,12 @@
 	// Retrieves any required solution components that are not included in the solution. 
     WebApiClient.Requests.RetrieveMissingDependenciesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveMissingDependencies"
+            value: "RetrieveMissingDependencies",
+            writeable: true
         }
     });
 
@@ -868,10 +1026,12 @@
 	// Retrieves the resources that are used by an organization. 
     WebApiClient.Requests.RetrieveOrganizationResourcesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveOrganizationResources"
+            value: "RetrieveOrganizationResources",
+            writeable: true
         }
     });
 
@@ -879,10 +1039,12 @@
 	// Retrieves the collection of the parent resource groups of the specified resource group (scheduling group). 
     WebApiClient.Requests.RetrieveParentGroupsResourceGroupRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveParentGroupsResourceGroup"
+            value: "RetrieveParentGroupsResourceGroup",
+            writeable: true
         }
     });
 
@@ -890,10 +1052,12 @@
 	// Retrieves the data from the parse table.
     WebApiClient.Requests.RetrieveParsedDataImportFileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveParsedDataImportFile"
+            value: "RetrieveParsedDataImportFile",
+            writeable: true
         }
     });
 
@@ -901,13 +1065,16 @@
 	// Retrieves pages of posts, including comments for each post, for all records that the calling user is following. 
     WebApiClient.Requests.RetrievePersonalWallRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrievePersonalWall"
+            value: "RetrievePersonalWall",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -915,13 +1082,16 @@
 	// Retrieves the access rights of the specified security principal (team or user) to the specified record.
     WebApiClient.Requests.RetrievePrincipalAccessRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrievePrincipalAccess"
+            value: "RetrievePrincipalAccess",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -929,13 +1099,16 @@
 	// Retrieves all the secured attribute privileges a user or team has through direct or indirect (through team membership) associations with the FieldSecurityProfile entity. 
     WebApiClient.Requests.RetrievePrincipalAttributePrivilegesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrievePrincipalAttributePrivileges"
+            value: "RetrievePrincipalAttributePrivileges",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -943,13 +1116,16 @@
 	// For internal use only.
     WebApiClient.Requests.RetrievePrincipalSyncAttributeMappingsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrievePrincipalSyncAttributeMappings"
+            value: "RetrievePrincipalSyncAttributeMappings",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -957,13 +1133,16 @@
 	// Retrieves the set of privileges defined in the system. 
     WebApiClient.Requests.RetrievePrivilegeSetRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrievePrivilegeSet"
+            value: "RetrievePrivilegeSet",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -971,10 +1150,12 @@
 	// TODO: RetrieveProcessInstances Function Description (By MS)
     WebApiClient.Requests.RetrieveProcessInstancesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveProcessInstances"
+            value: "RetrieveProcessInstances",
+            writeable: true
         }
     });
 
@@ -982,13 +1163,16 @@
 	// Retrieve all the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice. 
     WebApiClient.Requests.RetrieveProductPropertiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveProductProperties"
+            value: "RetrieveProductProperties",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -996,10 +1180,12 @@
 	// Retrieves the version of a provisioned language pack. 
     WebApiClient.Requests.RetrieveProvisionedLanguagePackVersionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveProvisionedLanguagePackVersion"
+            value: "RetrieveProvisionedLanguagePackVersion",
+            writeable: true
         }
     });
 
@@ -1007,10 +1193,12 @@
 	// Retrieves the list of provisioned languages. 
     WebApiClient.Requests.RetrieveProvisionedLanguagesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveProvisionedLanguages"
+            value: "RetrieveProvisionedLanguages",
+            writeable: true
         }
     });
 
@@ -1018,13 +1206,16 @@
 	// Retrieves pages of posts, including comments for each post, for a specified record. 
     WebApiClient.Requests.RetrieveRecordWallRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveRecordWall"
+            value: "RetrieveRecordWall",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1032,10 +1223,12 @@
 	// Retrieves a collection of solution components that are required for a solution component. 
     WebApiClient.Requests.RetrieveRequiredComponentsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveRequiredComponents"
+            value: "RetrieveRequiredComponents",
+            writeable: true
         }
     });
 
@@ -1043,10 +1236,12 @@
 	// Retrieves the privileges that are assigned to the specified role. 
     WebApiClient.Requests.RetrieveRolePrivilegesRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveRolePrivilegesRole"
+            value: "RetrieveRolePrivilegesRole",
+            writeable: true
         }
     });
 
@@ -1054,16 +1249,20 @@
 	// Retrieves the collection of child resource groups from the specified resource group. 
     WebApiClient.Requests.RetrieveSubGroupsResourceGroupRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveSubGroupsResourceGroup"
+            value: "RetrieveSubGroupsResourceGroup",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "resourcegroup"
+            value: "resourcegroup",
+            writeable: true
         }
     });
 
@@ -1071,16 +1270,20 @@
 	// Retrieves the privileges for a team. 
     WebApiClient.Requests.RetrieveTeamPrivilegesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveTeamPrivileges"
+            value: "RetrieveTeamPrivileges",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "team"
+            value: "team",
+            writeable: true
         }
     });
 
@@ -1088,10 +1291,12 @@
 	// Retrieves a time stamp for the metadata. 
     WebApiClient.Requests.RetrieveTimestampRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveTimestamp"
+            value: "RetrieveTimestamp",
+            writeable: true
         }
     });
 
@@ -1099,13 +1304,16 @@
 	// Retrieves a collection of unpublished organization-owned records that satisfy the specified query criteria. 
     WebApiClient.Requests.RetrieveUnpublishedMultipleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveUnpublishedMultiple"
+            value: "RetrieveUnpublishedMultiple",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1113,16 +1321,20 @@
 	// Retrieves the privileges a system user (user) has through his or her roles in the specified business unit. 
     WebApiClient.Requests.RetrieveUserPrivilegesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveUserPrivileges"
+            value: "RetrieveUserPrivileges",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -1130,16 +1342,20 @@
 	// Retrieves all private queues of a specified user and optionally all public queues. 
     WebApiClient.Requests.RetrieveUserQueuesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveUserQueues"
+            value: "RetrieveUserQueues",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -1147,10 +1363,12 @@
 	// Retrieves the version number of the Microsoft Dynamics 365 Server. 
     WebApiClient.Requests.RetrieveVersionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "RetrieveVersion"
+            value: "RetrieveVersion",
+            writeable: true
         }
     });
 
@@ -1158,10 +1376,12 @@
 	// Retrieves all the entity records that are related to the specified record. 
     WebApiClient.Requests.RollupRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "Rollup"
+            value: "Rollup",
+            writeable: true
         }
     });
 
@@ -1169,10 +1389,12 @@
 	// Searches for available time slots that fulfill the specified appointment request. 
     WebApiClient.Requests.SearchRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "Search"
+            value: "Search",
+            writeable: true
         }
     });
 
@@ -1180,13 +1402,16 @@
 	// Searches for knowledge base articles that contain the specified body text.
     WebApiClient.Requests.SearchByBodyKbArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "SearchByBodyKbArticle"
+            value: "SearchByBodyKbArticle",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1194,13 +1419,16 @@
 	// Searches for knowledge base articles that contain the specified keywords.
     WebApiClient.Requests.SearchByKeywordsKbArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "SearchByKeywordsKbArticle"
+            value: "SearchByKeywordsKbArticle",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1208,13 +1436,16 @@
 	// Searches for knowledge base articles that contain the specified title. 
     WebApiClient.Requests.SearchByTitleKbArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "SearchByTitleKbArticle"
+            value: "SearchByTitleKbArticle",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1222,10 +1453,12 @@
 	// Validates a rule for a recurring appointment. 
     WebApiClient.Requests.ValidateRecurrenceRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "ValidateRecurrenceRule"
+            value: "ValidateRecurrenceRule",
+            writeable: true
         }
     });
 
@@ -1233,10 +1466,12 @@
     // Retrieves the system user ID for the currently logged on user or the user under whose context the code is running. 
     WebApiClient.Requests.WhoAmIRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "GET"
+            value: "GET",
+            writeable: true
         },
         name: {
-            value: "WhoAmI"
+            value: "WhoAmI",
+            writeable: true
         }
     });
 
@@ -1246,13 +1481,16 @@
 	// Adds an item to a campaign.
     WebApiClient.Requests.AddItemCampaignRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddItemCampaign"
+            value: "AddItemCampaign",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1260,10 +1498,12 @@
 	// Adds an item to a campaign activity. 
     WebApiClient.Requests.AddItemCampaignActivityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddItemCampaignActivity"
+            value: "AddItemCampaignActivity",
+            writeable: true
         }
     });
 
@@ -1271,10 +1511,12 @@
 	// Adds members to a list. 
     WebApiClient.Requests.AddListMembersListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddListMembersList"
+            value: "AddListMembersList",
+            writeable: true
         }
     });
 
@@ -1282,16 +1524,20 @@
 	// Adds a member to a list (marketing list). 
     WebApiClient.Requests.AddMemberListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddMemberList"
+            value: "AddMemberList",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "list"
+            value: "list",
+            writeable: true
         }
     });
 
@@ -1299,16 +1545,20 @@
 	// Adds members to a team. 
     WebApiClient.Requests.AddMembersTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddMembersTeam"
+            value: "AddMembersTeam",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "team"
+            value: "team",
+            writeable: true
         }
     });
 
@@ -1316,16 +1566,20 @@
 	// Adds the specified principal to the list of queue members. 
     WebApiClient.Requests.AddPrincipalToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddPrincipalToQueue"
+            value: "AddPrincipalToQueue",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "queue"
+            value: "queue",
+            writeable: true
         }
     });
 
@@ -1333,16 +1587,20 @@
 	// Adds a set of existing privileges to an existing role. 
     WebApiClient.Requests.AddPrivilegesRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddPrivilegesRole"
+            value: "AddPrivilegesRole",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "role"
+            value: "role",
+            writeable: true
         }
     });
 
@@ -1350,16 +1608,20 @@
 	// Adds recurrence information to an existing appointment. 
     WebApiClient.Requests.AddRecurrenceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddRecurrence"
+            value: "AddRecurrence",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "appointment"
+            value: "appointment",
+            writeable: true
         }
     });
 
@@ -1367,10 +1629,12 @@
 	// Adds a solution component to an unmanaged solution. 
     WebApiClient.Requests.AddSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddSolutionComponent"
+            value: "AddSolutionComponent",
+            writeable: true
         }
     });
 
@@ -1378,16 +1642,20 @@
     // Moves an entity record from a source queue to a destination queue.
     WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddToQueue"
+            value: "AddToQueue",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "queue"
+            value: "queue",
+            writeable: true
         }
     });
 
@@ -1395,16 +1663,20 @@
 	// Adds a user to the auto created access team for the specified record. 
     WebApiClient.Requests.AddUserToRecordTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AddUserToRecordTeam"
+            value: "AddUserToRecordTeam",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -1412,10 +1684,12 @@
 	// Applies record creation and update rules to activities in 365 created as a result of the integration with external applications. 
     WebApiClient.Requests.ApplyRecordCreationAndUpdateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ApplyRecordCreationAndUpdateRule"
+            value: "ApplyRecordCreationAndUpdateRule",
+            writeable: true
         }
     });
 
@@ -1423,10 +1697,12 @@
 	// Applies the active routing rule to an incident. 
     WebApiClient.Requests.ApplyRoutingRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ApplyRoutingRule"
+            value: "ApplyRoutingRule",
+            writeable: true
         }
     });
 
@@ -1434,10 +1710,12 @@
 	// Generates a new set of attribute mappings based on the metadata. 
     WebApiClient.Requests.AutoMapEntityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "AutoMapEntity"
+            value: "AutoMapEntity",
+            writeable: true
         }
     });
 
@@ -1445,10 +1723,12 @@
 	// Schedules or "books" an appointment, recurring appointment, or service appointment (service activity). 
     WebApiClient.Requests.BookRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "Book"
+            value: "Book",
+            writeable: true
         }
     });
 
@@ -1456,10 +1736,12 @@
 	// Submits a bulk delete job that deletes selected records in bulk. This job runs asynchronously in the background without blocking other activities.
     WebApiClient.Requests.BulkDeleteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "BulkDelete"
+            value: "BulkDelete",
+            writeable: true
         }
     });
 
@@ -1467,10 +1749,12 @@
 	// Submits an asynchronous system job that detects and logs multiple duplicate records.
     WebApiClient.Requests.BulkDetectDuplicatesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "BulkDetectDuplicates"
+            value: "BulkDetectDuplicates",
+            writeable: true
         }
     });
 
@@ -1478,16 +1762,20 @@
 	// Calculates the value of an opportunity that is in the "Won" state. 
     WebApiClient.Requests.CalculateActualValueOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CalculateActualValueOpportunity"
+            value: "CalculateActualValueOpportunity",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "opportunity"
+            value: "opportunity",
+            writeable: true
         }
     });
 
@@ -1495,10 +1783,12 @@
 	// Calculates price in an opportunity, quote, order, and invoice.
     WebApiClient.Requests.CalculatePriceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CalculatePrice"
+            value: "CalculatePrice",
+            writeable: true
         }
     });
 
@@ -1506,10 +1796,12 @@
 	// Checks whether the specified entity can be the primary entity (one) in a one-to-many relationship. 
     WebApiClient.Requests.CanBeReferencedRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CanBeReferenced"
+            value: "CanBeReferenced",
+            writeable: true
         }
     });
 
@@ -1517,10 +1809,12 @@
 	// Checkes whether an entity can be the referencing entity in a one-to-many relationship. 
     WebApiClient.Requests.CanBeReferencingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CanBeReferencing"
+            value: "CanBeReferencing",
+            writeable: true
         }
     });
 
@@ -1528,16 +1822,20 @@
 	// Cancels a contract. 
     WebApiClient.Requests.CancelContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CancelContract"
+            value: "CancelContract",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "contract"
+            value: "contract",
+            writeable: true
         }
     });
 
@@ -1545,10 +1843,12 @@
 	// Cancels a sales order. 
     WebApiClient.Requests.CancelSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CancelSalesOrder"
+            value: "CancelSalesOrder",
+            writeable: true
         }
     });
 
@@ -1556,10 +1856,12 @@
 	// Checks whether an entity can participate in a many-to-many relationship. 
     WebApiClient.Requests.CanManyToManyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CanManyToMany"
+            value: "CanManyToMany",
+            writeable: true
         }
     });
 
@@ -1567,10 +1869,12 @@
 	// Creates a solution patch from a managed or unmanaged solution.
     WebApiClient.Requests.CloneAsPatchRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloneAsPatch"
+            value: "CloneAsPatch",
+            writeable: true
         }
     });
 
@@ -1578,10 +1882,12 @@
 	// Creates a new copy of an unmanged solution that contains the original solution plus all of its patches.
     WebApiClient.Requests.CloneAsSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloneAsSolution"
+            value: "CloneAsSolution",
+            writeable: true
         }
     });
 
@@ -1589,16 +1895,20 @@
 	// Copies an existing contract and its line items. 
     WebApiClient.Requests.CloneContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloneContract"
+            value: "CloneContract",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "contract"
+            value: "contract",
+            writeable: true
         }
     });
 
@@ -1606,16 +1916,20 @@
 	// For internal use only. 
     WebApiClient.Requests.CloneMobileOfflineProfileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloneMobileOfflineProfile"
+            value: "CloneMobileOfflineProfile",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "mobileofflineprofile"
+            value: "mobileofflineprofile",
+            writeable: true
         }
     });
 
@@ -1623,16 +1937,20 @@
 	// Copies an existing product family, product, or bundle under the same parent record. 
     WebApiClient.Requests.CloneProductRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloneProduct"
+            value: "CloneProduct",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "product"
+            value: "product",
+            writeable: true
         }
     });
 
@@ -1640,10 +1958,12 @@
 	// Closes an incident (case).
     WebApiClient.Requests.CloseIncidentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloseIncident"
+            value: "CloseIncident",
+            writeable: true
         }
     });
 
@@ -1651,10 +1971,12 @@
 	// Closes a quote. 
     WebApiClient.Requests.CloseQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CloseQuote"
+            value: "CloseQuote",
+            writeable: true
         }
     });
 
@@ -1662,10 +1984,12 @@
 	// Updates a duplicate rule (duplicate detection rule) and its related duplicate rule conditions. 
     WebApiClient.Requests.CompoundUpdateDuplicateDetectionRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CompoundUpdateDuplicateDetectionRule"
+            value: "CompoundUpdateDuplicateDetectionRule",
+            writeable: true
         }
     });
 
@@ -1673,16 +1997,20 @@
 	// Converts a team of type owner to a team of type access. 
     WebApiClient.Requests.ConvertOwnerTeamToAccessTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ConvertOwnerTeamToAccessTeam"
+            value: "ConvertOwnerTeamToAccessTeam",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "team"
+            value: "team",
+            writeable: true
         }
     });
 
@@ -1690,10 +2018,12 @@
 	// Converts a product to a kit. 
     WebApiClient.Requests.ConvertProductToKitRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ConvertProductToKit"
+            value: "ConvertProductToKit",
+            writeable: true
         }
     });
 
@@ -1701,10 +2031,12 @@
 	// Converts a quote to a sales order. 
     WebApiClient.Requests.ConvertQuoteToSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ConvertQuoteToSalesOrder"
+            value: "ConvertQuoteToSalesOrder",
+            writeable: true
         }
     });
 
@@ -1712,10 +2044,12 @@
 	// Converts a sales order to an invoice. 
     WebApiClient.Requests.ConvertSalesOrderToInvoiceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ConvertSalesOrderToInvoice"
+            value: "ConvertSalesOrderToInvoice",
+            writeable: true
         }
     });
 
@@ -1723,16 +2057,20 @@
 	// Copies a campaign. 
     WebApiClient.Requests.CopyCampaignRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CopyCampaign"
+            value: "CopyCampaign",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "campaign"
+            value: "campaign",
+            writeable: true
         }
     });
 
@@ -1740,16 +2078,20 @@
 	// Creates a copy of a campaign response
     WebApiClient.Requests.CopyCampaignResponseRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CopyCampaignResponse"
+            value: "CopyCampaignResponse",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "campaignresponse"
+            value: "campaignresponse",
+            writeable: true
         }
     });
 
@@ -1757,16 +2099,20 @@
 	// Creates a static list from the specified dynamic list and add the members that satisfy the dynamic list query criteria to the static list. 
     WebApiClient.Requests.CopyDynamicListToStaticRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CopyDynamicListToStatic"
+            value: "CopyDynamicListToStatic",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "list"
+            value: "list",
+            writeable: true
         }
     });
 
@@ -1774,16 +2120,20 @@
 	// Copies the members from the source list to the target list without creating duplicates. 
     WebApiClient.Requests.CopyMembersListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CopyMembersList"
+            value: "CopyMembersList",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "list"
+            value: "list",
+            writeable: true
         }
     });
 
@@ -1791,16 +2141,20 @@
 	// Creates a new entity form that is based on an existing entity form. 
     WebApiClient.Requests.CopySystemFormRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CopySystemForm"
+            value: "CopySystemForm",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemform"
+            value: "systemform",
+            writeable: true
         }
     });
 
@@ -1808,10 +2162,12 @@
 	// Creates a quick campaign to distribute an activity to members of a list (marketing list). 
     WebApiClient.Requests.CreateActivitiesListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateActivitiesList"
+            value: "CreateActivitiesList",
+            writeable: true
         }
     });
 
@@ -1819,10 +2175,12 @@
 	// Creates a new customer lookup attribute, and optionally, to add it to a specified unmanaged solution.
     WebApiClient.Requests.CreateCustomerRelationshipsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateCustomerRelationships"
+            value: "CreateCustomerRelationships",
+            writeable: true
         }
     });
 
@@ -1830,13 +2188,16 @@
 	// Creates an exception for the recurring appointment instance. 
     WebApiClient.Requests.CreateExceptionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateException"
+            value: "CreateException",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1844,10 +2205,12 @@
 	// Creates future unexpanded instances for the recurring appointment master. 
     WebApiClient.Requests.CreateInstanceRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateInstance"
+            value: "CreateInstance",
+            writeable: true
         }
     });
 
@@ -1855,10 +2218,12 @@
 	// Creates translation of a knowledge article instance.
     WebApiClient.Requests.CreateKnowledgeArticleTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateKnowledgeArticleTranslation"
+            value: "CreateKnowledgeArticleTranslation",
+            writeable: true
         }
     });
 
@@ -1866,10 +2231,12 @@
 	// Creates a major or minor version of a knowledge article instance.
     WebApiClient.Requests.CreateKnowledgeArticleVersionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateKnowledgeArticleVersion"
+            value: "CreateKnowledgeArticleVersion",
+            writeable: true
         }
     });
 
@@ -1877,16 +2244,20 @@
 	// Creates a workflow (process) from a workflow template. 
     WebApiClient.Requests.CreateWorkflowFromTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "CreateWorkflowFromTemplate"
+            value: "CreateWorkflowFromTemplate",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "workflow"
+            value: "workflow",
+            writeable: true
         }
     });
 
@@ -1894,10 +2265,12 @@
 	// Replaces managed solution (A) plus all of its patches with managed solution (B) that is the clone of (A) and all of its patches.
     WebApiClient.Requests.DeleteAndPromoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeleteAndPromote"
+            value: "DeleteAndPromote",
+            writeable: true
         }
     });
 
@@ -1905,10 +2278,12 @@
 	// Deletes all audit data records up until a specified end date. 
     WebApiClient.Requests.DeleteAuditDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeleteAuditData"
+            value: "DeleteAuditData",
+            writeable: true
         }
     });
 
@@ -1916,10 +2291,12 @@
 	// Deletes instances of a recurring appointment master that have an “Open” state. 
     WebApiClient.Requests.DeleteOpenInstancesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeleteOpenInstances"
+            value: "DeleteOpenInstances",
+            writeable: true
         }
     });
 
@@ -1927,10 +2304,12 @@
 	// Deletes an option value in a global or local option set. 
     WebApiClient.Requests.DeleteOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeleteOptionValue"
+            value: "DeleteOptionValue",
+            writeable: true
         }
     });
 
@@ -1938,13 +2317,16 @@
 	// Creates an email activity record from an incoming email message. 
     WebApiClient.Requests.DeliverIncomingEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeliverIncomingEmail"
+            value: "DeliverIncomingEmail",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -1952,16 +2334,20 @@
 	// Creates an email activity record from the specified email message 
     WebApiClient.Requests.DeliverPromoteEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeliverPromoteEmail"
+            value: "DeliverPromoteEmail",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "email"
+            value: "email",
+            writeable: true
         }
     });
 
@@ -1969,10 +2355,12 @@
 	// Deprovisions a language. 
     WebApiClient.Requests.DeprovisionLanguageRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DeprovisionLanguage"
+            value: "DeprovisionLanguage",
+            writeable: true
         }
     });
 
@@ -1980,16 +2368,20 @@
 	// Creates a bulk operation that distributes a campaign activity. 
     WebApiClient.Requests.DistributeCampaignActivityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "DistributeCampaignActivity"
+            value: "DistributeCampaignActivity",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "campaignactivity"
+            value: "campaignactivity",
+            writeable: true
         }
     });
 
@@ -1997,16 +2389,20 @@
 	// Executes a workflow.
     WebApiClient.Requests.ExecuteWorkflowRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ExecuteWorkflow"
+            value: "ExecuteWorkflow",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "workflow"
+            value: "workflow",
+            writeable: true
         }
     });
 
@@ -2014,16 +2410,20 @@
 	// Exports a data map as an XML formatted data. 
     WebApiClient.Requests.ExportMappingsImportMapRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ExportMappingsImportMap"
+            value: "ExportMappingsImportMap",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "importmap"
+            value: "importmap",
+            writeable: true
         }
     });
 
@@ -2031,10 +2431,12 @@
 	// Exports a solution. 
     WebApiClient.Requests.ExportSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ExportSolution"
+            value: "ExportSolution",
+            writeable: true
         }
     });
 
@@ -2042,13 +2444,16 @@
 	// Exports all translations for a specific solution to a compressed file. 
     WebApiClient.Requests.ExportTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ExportTranslation"
+            value: "ExportTranslation",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -2056,13 +2461,16 @@
 	// Fulfills a sales order.
     WebApiClient.Requests.FulfillSalesOrderRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "FulfillSalesOrder"
+            value: "FulfillSalesOrder",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
     
@@ -2070,10 +2478,12 @@
 	// Performs a full-text search on knowledge articles in Dynamics 365 using the specified search text.
     WebApiClient.Requests.FullTextSearchKnowledgeArticleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "FullTextSearchKnowledgeArticle"
+            value: "FullTextSearchKnowledgeArticle",
+            writeable: true
         }
     });
 
@@ -2081,10 +2491,12 @@
 	// Generates an invoice from an opportunity. 
     WebApiClient.Requests.GenerateInvoiceFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GenerateInvoiceFromOpportunity"
+            value: "GenerateInvoiceFromOpportunity",
+            writeable: true
         }
     });
 
@@ -2092,10 +2504,12 @@
 	// Generates a quote from an opportunity. 
     WebApiClient.Requests.GenerateQuoteFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GenerateQuoteFromOpportunity"
+            value: "GenerateQuoteFromOpportunity",
+            writeable: true
         }
     });
 
@@ -2103,10 +2517,12 @@
 	// Generates a sales order (order) from an opportunity. 
     WebApiClient.Requests.GenerateSalesOrderFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GenerateSalesOrderFromOpportunity"
+            value: "GenerateSalesOrderFromOpportunity",
+            writeable: true
         }
     });
 
@@ -2114,16 +2530,20 @@
 	// Returns an existing social profile record if one exists, otherwise generates a new one and returns it. 
     WebApiClient.Requests.GenerateSocialProfileRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GenerateSocialProfile"
+            value: "GenerateSocialProfile",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "socialprofile"
+            value: "socialprofile",
+            writeable: true
         }
     });
 
@@ -2131,16 +2551,20 @@
 	// Retrieves the products from an opportunity and copy them to the invoice. 
     WebApiClient.Requests.GetInvoiceProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GetInvoiceProductsFromOpportunity"
+            value: "GetInvoiceProductsFromOpportunity",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "invoice"
+            value: "invoice",
+            writeable: true
         }
     });
 
@@ -2148,16 +2572,20 @@
 	// Retrieves the products from an opportunity and copy them to the quote. 
     WebApiClient.Requests.GetQuoteProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GetQuoteProductsFromOpportunity"
+            value: "GetQuoteProductsFromOpportunity",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "quote"
+            value: "quote",
+            writeable: true
         }
     });
 
@@ -2165,16 +2593,20 @@
 	// Retrieves the products from an opportunity and copy them to the sales order. 
     WebApiClient.Requests.GetSalesOrderProductsFromOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GetSalesOrderProductsFromOpportunity"
+            value: "GetSalesOrderProductsFromOpportunity",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "salesorder"
+            value: "salesorder",
+            writeable: true
         }
     });
 
@@ -2182,10 +2614,12 @@
 	// Returns a tracking token that can then be passed as a parameter to the SendEmailRequest message. 
     WebApiClient.Requests.GetTrackingTokenEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "GetTrackingTokenEmail"
+            value: "GetTrackingTokenEmail",
+            writeable: true
         }
     });
 
@@ -2193,10 +2627,12 @@
 	// Imports translations from a compressed file.
     WebApiClient.Requests.ImportFieldTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ImportFieldTranslation"
+            value: "ImportFieldTranslation",
+            writeable: true
         }
     });
 
@@ -2204,10 +2640,12 @@
 	// Imports the XML representation of a data map and create an import map (data map) based on this data. 
     WebApiClient.Requests.ImportMappingsImportMapRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ImportMappingsImportMap"
+            value: "ImportMappingsImportMap",
+            writeable: true
         }
     });
 
@@ -2215,16 +2653,20 @@
 	// Submits an asynchronous job that uploads the transformed data into Microsoft Dynamics 365.
     WebApiClient.Requests.ImportRecordsImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ImportRecordsImport"
+            value: "ImportRecordsImport",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "import"
+            value: "import",
+            writeable: true
         }
     });
 
@@ -2232,10 +2674,12 @@
 	// Imports a solution. 
     WebApiClient.Requests.ImportSolutionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ImportSolution"
+            value: "ImportSolution",
+            writeable: true
         }
     });
 
@@ -2243,10 +2687,12 @@
 	// Imports translations from a compressed file. 
     WebApiClient.Requests.ImportTranslationRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ImportTranslation"
+            value: "ImportTranslation",
+            writeable: true
         }
     });
 
@@ -2254,10 +2700,12 @@
 	// Inserts a new option value for a global or local option set. 
     WebApiClient.Requests.InsertOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "InsertOptionValue"
+            value: "InsertOptionValue",
+            writeable: true
         }
     });
 
@@ -2265,10 +2713,12 @@
 	// Inserts a new option into a StatusAttributeMetadata attribute. 
     WebApiClient.Requests.InsertStatusValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "InsertStatusValue"
+            value: "InsertStatusValue",
+            writeable: true
         }
     });
 
@@ -2276,10 +2726,12 @@
 	// Installs the sample data. 
     WebApiClient.Requests.InstallSampleDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "InstallSampleData"
+            value: "InstallSampleData",
+            writeable: true
         }
     });
 
@@ -2287,16 +2739,20 @@
 	// Instantiates a set of filters for Dynamics 365 for Outlook for the specified user. 
     WebApiClient.Requests.InstantiateFiltersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "InstantiateFilters"
+            value: "InstantiateFilters",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -2304,10 +2760,12 @@
 	// Creates an email message from a template (email template). 
     WebApiClient.Requests.InstantiateTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "InstantiateTemplate"
+            value: "InstantiateTemplate",
+            writeable: true
         }
     });
 
@@ -2315,16 +2773,20 @@
 	// Locks the total price of products and services that are specified in the invoice. 
     WebApiClient.Requests.LockInvoicePricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "LockInvoicePricing"
+            value: "LockInvoicePricing",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "invoice"
+            value: "invoice",
+            writeable: true
         }
     });
 
@@ -2332,16 +2794,20 @@
 	// Locks the total price of products and services that are specified in the sales order (order). 
     WebApiClient.Requests.LockSalesOrderPricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "LockSalesOrderPricing"
+            value: "LockSalesOrderPricing",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "salesorder"
+            value: "salesorder",
+            writeable: true
         }
     });
 
@@ -2349,10 +2815,12 @@
 	// Sets the state of an opportunity to Lost. 
     WebApiClient.Requests.LoseOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "LoseOpportunity"
+            value: "LoseOpportunity",
+            writeable: true
         }
     });
 
@@ -2360,10 +2828,12 @@
 	// Merges the information from two entity records of the same type. 
     WebApiClient.Requests.MergeRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "Merge"
+            value: "Merge",
+            writeable: true
         }
     });
 
@@ -2371,10 +2841,12 @@
 	// Sets the order for an option set. 
     WebApiClient.Requests.OrderOptionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "OrderOption"
+            value: "OrderOption",
+            writeable: true
         }
     });
 
@@ -2382,16 +2854,20 @@
 	// Submits an asynchronous job that parses all import files that are associated with the specified import (data import). 
     WebApiClient.Requests.ParseImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ParseImport"
+            value: "ParseImport",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "import"
+            value: "import",
+            writeable: true
         }
     });
 
@@ -2399,16 +2875,20 @@
 	// Assigns a queue item to a user and optionally remove the queue item from the queue. 
     WebApiClient.Requests.PickFromQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PickFromQueue"
+            value: "PickFromQueue",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "queueitem"
+            value: "queueitem",
+            writeable: true
         }
     });
 
@@ -2416,16 +2896,20 @@
 	// Processes the email responses from a marketing campaign. 
     WebApiClient.Requests.ProcessInboundEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ProcessInboundEmail"
+            value: "ProcessInboundEmail",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "email"
+            value: "email",
+            writeable: true
         }
     });
 
@@ -2433,10 +2917,12 @@
 	// Creates a quick campaign to distribute an activity to accounts, contacts, or leads that are selected by a query. 
     WebApiClient.Requests.PropagateByExpressionRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PropagateByExpression"
+            value: "PropagateByExpression",
+            writeable: true
         }
     });
 
@@ -2444,10 +2930,12 @@
 	// Provisions a new language. 
     WebApiClient.Requests.ProvisionLanguageRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ProvisionLanguage"
+            value: "ProvisionLanguage",
+            writeable: true
         }
     });
 
@@ -2455,10 +2943,12 @@
 	// Publishes all changes to solution components. 
     WebApiClient.Requests.PublishAllXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PublishAllXml"
+            value: "PublishAllXml",
+            writeable: true
         }
     });
 
@@ -2466,16 +2956,20 @@
 	// Submits an asynchronous job to publish a duplicate rule. 
     WebApiClient.Requests.PublishDuplicateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PublishDuplicateRule"
+            value: "PublishDuplicateRule",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "duplicaterule"
+            value: "duplicaterule",
+            writeable: true
         }
     });
 
@@ -2483,16 +2977,20 @@
 	// Publishes a product family record and all its child records. 
     WebApiClient.Requests.PublishProductHierarchyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PublishProductHierarchy"
+            value: "PublishProductHierarchy",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "product"
+            value: "product",
+            writeable: true
         }
     });
 
@@ -2500,16 +2998,20 @@
 	// Publishes a theme and set it as the current theme. 
     WebApiClient.Requests.PublishThemeRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PublishTheme"
+            value: "PublishTheme",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "theme"
+            value: "theme",
+            writeable: true
         }
     });
 
@@ -2517,10 +3019,12 @@
     // Publishes specified solution components. 
     WebApiClient.Requests.PublishXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "PublishXml"
+            value: "PublishXml",
+            writeable: true
         }
     });
 
@@ -2528,16 +3032,20 @@
 	// Qualifies a lead and create account, contact, and opportunity records that are linked to the originating lead record. 
     WebApiClient.Requests.QualifyLeadRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "QualifyLead"
+            value: "QualifyLead",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "lead"
+            value: "lead",
+            writeable: true
         }
     });
 
@@ -2545,16 +3053,20 @@
 	// Qualifies the specified list and either override the list members or remove them according to the specified option. 
     WebApiClient.Requests.QualifyMemberListRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "QualifyMemberList"
+            value: "QualifyMemberList",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "list"
+            value: "list",
+            writeable: true
         }
     });
 
@@ -2562,10 +3074,12 @@
 	// Converts a QueryExpression query to its equivalent FetchXML query
     WebApiClient.Requests.QueryExpressionToFetchXmlRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "QueryExpressionToFetchXml"
+            value: "QueryExpressionToFetchXml",
+            writeable: true
         }
     });
 
@@ -2573,10 +3087,12 @@
 	// Reassigns all records that are owned by the security principal (user or team) to another security principal (user or team). 
     WebApiClient.Requests.ReassignObjectsOwnerRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ReassignObjectsOwner"
+            value: "ReassignObjectsOwner",
+            writeable: true
         }
     });
 
@@ -2584,16 +3100,20 @@
 	// Reassigns all records that are owned by a specified user to another security principal (user or team). 
     WebApiClient.Requests.ReassignObjectsSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ReassignObjectsSystemUser"
+            value: "ReassignObjectsSystemUser",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -2601,16 +3121,20 @@
 	// Recalculate system-computed values for rollup fields in the goal hierarchy. 
     WebApiClient.Requests.RecalculateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "Recalculate"
+            value: "Recalculate",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "goal"
+            value: "goal",
+            writeable: true
         }
     });
 
@@ -2618,16 +3142,20 @@
 	// Assigns a queue item back to the queue owner so others can pick it. 
     WebApiClient.Requests.ReleaseToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ReleaseToQueue"
+            value: "ReleaseToQueue",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "queueitem"
+            value: "queueitem",
+            writeable: true
         }
     });
 
@@ -2635,16 +3163,20 @@
 	// Removes a queue item from a queue. 
     WebApiClient.Requests.RemoveFromQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemoveFromQueue"
+            value: "RemoveFromQueue",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "queueitem"
+            value: "queueitem",
+            writeable: true
         }
     });
 
@@ -2652,13 +3184,16 @@
 	// Removes members from a team.
     WebApiClient.Requests.RemoveMembersTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemoveMembersTeam"
+            value: "RemoveMembersTeam",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -2666,10 +3201,12 @@
 	// Removes the parent for a system user (user) record. 
     WebApiClient.Requests.RemoveParentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemoveParent"
+            value: "RemoveParent",
+            writeable: true
         }
     });
 
@@ -2677,16 +3214,20 @@
 	// Removes a privilege from an existing role. 
     WebApiClient.Requests.RemovePrivilegeRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemovePrivilegeRole"
+            value: "RemovePrivilegeRole",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "role"
+            value: "role",
+            writeable: true
         }
     });
 
@@ -2694,10 +3235,12 @@
 	// Removes a component from an unmanaged solution. 
     WebApiClient.Requests.RemoveSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemoveSolutionComponent"
+            value: "RemoveSolutionComponent",
+            writeable: true
         }
     });
 
@@ -2705,16 +3248,20 @@
 	// Removes a user from the auto created access team for the specified record. 
     WebApiClient.Requests.RemoveUserFromRecordTeamRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RemoveUserFromRecordTeam"
+            value: "RemoveUserFromRecordTeam",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -2722,16 +3269,20 @@
 	// Renews a contract and create the contract details for a new contract. 
     WebApiClient.Requests.RenewContractRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RenewContract"
+            value: "RenewContract",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "contract"
+            value: "contract",
+            writeable: true
         }
     });
 
@@ -2739,16 +3290,20 @@
 	// Renews an entitlement. 
     WebApiClient.Requests.RenewEntitlementRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RenewEntitlement"
+            value: "RenewEntitlement",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "entitlement"
+            value: "entitlement",
+            writeable: true
         }
     });
 
@@ -2756,16 +3311,20 @@
 	// Replaces the privilege set of an existing role. 
     WebApiClient.Requests.ReplacePrivilegesRoleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ReplacePrivilegesRole"
+            value: "ReplacePrivilegesRole",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "role"
+            value: "role",
+            writeable: true
         }
     });
 
@@ -2773,10 +3332,12 @@
 	// Reschedules an appointment, recurring appointment, or service appointment (service activity). 
     WebApiClient.Requests.RescheduleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "Reschedule"
+            value: "Reschedule",
+            writeable: true
         }
     });
     
@@ -2784,10 +3345,12 @@
 	// Resets the offline data filters for the calling user to the default filters for the organization. 
     WebApiClient.Requests.ResetUserFiltersRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ResetUserFilters"
+            value: "ResetUserFilters",
+            writeable: true
         }
     });
 
@@ -2795,10 +3358,12 @@
 	// Reverts changes done to properties of a product family, product, or bundle record, and set it back to its last published (active) state. 
     WebApiClient.Requests.RevertProductRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RevertProduct"
+            value: "RevertProduct",
+            writeable: true
         }
     });
 
@@ -2806,10 +3371,12 @@
 	// Sets the state of a quote to Draft. 
     WebApiClient.Requests.ReviseQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ReviseQuote"
+            value: "ReviseQuote",
+            writeable: true
         }
     });
 
@@ -2817,10 +3384,12 @@
 	// Replaces the access rights on the target record for the specified security principal (user or team). 
     WebApiClient.Requests.RevokeAccessRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RevokeAccess"
+            value: "RevokeAccess",
+            writeable: true
         }
     });
 
@@ -2828,10 +3397,12 @@
 	// Routes a queue item to a queue, a user, or a team. 
     WebApiClient.Requests.RouteToRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "RouteTo"
+            value: "RouteTo",
+            writeable: true
         }
     });
 
@@ -2839,10 +3410,12 @@
 	// Sends bulk email messages.
     WebApiClient.Requests.SendBulkMailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SendBulkMail"
+            value: "SendBulkMail",
+            writeable: true
         }
     });
 
@@ -2850,16 +3423,20 @@
 	// Sends an e-mail message. 
     WebApiClient.Requests.SendEmailRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SendEmail"
+            value: "SendEmail",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "email"
+            value: "email",
+            writeable: true
         }
     });
 
@@ -2867,10 +3444,12 @@
 	// Sends an e-mail message to a recipient using an e-mail template. 
     WebApiClient.Requests.SendEmailFromTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SendEmailFromTemplate"
+            value: "SendEmailFromTemplate",
+            writeable: true
         }
     });
 
@@ -2878,10 +3457,12 @@
 	// Sends a fax. 
     WebApiClient.Requests.SendFaxRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SendFax"
+            value: "SendFax",
+            writeable: true
         }
     });
 
@@ -2889,10 +3470,12 @@
 	// Sends a bulk email message that is created from a template. 
     WebApiClient.Requests.SendTemplateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SendTemplate"
+            value: "SendTemplate",
+            writeable: true
         }
     });
 
@@ -2900,10 +3483,12 @@
 	// Assigns equipment (facility/equipment) to a specific business unit. 
     WebApiClient.Requests.SetBusinessEquipmentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetBusinessEquipment"
+            value: "SetBusinessEquipment",
+            writeable: true
         }
     });
 
@@ -2911,16 +3496,20 @@
 	// Moves a system user (user) to a different business unit. 
     WebApiClient.Requests.SetBusinessSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetBusinessSystemUser"
+            value: "SetBusinessSystemUser",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -2928,10 +3517,12 @@
 	// Sets or restore the data encryption key. 
     WebApiClient.Requests.SetDataEncryptionKeyRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetDataEncryptionKey"
+            value: "SetDataEncryptionKey",
+            writeable: true
         }
     });
 
@@ -2939,10 +3530,12 @@
 	// TODO: SetFeatureStatus Action Description (Obviously no description yet)
     WebApiClient.Requests.SetFeatureStatusRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetFeatureStatus"
+            value: "SetFeatureStatus",
+            writeable: true
         }
     });
 
@@ -2950,10 +3543,12 @@
     // Sets localized labels for a limited set of entity attributes. 
     WebApiClient.Requests.SetLocLabelsRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetLocLabels"
+            value: "SetLocLabels",
+            writeable: true
         }
     });
 
@@ -2961,16 +3556,20 @@
 	// Sets a new parent system user (user) for the specified user. 
     WebApiClient.Requests.SetParentSystemUserRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetParentSystemUser"
+            value: "SetParentSystemUser",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "systemuser"
+            value: "systemuser",
+            writeable: true
         }
     });
 
@@ -2978,10 +3577,12 @@
 	// Sets the process that associates with a given target entity. The user can set to another business process or specify null to clear out the current process.
     WebApiClient.Requests.SetProcessRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetProcess"
+            value: "SetProcess",
+            writeable: true
         }
     });
 
@@ -2989,10 +3590,12 @@
 	// Links an instance of a report entity to related entities. 
     WebApiClient.Requests.SetReportRelatedRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "SetReportRelated"
+            value: "SetReportRelated",
+            writeable: true
         }
     });
 
@@ -3000,10 +3603,12 @@
 	// Submits an asynchronous job that transforms the parsed data. 
     WebApiClient.Requests.TransformImportRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "TransformImport"
+            value: "TransformImport",
+            writeable: true
         }
     });
 
@@ -3011,16 +3616,20 @@
 	// Validates the configuration of a Microsoft Azure Service Bus solution’s service endpoint. 
     WebApiClient.Requests.TriggerServiceEndpointCheckRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "TriggerServiceEndpointCheck"
+            value: "TriggerServiceEndpointCheck",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         },
         entityName: {
-            value: "serviceendpoint"
+            value: "serviceendpoint",
+            writeable: true
         }
     });
 
@@ -3028,10 +3637,12 @@
 	// Uninstalls the sample data.
     WebApiClient.Requests.UninstallSampleDataRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UninstallSampleData"
+            value: "UninstallSampleData",
+            writeable: true
         }
     });
 
@@ -3039,10 +3650,12 @@
 	// Unlocks pricing for an invoice. 
     WebApiClient.Requests.UnlockInvoicePricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UnlockInvoicePricing"
+            value: "UnlockInvoicePricing",
+            writeable: true
         }
     });
 
@@ -3050,10 +3663,12 @@
 	// Unlocks pricing for a sales order (order). 
     WebApiClient.Requests.UnlockSalesOrderPricingRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UnlockSalesOrderPricing"
+            value: "UnlockSalesOrderPricing",
+            writeable: true
         }
     });
 
@@ -3061,10 +3676,12 @@
 	// Submits an asynchronous job to unpublish a duplicate rule. 
     WebApiClient.Requests.UnpublishDuplicateRuleRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UnpublishDuplicateRule"
+            value: "UnpublishDuplicateRule",
+            writeable: true
         }
     });
 
@@ -3072,10 +3689,12 @@
 	// TODO: UpdateFeatureConfig Action Description (Missing)
     WebApiClient.Requests.UpdateFeatureConfigRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UpdateFeatureConfig"
+            value: "UpdateFeatureConfig",
+            writeable: true
         }
     });
 
@@ -3083,10 +3702,12 @@
 	// Updates an option value in a global or local option set. 
     WebApiClient.Requests.UpdateOptionValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UpdateOptionValue"
+            value: "UpdateOptionValue",
+            writeable: true
         }
     });
 
@@ -3094,10 +3715,12 @@
 	// Updates values of the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice. 
     WebApiClient.Requests.UpdateProductPropertiesRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UpdateProductProperties"
+            value: "UpdateProductProperties",
+            writeable: true
         }
     });
 
@@ -3105,10 +3728,12 @@
 	// Updates a component in an unmanaged solution.
     WebApiClient.Requests.UpdateSolutionComponentRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UpdateSolutionComponent"
+            value: "UpdateSolutionComponent",
+            writeable: true
         }
     });
 
@@ -3116,10 +3741,12 @@
 	// Updates an option set value in for a StateAttributeMetadata attribute. 
     WebApiClient.Requests.UpdateStateValueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "UpdateStateValue"
+            value: "UpdateStateValue",
+            writeable: true
         }
     });
 
@@ -3127,10 +3754,12 @@
 	// Verifies that an appointment or service appointment (service activity) has valid available resources for the activity, duration, and site, as appropriate. 
     WebApiClient.Requests.ValidateRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "Validate"
+            value: "Validate",
+            writeable: true
         }
     });
 
@@ -3138,13 +3767,16 @@
 	// Validates a saved query.
     WebApiClient.Requests.ValidateSavedQueryRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "ValidateSavedQuery"
+            value: "ValidateSavedQuery",
+            writeable: true
         },
         bound: {
-            value: true
+            value: true,
+            writeable: true
         }
     });
 
@@ -3152,10 +3784,12 @@
 	// Sets the state of an opportunity to Won. 
     WebApiClient.Requests.WinOpportunityRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "WinOpportunity"
+            value: "WinOpportunity",
+            writeable: true
         }
     });
 
@@ -3163,10 +3797,12 @@
 	// Sets the state of a quote to Won. 
     WebApiClient.Requests.WinQuoteRequest = Object.create(WebApiClient.Requests.Request.prototype, {
         method: {
-            value: "POST"
+            value: "POST",
+            writeable: true
         },
         name: {
-            value: "WinQuote"
+            value: "WinQuote",
+            writeable: true
         }
     });
 
