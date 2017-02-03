@@ -146,7 +146,7 @@ describe("WebApiClient", function() {
             [500, { "Content-Type": "application/json" }, errorJson]
         );
         
-        var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/Microsoft.Dynamics.CRM.WhoAmI()");
+        var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/WhoAmI()");
         xhr.respondWith("GET", new RegExp(whoAmI),
             [200, { "Content-Type": "application/json" }, JSON.stringify({UserId: "1234"})]
         );
@@ -156,17 +156,17 @@ describe("WebApiClient", function() {
             [200, { "Content-Type": "application/json" }, JSON.stringify({ QueueItemId: "5aae8258-4878-e511-80d4-00155d2a68d1"})]
         );
         
-        var retrieveLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/Microsoft.Dynamics.CRM.RetrieveLocLabels(EntityMoniker=@p1,AttributeName=@p2,IncludeUnpublished=@p3)?@p1={'@odata.id':'savedqueries(31089fd8-596a-47be-9c9c-3ff82c7a8f8c)'}&@p2='name'&@p3=true");
+        var retrieveLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/RetrieveLocLabels(EntityMoniker=@p1,AttributeName=@p2,IncludeUnpublished=@p3)?@p1={'@odata.id':'savedqueries(31089fd8-596a-47be-9c9c-3ff82c7a8f8c)'}&@p2='name'&@p3=true");
         xhr.respondWith("GET", new RegExp(retrieveLocLabels),
             [200, { "Content-Type": "application/json" }, JSON.stringify({Labels: "Here be labels"})]
         );
         
-        var setLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/Microsoft.Dynamics.CRM.SetLocLabels()");
+        var setLocLabels = RegExp.escape(fakeUrl + "/api/data/v8.0/SetLocLabels()");
         xhr.respondWith("POST", new RegExp(setLocLabels),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
         
-        var publishXml = RegExp.escape(fakeUrl + "/api/data/v8.0/Microsoft.Dynamics.CRM.PublishXml()");
+        var publishXml = RegExp.escape(fakeUrl + "/api/data/v8.0/PublishXml()");
         xhr.respondWith("POST", new RegExp(publishXml),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );

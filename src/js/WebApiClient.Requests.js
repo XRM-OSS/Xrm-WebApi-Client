@@ -80,7 +80,7 @@
             url += WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/"; 
         } 
         
-        if (this.name.indexOf("Microsoft.Dynamics.CRM.") === -1) {
+        if (this.bound && this.name.indexOf("Microsoft.Dynamics.CRM.") === -1) {
             url += "Microsoft.Dynamics.CRM.";
         }
         url += this.name;
