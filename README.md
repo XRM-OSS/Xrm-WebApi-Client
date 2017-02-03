@@ -287,6 +287,16 @@ WebApiClient.Execute(request)
     });
 ```
 
+### Configuration
+When having to set multiple configuration settings for the WebApiClient, you can use the ```Configure``` function, which gets an object passed with keys and values, that get projected onto the WebApiClient:
+
+```JavaScript
+WebApiClient.Configure({
+    ApiVersion: "8.2",
+    ReturnAllPages: true,
+    PrettifyErrors: false
+});
+```
 
 ### Errors
 If errors occur during processing of requests, the WebAPI client by default throws an error with the text that follows this format: xhr.statusText: xhr.response.message, i.e. "Internal Server Error: The function parameter 'EntityMoniker' cannot be found.Parameter name: parameterName".
@@ -327,7 +337,7 @@ WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Re
         value: "POST"
     },
     name: {
-        value: "Microsoft.Dynamics.CRM.AddToQueue"
+        value: "AddToQueue"
     },
     bound: {
         value: true
@@ -339,7 +349,7 @@ WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Re
 
 ```
 For further explanations regarding these requests, please check [here](#execute).
-Feel free to send PRs with the missing request definitions, I'll happily include them in the project.
+All requests should be implemented basically by now, in case of any errors in the implementations, you can override any property using the ```with``` function as described [here](#execute).
 
 Alternatively, you can use the ```WebApiClient.SendRequest``` function.
 In combination with ```WebApiClient.GetApiUrl``` and ```WebApiClient.GetSetName``` you can easily build up your request url, set your HTTP method and attach additional payload or headers.
