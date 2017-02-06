@@ -524,6 +524,45 @@ describe("WebApiClient", function() {
             }).toThrow();
         });
         
+        it("should use full name for bound requests", function(){
+            var bound = Object.create(WebApiClient.Requests.Request.prototype, {
+                method: {
+                    value: "POST"
+                },                
+                name: {
+                    value: "BoundRequest"
+                },
+                bound: {
+                    value: true
+                },
+                entityName: {
+                    value: "queue"
+                }
+            });
+            
+            var boundRequest = bound.with({
+                entityId: "56ae8258-4878-e511-80d4-00155d2a68d1"
+            });
+            
+            expect(boundRequest.buildUrl()).toBe(fakeUrl + "/api/data/v8.0/queues(56ae8258-4878-e511-80d4-00155d2a68d1)/Microsoft.Dynamics.CRM.BoundRequest()");
+        });
+        
+        it("should not use full name for unbound requests", function(){
+            var unbound = Object.create(WebApiClient.Requests.Request.prototype, {
+                method: {
+                    value: "POST"
+                },                
+                name: {
+                    value: "UnboundRequest"
+                },
+                bound: {
+                    value: false
+                }
+            });
+            
+            expect(unbound.buildUrl()).toBe(fakeUrl + "/api/data/v8.0/UnboundRequest()");
+        });
+        
         it("should execute AddToQueueRequest", function(done){
             var request = WebApiClient.Requests.AddToQueueRequest
                 .with({
