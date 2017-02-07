@@ -2,7 +2,6 @@ language: node_js
 node_js: node
 script: npm run build
 before_deploy:
-  - echo "Travis tag: $TRAVIS_TAG"
   - sed -i "s/v0.0.0/$TRAVIS_TAG/g" package.json
 deploy:
   - provider: releases
