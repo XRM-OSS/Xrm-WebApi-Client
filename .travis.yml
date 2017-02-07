@@ -5,7 +5,6 @@ before_deploy:
   - echo "Travis tag: $TRAVIS_TAG"
   - sed -i "s/v0.0.0/$TRAVIS_TAG/g" package.json
 deploy:
-  skip_cleanup: true
   - provider: releases
     api_key:
       secure: KLgNto+oYdiS+svbt4DTttw1bGKmnuWXnOGBC42fQSjekU//JE/YwxV+GsDy6/QRWS+l83demi3z5yxHl9DMN6OB6tWUb2WfNEDezt4LhI9PegHceLGcp+8tEozQDOjiSCzjKW75lrJ1CKDkdzvYvJD9t3MbCEy+6XOBb0QinpOO60xx9S7c4uc1gdvCkgWnRWHnTlt5NI0r4CxfOjMWQqlU3vlqaDXLH6J+cHCvHJ6Z4G0cnRkOE4mqtcmFHmjBamiz4cuL3/Sj5HBnp2D5d/CDiOl3VRD0s2x5GtreNAE19XYvktbn2Ie4h5TsKb2tJjp9K4oMdko6GecN/rWhxw1edH3acRmxlxPFOBOOiUP4HYgPkp7J/gD249l36KN001XS8QFBv2oRKMc6H9w8ugttumGyVKZMoyWIyDWfoejH0RPzrk0iNeKmlnyOLdw0KP0wdv5Cq3F/ln76quvRcvwSS2vmhh3slNUC9oadDjqZZy7yKy1yfgryCKRN6Myx0sMMtKJEX2Wu9Auv4l7ofVs+emVT2xL1xTmGH24RFmoxNIn5LqoelAbS/FdNVac7FF8grqxwtu0whUBjBOLx75G15r1B6gqrrRdM8NyOc+y13aPdJLCl5fAu8gQMuUUka/VhoTnJA/1wUJcs8aehG/C2UMjcztJLbR78e7pZ16w=
@@ -15,6 +14,7 @@ deploy:
       all_branches: true
       tags: true
   - provider: npm
+    skip_cleanup: true
     email: "Florian.Kroenert@gmx.de"
     api_key:
       secure: KniV8iAfjBpxTLxUioYZzmX18rtD6zY4VoHDaPPLLquJT3D32Cs+ectueMg5E5hyUquaZGg2vMnVRu6LgV89uctbbNjfyz0i1zdEdDIrcr0Dm+SsSI/x8e/PWDCj7/tL8m6VjObXQhuaQ3jec8AfHYh7rwOCGSWN8CpNhtIrkDzjPkPS6OF220RpnkBbzJ/2koifqc868xMkEhdTJWaMFIkpXMoDrR9gMAZmtDnVWmhsaAXnJm+IcUDY0ut0249ikD2Ied2gQ8yzLEAfkTqKpxkzf6oUvnBNKAfzmeQAe19SPNOi7eFO//SHu8YLGMFjvs1K7bsrVbK3vjiOGyGDIgfvQej8J1zWHi+SBXkdAoWezEl+zggcUhtMhd6PljUOIlO5G3v499hB9VHPwrHZy9ktgRh+D9vQPCWab+eBlN24yUocqS+IXCtGMYBf5S69btNQ2MibDH+pUpvB6wdxM3fXccWVm20l4a9VPvnNccEtBPjS1aPmxBNvUns1YS4fyNGDBSfGrz12Wp0TU/U+Odf0RPCLt7C8gR0jieSmleDjmoHVP5xNFsh8dYFuFoT/TCkJLxi0ACvmYnWDUHzmid8xBCJuObxTKrfzqIk2DVFvAW/y/RQMb+mA7bGyANXKDLAnCSLtz8JEgyGFN6d+Rvx8g9PzJ63axQfFsxv5qPk=
