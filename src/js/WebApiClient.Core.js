@@ -402,4 +402,4 @@
         
         return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request.headers);
     };
-} (window.WebApiClient = window.WebApiClient || {}));
+} (global.WebApiClient = global.WebApiClient || {}));

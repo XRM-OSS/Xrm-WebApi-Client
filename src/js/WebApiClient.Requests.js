@@ -3806,4 +3806,4 @@
         }
     });
 
-} (window.WebApiClient = window.WebApiClient || {}));
+} (global.WebApiClient = global.WebApiClient || {}));
