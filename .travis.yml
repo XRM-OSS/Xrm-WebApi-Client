@@ -12,6 +12,9 @@ deploy:
       tags: true
   - provider: npm
     email: "Florian.Kroenert@gmx.de"
+    before_deploy:
+      - Version=$(echo $TRAVIS_TAG | sed 's/v//g') \
+        && sed -i "s/(DoItTravis)/$Version/g" packages.json
     api_key:
       secure: KniV8iAfjBpxTLxUioYZzmX18rtD6zY4VoHDaPPLLquJT3D32Cs+ectueMg5E5hyUquaZGg2vMnVRu6LgV89uctbbNjfyz0i1zdEdDIrcr0Dm+SsSI/x8e/PWDCj7/tL8m6VjObXQhuaQ3jec8AfHYh7rwOCGSWN8CpNhtIrkDzjPkPS6OF220RpnkBbzJ/2koifqc868xMkEhdTJWaMFIkpXMoDrR9gMAZmtDnVWmhsaAXnJm+IcUDY0ut0249ikD2Ied2gQ8yzLEAfkTqKpxkzf6oUvnBNKAfzmeQAe19SPNOi7eFO//SHu8YLGMFjvs1K7bsrVbK3vjiOGyGDIgfvQej8J1zWHi+SBXkdAoWezEl+zggcUhtMhd6PljUOIlO5G3v499hB9VHPwrHZy9ktgRh+D9vQPCWab+eBlN24yUocqS+IXCtGMYBf5S69btNQ2MibDH+pUpvB6wdxM3fXccWVm20l4a9VPvnNccEtBPjS1aPmxBNvUns1YS4fyNGDBSfGrz12Wp0TU/U+Odf0RPCLt7C8gR0jieSmleDjmoHVP5xNFsh8dYFuFoT/TCkJLxi0ACvmYnWDUHzmid8xBCJuObxTKrfzqIk2DVFvAW/y/RQMb+mA7bGyANXKDLAnCSLtz8JEgyGFN6d+Rvx8g9PzJ63axQfFsxv5qPk=
     on:
