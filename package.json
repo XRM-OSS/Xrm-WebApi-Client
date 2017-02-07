@@ -1,11 +1,17 @@
 {
   "name": "Xrm-WebApi-Client",
   "description": "Dynamics CRM WebApi Client",
-  "version": "1.0.0",
+  "version": "2.1.2",
   "license": "MIT",
   "main": "./Publish/WebApiClient.min.js",
-  "repository": "https://github.com/DigitalFlow/Xrm-WebApi-Client",
-  "author": "Florian Krönert (https://github.com/DigitalFlow)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DigitalFlow/Xrm-WebApi-Client"
+  },
+  "author": {
+    "name": "Florian Krönert",
+    "url": "https://github.com/DigitalFlow"
+  },
   "devDependencies": {
     "bluebird": "^3.4.6",
     "browserify": "latest",
