@@ -1,7 +1,7 @@
 {
   "name": "xrm-webapi-client",
   "description": "Dynamics CRM WebApi Client",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "license": "MIT",
   "main": "./Publish/WebApiClient.min.js",
   "repository": {
