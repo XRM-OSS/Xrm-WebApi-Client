@@ -3,12 +3,11 @@
   "description": "Dynamics CRM WebApi Client",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "./Publish/WebApiClient.min.js",
   "repository": "https://github.com/DigitalFlow/Xrm-WebApi-Client",
   "author": "Florian Krönert (https://github.com/DigitalFlow)",
-  "dependencies": {
-    "bluebird": "^3.4.6"
-  },
   "devDependencies": {
+    "bluebird": "^3.4.6",
     "browserify": "latest",
     "jasmine-core": "*",
     "jshint": "latest",
@@ -19,9 +18,13 @@
     "sinon": "^1.17.6",
     "uglify-js": "^2.7.3"
   },
+  "files": [
+    "src",
+    "Publish"
+  ],
   "scripts": {
     "lint": "jshint src/js/WebApiClient.Core.js src/js/WebApiClient.Requests.js",
-    "build-js": "browserify src/js/globals.js src/js/WebApiClient.Core.js src/js/WebApiClient.Requests.js -d -o Publish/WebApiClient.js",
+    "build-js": "browserify src/js/WebApiClient.Core.js -s WebApiClient -o Publish/WebApiClient.js",
     "prebuild-js": "npm run lint && mkdir -p Publish",
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",

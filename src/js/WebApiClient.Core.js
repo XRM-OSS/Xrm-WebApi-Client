@@ -22,8 +22,9 @@
  * SOFTWARE.
  *
 */
-(function (WebApiClient, undefined) {
+(function (undefined) {
     "use strict";
+    var WebApiClient = {};
     
 	/// <summary>The API version that will be used when sending requests. Default is "8.0"</summary>    
     WebApiClient.ApiVersion = "8.0";
@@ -34,9 +35,10 @@
     /// <summary>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</summary>
     WebApiClient.PrettifyErrors = true;
     
-    // Override promise locally. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
+    // Override promise. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of 
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
-    var Promise = require("bluebird");
+    // In addition to that, users don't have to import it themselves for using own promises in legacy browsers.
+    global.Promise = require("bluebird");
     
     function GetCrmContext() {
         if (typeof (GetGlobalContext) !== "undefined") {
@@ -402,4 +404,9 @@
         
         return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request.headers);
     };
-} (global.WebApiClient = global.WebApiClient || {}));
+    
+    // Attach requests to Client
+    WebApiClient.Requests = require("./WebApiClient.Requests.js");
+    
+    module.exports = WebApiClient;
+} ());
