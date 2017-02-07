@@ -16,7 +16,15 @@ Bluebird is automatically included in the bundled release, no additional steps r
 For a list of supported browsers, check the bluebird [platform support](http://bluebirdjs.com/docs/install.html#supported-platforms).
 
 ## How to obtain it
-You can always download the browserified version of this framework by downloading the release.zip file from the latest release.
+### NPM
+This framework is on npm as UMD, thanks to the standalone option of browserify.
+
+The package name is xrm-webapi-client, check it out:
+
+
+[![NPM version](https://img.shields.io/npm/v/xrm-webapi-client.svg?style=flat)](https://www.npmjs.com/package/xrm-webapi-client)
+### GitHub Release
+You can always download the browserified version of this framework by downloading the release.zip file from the latest [release](https://github.com/DigitalFlow/Xrm-WebApi-Client/releases).
 
 ## Build Status
 [![Build Status](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client.svg?branch=master)](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client)
