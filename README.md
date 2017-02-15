@@ -242,7 +242,9 @@ The WebApiClient has a function WebApiClient.Execute, which takes a request as p
 Requests are objects that base on the WebApiClient.Requests.Request base request.
 When wanting to send an already implemented request using Execute, you can either use the blank request (such as the WhoAmIRequest, that does not need any parameters), or in case it needs parameters, extend an existing request.
 
-Check the [wiki](https://github.com/DigitalFlow/Xrm-WebApi-Client/wiki) for a list of requests that are implemented in the current release and examples on how to send them! Missing requests can be implemented as described [here](#not-yet-implemented-requests).
+Missing or custom action requests can be implemented as described [here](#not-yet-implemented-requests)
+
+Check the [wiki](https://github.com/DigitalFlow/Xrm-WebApi-Client/wiki) for a list of requests that are implemented in the current release and examples on how to send them!
 
 #### No parameter request
 The WhoAmI request does not need any parameters, therefore we can just pass the blank request:
@@ -336,7 +338,7 @@ WebApiClient.Create(request)
 ```
 
 ### Not yet implemented requests
-If you need to use requests, that are not yet implemented, you can create an executor for the missing request and append it to the WebApiClient.Requests object. Be sure to create your missing request by calling Object.create on the base request object.
+If you need to use requests, that are not yet implemented (such as custom actions), you can create an executor for the missing request and append it to the WebApiClient.Requests object (if you want to reuse it). Be sure to create your missing request by calling Object.create on the base request object.
 This might look something like this:
 
 ```JavaScript
