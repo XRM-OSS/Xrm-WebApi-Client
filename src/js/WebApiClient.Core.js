@@ -411,18 +411,13 @@
     };
 
     WebApiClient.Expand = function (parameters) {
-    /// <summary>Expands all odata.nextLink for one record or an array of records</summary>
+    /// <summary>Expands all odata.nextLink / deferred properties for an array of records</summary>
     /// <param name="parameters" type="Object">Object that contains 'records' array or object. Optional 'headers'.</param>
     /// <returns>Promise for sent request.</returns>
         var params = parameters || {};
         var records = params.records;
 
-        if (!Array.isArray(records)) {
-            records = [records];
-        }
-
         var requests = [];
-        var nextLinkRegex = /(.*)@odata.nextLink/ig;
 
         for (var i = 0; i < records.length; i++) {
             var record = records[i];
@@ -432,26 +427,20 @@
                     continue;
                 }
 
-                if (!nextLinkRegex.test(attribute)) {
+                var name = attribute.replace("@odata.nextLink", "");
+
+                // If nothing changed, this was not a deferred attribute
+                if (name === attribute) {
                     continue;
                 }
-
-                var matches = nextLinkRegex.exec(attribute);
-
-                // First match is the whole input, second one is the attribute name
-                if (matches.length !== 2) {
-                    continue;
-                }
-
-                var name = matches[1];
 
                 record[name] = WebApiClient.SendRequest("GET", record[attribute], null, params.headers);
 
                 // Delete @odata.nextLink property
                 delete record[attribute];
-
-                requests.push(Promise.props(record));
             }
+
+            requests.push(Promise.props(record));
         }
 
         return Promise.all(requests);
