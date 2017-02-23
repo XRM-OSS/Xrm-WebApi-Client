@@ -23,6 +23,7 @@ The package name is xrm-webapi-client, check it out:
 
 
 [![NPM version](https://img.shields.io/npm/v/xrm-webapi-client.svg?style=flat)](https://www.npmjs.com/package/xrm-webapi-client)
+
 ### GitHub Release
 You can always download the browserified version of this framework by downloading the release.zip file from the latest [release](https://github.com/DigitalFlow/Xrm-WebApi-Client/releases).
 
@@ -141,6 +142,29 @@ WebApiClient.Retrieve(request)
     .catch(function(error) {
         // Handle error
     });
+```
+
+#### Auto expand collection-valued navigation properties
+When retrieving collection-valued navigation properties, the expand is being deferred, i.e. you don't retrieve immediate results, but a property ending in "@odata.nextLink" that contains an URL to the results for this expand. You can read more about this [here](https://msdn.microsoft.com/en-us/library/gg334767.aspx#bkmk_expandRelated).
+For easing to retrieve these, we can use the `WebApiClient.Expand` function. It takes an array of records and expands all properties, that end in "@odata.nextLink".
+You can additionally pass headers to the request, that will be appended to each retrieve request for properties.
+
+```JavaScript
+WebApiClient.Retrieve({
+    entityName: "account", 
+    queryParams: "?$expand=contact_customer_accounts"
+})
+.then(function(response){
+    return WebApiClient.Expand({
+        records: response.value
+    });
+})
+.then(function(response){        
+    // Process response
+})
+.catch(function(error) {
+    // Handle error
+});
 ```
 
 ### Update
