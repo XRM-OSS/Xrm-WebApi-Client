@@ -21,6 +21,11 @@ This framework is on npm as UMD, thanks to the standalone option of browserify.
 
 The package name is xrm-webapi-client, check it out:
 
+## How to build it
+For bootstrapping, simply run ```npm install``` once initially.
+
+For every build, you can just call ```npm run build```.
+Note: For Windows you'll have to delete the `Publish` and `-p` directories before each build, as Windows does not know `mkdir -p`, which causes the issues. This will be resolved eventually.
 
 [![NPM version](https://img.shields.io/npm/v/xrm-webapi-client.svg?style=flat)](https://www.npmjs.com/package/xrm-webapi-client)
 
