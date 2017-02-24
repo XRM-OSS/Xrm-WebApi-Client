@@ -446,8 +446,5 @@
         return Promise.all(requests);
     };
 
-    // Attach requests to Client
-    WebApiClient.Requests = require("./WebApiClient.Requests.js");
-
     module.exports = WebApiClient;
 } ());

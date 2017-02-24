@@ -1,35 +1,37 @@
 (function (undefined) {
     "use strict";
-    
+
+    var WebApiClient = require("./WebApiClient.Core.js");
+
     function AppendRequestParams(url, params) {
         url += "(";
         var paramCount = 1;
-        
+
         for (var parameter in params) {
             if (!params.hasOwnProperty(parameter)) {
                 continue;
             }
-            
+
             if (paramCount !== 1) {
                 url += ",";
             }
-            
+
             url += parameter + "=@p" + paramCount++;
         }
-            
+
         url += ")";
-        
+
         return url;
     }
-    
+
     function AppendParamValues (url, params) {
         var paramCount = 1;
-        
+
         for (var parameter in params) {
             if (!params.hasOwnProperty(parameter)) {
                 continue;
             }
-            
+
             if (paramCount === 1) {
                 url += "?@p1=";
             }
@@ -37,15 +39,15 @@
                 url += "&@p" + paramCount + "=";
             }
             paramCount++;
-            
+
             url += params[parameter];
         }
-        
+
         return url;
     }
-    
+
     var Requests = {};
-    
+
     Requests.Request = function () {
         this.method = "";
         this.name = "";
@@ -56,49 +58,49 @@
         this.headers = null;
         this.urlParams = null;
     };
-    
+
     Requests.Request.prototype.with = function (parameters) {
         var request = Object.create(this);
-        
+
         for (var parameter in parameters) {
             if (!parameters.hasOwnProperty(parameter)) {
                 continue;
             }
-            
+
             request[parameter] = parameters[parameter];
         }
-        
+
         return request;
     };
-    
+
     Requests.Request.prototype.buildUrl = function() {
         var baseUrl = WebApiClient.GetApiUrl();
         var url = baseUrl;
-        
+
         if (this.bound && this.entityId) {
             var entityId = this.entityId.replace("{", "").replace("}", "");
-            url += WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/"; 
-        } 
-        
+            url += WebApiClient.GetSetName(this.entityName) + "(" + entityId + ")/";
+        }
+
         if (this.bound && this.name.indexOf("Microsoft.Dynamics.CRM.") === -1) {
             url += "Microsoft.Dynamics.CRM.";
         }
         url += this.name;
-        
+
         if (this.urlParams) {
             url = AppendRequestParams(url, this.urlParams);
             url = AppendParamValues(url, this.urlParams);
         } else {
             url += "()";
         }
-        
+
         return url;
     };
-    
+
     // Functions
-    
+
     // MSDN: https://msdn.microsoft.com/en-us/library/mt718083.aspx
-    // Calculates the value of a rollup attribute. 
+    // Calculates the value of a rollup attribute.
     Requests.CalculateRollupFieldRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -111,7 +113,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt593054.aspx
-    // Calculates the total time, in minutes, that you used while you worked on an incident (case). 
+    // Calculates the total time, in minutes, that you used while you worked on an incident (case).
     Requests.CalculateTotalTimeIncidentRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -132,7 +134,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt683529.aspx
-    // Check whether the incoming email message is relevant to the Microsoft Dynamics 365 system. 
+    // Check whether the incoming email message is relevant to the Microsoft Dynamics 365 system.
     Requests.CheckIncomingEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -145,7 +147,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt593013.aspx
-    // Contains the data that is needed to check whether the incoming email message should be promoted to the Microsoft Dynamics 365 system. 
+    // Contains the data that is needed to check whether the incoming email message should be promoted to the Microsoft Dynamics 365 system.
     Requests.CheckPromoteEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -158,7 +160,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt607800.aspx
-    // Downloads a report definition. 
+    // Downloads a report definition.
     Requests.DownloadReportDefinitionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -179,7 +181,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607824.aspx
-	// Converts the calendar rules to an array of available time blocks for the specified period. 
+	// Converts the calendar rules to an array of available time blocks for the specified period.
     Requests.ExpandCalendarRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -200,7 +202,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593047.aspx
-	// Exports localizable fields values to a compressed file. 
+	// Exports localizable fields values to a compressed file.
     Requests.ExportFieldTranslationRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -213,7 +215,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491169.aspx
-	// Converts a query in FetchXML to a QueryExpression. 
+	// Converts a query in FetchXML to a QueryExpression.
     Requests.FetchXmlToQueryExpressionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -247,7 +249,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593004.aspx
-	// Retrieves all the time zone definitions for the specified locale and to return only the display name attribute. 
+	// Retrieves all the time zone definitions for the specified locale and to return only the display name attribute.
     Requests.GetAllTimeZonesWithDisplayNameRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -264,7 +266,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608119.aspx
-	// Retrieves the default price level (price list) for the current user based on the user’s territory relationship with the price level. 
+	// Retrieves the default price level (price list) for the current user based on the user’s territory relationship with the price level.
     Requests.GetDefaultPriceLevelRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -281,7 +283,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622422.aspx
-	// Retrieves distinct values from the parse table for a column in the source file that contains list values. 
+	// Retrieves distinct values from the parse table for a column in the source file that contains list values.
     Requests.GetDistinctValuesImportFileRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -302,7 +304,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622408.aspx
-	// Retrieves the source-file column headings; or retrieve the system-generated column headings if the source file does not contain column headings. 
+	// Retrieves the source-file column headings; or retrieve the system-generated column headings if the source file does not contain column headings.
     Requests.GetHeaderColumnsImportFileRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -323,7 +325,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683531.aspx
-	// Gets the quantity decimal value of a product for the specified entity in the target. 
+	// Gets the quantity decimal value of a product for the specified entity in the target.
     Requests.GetQuantityDecimalRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -340,7 +342,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607697.aspx
-	// Retrieves the history limit for a report. 
+	// Retrieves the history limit for a report.
     Requests.GetReportHistoryLimitRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -361,7 +363,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607644.aspx
-	// Retrieves the time zone code for the specified localized time zone name. 
+	// Retrieves the time zone code for the specified localized time zone name.
     Requests.GetTimeZoneCodeByLocalizedNameRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -374,7 +376,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608131.aspx
-	// Retrieves a list of all the entities that can participate in a Many-to-Many entity relationship. 
+	// Retrieves a list of all the entities that can participate in a Many-to-Many entity relationship.
     Requests.GetValidManyToManyRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -387,7 +389,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608031.aspx
-	// Retrieves a list of entity logical names that are valid as the primary entity (one) from the specified entity in a one-to-many relationship. 
+	// Retrieves a list of entity logical names that are valid as the primary entity (one) from the specified entity in a one-to-many relationship.
     Requests.GetValidReferencedEntitiesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -400,7 +402,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt592992.aspx
-	// Retrieves the set of entities that are valid as the related entity (many) to the specified entity in a one-to-many relationship. 
+	// Retrieves the set of entities that are valid as the related entity (many) to the specified entity in a one-to-many relationship.
     Requests.GetValidReferencingEntitiesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -439,7 +441,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607606.aspx
-	// Determines whether a solution component is customizable. 
+	// Determines whether a solution component is customizable.
     Requests.IsComponentCustomizableRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -452,7 +454,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607678.aspx
-	// Determines whether data encryption is currently running (active or inactive). 
+	// Determines whether data encryption is currently running (active or inactive).
     Requests.IsDataEncryptionActiveRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -491,7 +493,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608100.aspx
-	// Searches the specified resource for an available time block that matches the specified parameters. 
+	// Searches the specified resource for an available time block that matches the specified parameters.
     Requests.QueryScheduleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -504,7 +506,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622429.aspx
-	// Retrieves the absolute URL and the site collection URL for a SharePoint location record in Microsoft Dynamics 365. 
+	// Retrieves the absolute URL and the site collection URL for a SharePoint location record in Microsoft Dynamics 365.
     Requests.RetrieveAbsoluteAndSiteCollectionUrlRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -534,7 +536,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607682.aspx
-	// Retrieves the collection of users that report to the specified system user (user). 
+	// Retrieves the collection of users that report to the specified system user (user).
     Requests.RetrieveAllChildUsersSystemUserRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -555,7 +557,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683536.aspx
-	// Retrieves metadata information about all the entities. 
+	// Retrieves metadata information about all the entities.
     Requests.RetrieveAllEntitiesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -568,7 +570,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607503.aspx
-	// Retrieve the data that defines the content and behavior of the application ribbon. 
+	// Retrieve the data that defines the content and behavior of the application ribbon.
     Requests.RetrieveApplicationRibbonRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -581,7 +583,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593106.aspx
-	// Retrieves the list of database partitions that are used to store audited history data. 
+	// Retrieves the list of database partitions that are used to store audited history data.
     Requests.RetrieveAuditPartitionListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -594,7 +596,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607635.aspx
-	// Retrieves the list of language packs that are installed and enabled on the server. 
+	// Retrieves the list of language packs that are installed and enabled on the server.
     Requests.RetrieveAvailableLanguagesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -607,7 +609,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607489.aspx
-	// Retrieves all business units from the business unit hierarchy. 
+	// Retrieves all business units from the business unit hierarchy.
     Requests.RetrieveBusinessHierarchyBusinessUnitRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -628,7 +630,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607979.aspx
-	// Retrieves all resources that are related to the specified resource group 
+	// Retrieves all resources that are related to the specified resource group
     Requests.RetrieveByGroupResourceRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -649,7 +651,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607881.aspx
-	// Retrieves the resource groups (scheduling groups) that contain the specified resource. 
+	// Retrieves the resource groups (scheduling groups) that contain the specified resource.
     Requests.RetrieveByResourceResourceGroupRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -683,7 +685,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607560.aspx
-	// Retrieves the top-ten articles about a specified product from the knowledge base of articles for the organization 
+	// Retrieves the top-ten articles about a specified product from the knowledge base of articles for the organization
     Requests.RetrieveByTopIncidentProductKbArticleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -704,7 +706,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608058.aspx
-	// Retrieves the top-ten articles about a specified subject from the knowledge base of articles for your organization. 
+	// Retrieves the top-ten articles about a specified subject from the knowledge base of articles for your organization.
     Requests.RetrieveByTopIncidentSubjectKbArticleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -725,7 +727,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608120.aspx
-	// Retrieve information about the current organization. 
+	// Retrieve information about the current organization.
     Requests.RetrieveCurrentOrganizationRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -738,7 +740,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608110.aspx
-	// Retrieves the data encryption key value. 
+	// Retrieves the data encryption key value.
     Requests.RetrieveDataEncryptionKeyRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -751,7 +753,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607985.aspx
-	// Retrieves a collection of dependency records that describe any solution components that would prevent a solution component from being deleted. 
+	// Retrieves a collection of dependency records that describe any solution components that would prevent a solution component from being deleted.
     Requests.RetrieveDependenciesForDeleteRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -764,7 +766,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607791.aspx
-	// Retrieves a list of the solution component dependencies that can prevent you from uninstalling a managed solution. 
+	// Retrieves a list of the solution component dependencies that can prevent you from uninstalling a managed solution.
     Requests.RetrieveDependenciesForUninstallRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -777,7 +779,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593045.aspx
-	// Retrieves a list dependencies for solution components that directly depend on a solution component. 
+	// Retrieves a list dependencies for solution components that directly depend on a solution component.
     Requests.RetrieveDependentComponentsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -790,7 +792,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593056.aspx
-	// Retrieves the type of license for a deployment of Microsoft Dynamics 365. 
+	// Retrieves the type of license for a deployment of Microsoft Dynamics 365.
     Requests.RetrieveDeploymentLicenseTypeRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -803,7 +805,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607656.aspx
-	// Retrieves a list of language packs that are installed on the server that have been disabled. 
+	// Retrieves a list of language packs that are installed on the server that have been disabled.
     Requests.RetrieveDeprovisionedLanguagesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -829,7 +831,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491170.aspx
-	// Retrieve the changes for an entity. 
+	// Retrieve the changes for an entity.
     Requests.RetrieveEntityChangesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -842,7 +844,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607698.aspx
-	// Retrieves ribbon definitions for an entity. 
+	// Retrieves ribbon definitions for an entity.
     Requests.RetrieveEntityRibbonRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -855,7 +857,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491173.aspx
-	// Retrieves the appointments for the current user for a specific date range from the exchange web service. 
+	// Retrieves the appointments for the current user for a specific date range from the exchange web service.
     Requests.RetrieveExchangeAppointmentsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -868,7 +870,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607795.aspx
-	// Retrieves the exchange rate. 
+	// Retrieves the exchange rate.
     Requests.RetrieveExchangeRateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -881,7 +883,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491174.aspx
-	// Retrieves the entity forms that are available for a specified user. 
+	// Retrieves the entity forms that are available for a specified user.
     Requests.RetrieveFilteredFormsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -898,7 +900,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607487.aspx
-	// Retrieves the formatted results from an import job. 
+	// Retrieves the formatted results from an import job.
     Requests.RetrieveFormattedImportJobResultsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -911,7 +913,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607696.aspx
-	// Retrieves the list of language packs that are installed on the server. 
+	// Retrieves the list of language packs that are installed on the server.
     Requests.RetrieveInstalledLanguagePacksRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -924,7 +926,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608102.aspx
-	// Retrieves the version of an installed language pack. 
+	// Retrieves the version of an installed language pack.
     Requests.RetrieveInstalledLanguagePackVersionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -937,7 +939,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607844.aspx
-	// Retrieves the number of used and available licenses for a deployment of Microsoft Dynamics 365. 
+	// Retrieves the number of used and available licenses for a deployment of Microsoft Dynamics 365.
     Requests.RetrieveLicenseInfoRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -963,7 +965,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt592988.aspx
-	// Retrieves folder-level tracking rules for a mailbox. 
+	// Retrieves folder-level tracking rules for a mailbox.
     Requests.RetrieveMailboxTrackingFoldersRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -976,7 +978,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622412.aspx
-	// Retrieves the members of a bulk operation. 
+	// Retrieves the members of a bulk operation.
     Requests.RetrieveMembersBulkOperationRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -997,7 +999,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607580.aspx
-	// Retrieves a list of missing components in the target organization. 
+	// Retrieves a list of missing components in the target organization.
     Requests.RetrieveMissingComponentsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1010,7 +1012,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607972.aspx
-	// Retrieves any required solution components that are not included in the solution. 
+	// Retrieves any required solution components that are not included in the solution.
     Requests.RetrieveMissingDependenciesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1023,7 +1025,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607527.aspx
-	// Retrieves the resources that are used by an organization. 
+	// Retrieves the resources that are used by an organization.
     Requests.RetrieveOrganizationResourcesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1036,7 +1038,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607818.aspx
-	// Retrieves the collection of the parent resource groups of the specified resource group (scheduling group). 
+	// Retrieves the collection of the parent resource groups of the specified resource group (scheduling group).
     Requests.RetrieveParentGroupsResourceGroupRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1062,7 +1064,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607613.aspx
-	// Retrieves pages of posts, including comments for each post, for all records that the calling user is following. 
+	// Retrieves pages of posts, including comments for each post, for all records that the calling user is following.
     Requests.RetrievePersonalWallRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1096,7 +1098,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607755.aspx
-	// Retrieves all the secured attribute privileges a user or team has through direct or indirect (through team membership) associations with the FieldSecurityProfile entity. 
+	// Retrieves all the secured attribute privileges a user or team has through direct or indirect (through team membership) associations with the FieldSecurityProfile entity.
     Requests.RetrievePrincipalAttributePrivilegesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1130,7 +1132,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622426.aspx
-	// Retrieves the set of privileges defined in the system. 
+	// Retrieves the set of privileges defined in the system.
     Requests.RetrievePrivilegeSetRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1160,7 +1162,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607701.aspx
-	// Retrieve all the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice. 
+	// Retrieve all the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice.
     Requests.RetrieveProductPropertiesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1177,7 +1179,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593074.aspx
-	// Retrieves the version of a provisioned language pack. 
+	// Retrieves the version of a provisioned language pack.
     Requests.RetrieveProvisionedLanguagePackVersionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1190,7 +1192,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607900.aspx
-	// Retrieves the list of provisioned languages. 
+	// Retrieves the list of provisioned languages.
     Requests.RetrieveProvisionedLanguagesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1203,7 +1205,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683540.aspx
-	// Retrieves pages of posts, including comments for each post, for a specified record. 
+	// Retrieves pages of posts, including comments for each post, for a specified record.
     Requests.RetrieveRecordWallRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1220,7 +1222,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607927.aspx
-	// Retrieves a collection of solution components that are required for a solution component. 
+	// Retrieves a collection of solution components that are required for a solution component.
     Requests.RetrieveRequiredComponentsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1233,7 +1235,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607997.aspx
-	// Retrieves the privileges that are assigned to the specified role. 
+	// Retrieves the privileges that are assigned to the specified role.
     Requests.RetrieveRolePrivilegesRoleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1246,7 +1248,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607604.aspx
-	// Retrieves the collection of child resource groups from the specified resource group. 
+	// Retrieves the collection of child resource groups from the specified resource group.
     Requests.RetrieveSubGroupsResourceGroupRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1267,7 +1269,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608036.aspx
-	// Retrieves the privileges for a team. 
+	// Retrieves the privileges for a team.
     Requests.RetrieveTeamPrivilegesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1288,7 +1290,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607518.aspx
-	// Retrieves a time stamp for the metadata. 
+	// Retrieves a time stamp for the metadata.
     Requests.RetrieveTimestampRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1301,7 +1303,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683541.aspx
-	// Retrieves a collection of unpublished organization-owned records that satisfy the specified query criteria. 
+	// Retrieves a collection of unpublished organization-owned records that satisfy the specified query criteria.
     Requests.RetrieveUnpublishedMultipleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1318,7 +1320,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607996.aspx
-	// Retrieves the privileges a system user (user) has through his or her roles in the specified business unit. 
+	// Retrieves the privileges a system user (user) has through his or her roles in the specified business unit.
     Requests.RetrieveUserPrivilegesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1339,7 +1341,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607579.aspx
-	// Retrieves all private queues of a specified user and optionally all public queues. 
+	// Retrieves all private queues of a specified user and optionally all public queues.
     Requests.RetrieveUserQueuesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1360,7 +1362,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593041.aspx
-	// Retrieves the version number of the Microsoft Dynamics 365 Server. 
+	// Retrieves the version number of the Microsoft Dynamics 365 Server.
     Requests.RetrieveVersionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1373,7 +1375,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491176.aspx
-	// Retrieves all the entity records that are related to the specified record. 
+	// Retrieves all the entity records that are related to the specified record.
     Requests.RollupRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1386,7 +1388,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608029.aspx
-	// Searches for available time slots that fulfill the specified appointment request. 
+	// Searches for available time slots that fulfill the specified appointment request.
     Requests.SearchRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1433,7 +1435,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683544.aspx
-	// Searches for knowledge base articles that contain the specified title. 
+	// Searches for knowledge base articles that contain the specified title.
     Requests.SearchByTitleKbArticleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1450,7 +1452,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt683545.aspx
-	// Validates a rule for a recurring appointment. 
+	// Validates a rule for a recurring appointment.
     Requests.ValidateRecurrenceRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1463,7 +1465,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt607925.aspx
-    // Retrieves the system user ID for the currently logged on user or the user under whose context the code is running. 
+    // Retrieves the system user ID for the currently logged on user or the user under whose context the code is running.
     Requests.WhoAmIRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "GET",
@@ -1476,7 +1478,7 @@
     });
 
     // Actions
-    
+
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607569.aspx
 	// Adds an item to a campaign.
     Requests.AddItemCampaignRequest = Object.create(Requests.Request.prototype, {
@@ -1495,7 +1497,7 @@
     });
 
 	// MSDN:https://msdn.microsoft.com/en-us/library/mt607559.aspx
-	// Adds an item to a campaign activity. 
+	// Adds an item to a campaign activity.
     Requests.AddItemCampaignActivityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1508,7 +1510,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607641.aspx
-	// Adds members to a list. 
+	// Adds members to a list.
     Requests.AddListMembersListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1521,7 +1523,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607495.aspx
-	// Adds a member to a list (marketing list). 
+	// Adds a member to a list (marketing list).
     Requests.AddMemberListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1542,7 +1544,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607496.aspx
-	// Adds members to a team. 
+	// Adds members to a team.
     Requests.AddMembersTeamRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1563,7 +1565,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593089.aspx
-	// Adds the specified principal to the list of queue members. 
+	// Adds the specified principal to the list of queue members.
     Requests.AddPrincipalToQueueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1584,7 +1586,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607862.aspx
-	// Adds a set of existing privileges to an existing role. 
+	// Adds a set of existing privileges to an existing role.
     Requests.AddPrivilegesRoleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1605,7 +1607,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607566.aspx
-	// Adds recurrence information to an existing appointment. 
+	// Adds recurrence information to an existing appointment.
     Requests.AddRecurrenceRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1626,7 +1628,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593057.aspx
-	// Adds a solution component to an unmanaged solution. 
+	// Adds a solution component to an unmanaged solution.
     Requests.AddSolutionComponentRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1660,7 +1662,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607951.aspx
-	// Adds a user to the auto created access team for the specified record. 
+	// Adds a user to the auto created access team for the specified record.
     Requests.AddUserToRecordTeamRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1681,7 +1683,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608069.aspx
-	// Applies record creation and update rules to activities in 365 created as a result of the integration with external applications. 
+	// Applies record creation and update rules to activities in 365 created as a result of the integration with external applications.
     Requests.ApplyRecordCreationAndUpdateRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1694,7 +1696,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608125.aspx
-	// Applies the active routing rule to an incident. 
+	// Applies the active routing rule to an incident.
     Requests.ApplyRoutingRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1707,7 +1709,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607766.aspx
-	// Generates a new set of attribute mappings based on the metadata. 
+	// Generates a new set of attribute mappings based on the metadata.
     Requests.AutoMapEntityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1720,7 +1722,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt718079.aspx
-	// Schedules or "books" an appointment, recurring appointment, or service appointment (service activity). 
+	// Schedules or "books" an appointment, recurring appointment, or service appointment (service activity).
     Requests.BookRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1759,7 +1761,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607988.aspx
-	// Calculates the value of an opportunity that is in the "Won" state. 
+	// Calculates the value of an opportunity that is in the "Won" state.
     Requests.CalculateActualValueOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1793,7 +1795,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593059.aspx
-	// Checks whether the specified entity can be the primary entity (one) in a one-to-many relationship. 
+	// Checks whether the specified entity can be the primary entity (one) in a one-to-many relationship.
     Requests.CanBeReferencedRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1806,7 +1808,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607578.aspx
-	// Checkes whether an entity can be the referencing entity in a one-to-many relationship. 
+	// Checkes whether an entity can be the referencing entity in a one-to-many relationship.
     Requests.CanBeReferencingRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1819,7 +1821,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607610.aspx
-	// Cancels a contract. 
+	// Cancels a contract.
     Requests.CancelContractRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1840,7 +1842,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607587.aspx
-	// Cancels a sales order. 
+	// Cancels a sales order.
     Requests.CancelSalesOrderRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1853,7 +1855,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607577.aspx
-	// Checks whether an entity can participate in a many-to-many relationship. 
+	// Checks whether an entity can participate in a many-to-many relationship.
     Requests.CanManyToManyRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1892,7 +1894,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607895.aspx
-	// Copies an existing contract and its line items. 
+	// Copies an existing contract and its line items.
     Requests.CloneContractRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1913,7 +1915,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt718080.aspx
-	// For internal use only. 
+	// For internal use only.
     Requests.CloneMobileOfflineProfileRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1934,7 +1936,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608030.aspx
-	// Copies an existing product family, product, or bundle under the same parent record. 
+	// Copies an existing product family, product, or bundle under the same parent record.
     Requests.CloneProductRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1968,7 +1970,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607685.aspx
-	// Closes a quote. 
+	// Closes a quote.
     Requests.CloseQuoteRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1981,7 +1983,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608088.aspx
-	// Updates a duplicate rule (duplicate detection rule) and its related duplicate rule conditions. 
+	// Updates a duplicate rule (duplicate detection rule) and its related duplicate rule conditions.
     Requests.CompoundUpdateDuplicateDetectionRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -1994,7 +1996,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607749.aspx
-	// Converts a team of type owner to a team of type access. 
+	// Converts a team of type owner to a team of type access.
     Requests.ConvertOwnerTeamToAccessTeamRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2015,7 +2017,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607933.aspx
-	// Converts a product to a kit. 
+	// Converts a product to a kit.
     Requests.ConvertProductToKitRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2028,7 +2030,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607842.aspx
-	// Converts a quote to a sales order. 
+	// Converts a quote to a sales order.
     Requests.ConvertQuoteToSalesOrderRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2041,7 +2043,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607736.aspx
-	// Converts a sales order to an invoice. 
+	// Converts a sales order to an invoice.
     Requests.ConvertSalesOrderToInvoiceRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2054,7 +2056,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607820.aspx
-	// Copies a campaign. 
+	// Copies a campaign.
     Requests.CopyCampaignRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2096,7 +2098,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593064.aspx
-	// Creates a static list from the specified dynamic list and add the members that satisfy the dynamic list query criteria to the static list. 
+	// Creates a static list from the specified dynamic list and add the members that satisfy the dynamic list query criteria to the static list.
     Requests.CopyDynamicListToStaticRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2116,8 +2118,8 @@
         }
     });
 
-	// MSDN: https://msdn.microsoft.com/en-us/library/mt607620.aspx 
-	// Copies the members from the source list to the target list without creating duplicates. 
+	// MSDN: https://msdn.microsoft.com/en-us/library/mt607620.aspx
+	// Copies the members from the source list to the target list without creating duplicates.
     Requests.CopyMembersListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2138,7 +2140,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608044.aspx
-	// Creates a new entity form that is based on an existing entity form. 
+	// Creates a new entity form that is based on an existing entity form.
     Requests.CopySystemFormRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2159,7 +2161,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607931.aspx
-	// Creates a quick campaign to distribute an activity to members of a list (marketing list). 
+	// Creates a quick campaign to distribute an activity to members of a list (marketing list).
     Requests.CreateActivitiesListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2185,7 +2187,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593100.aspx
-	// Creates an exception for the recurring appointment instance. 
+	// Creates an exception for the recurring appointment instance.
     Requests.CreateExceptionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2202,7 +2204,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608070.aspx
-	// Creates future unexpanded instances for the recurring appointment master. 
+	// Creates future unexpanded instances for the recurring appointment master.
     Requests.CreateInstanceRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2241,7 +2243,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622404.aspx
-	// Creates a workflow (process) from a workflow template. 
+	// Creates a workflow (process) from a workflow template.
     Requests.CreateWorkflowFromTemplateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2275,7 +2277,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607758.aspx
-	// Deletes all audit data records up until a specified end date. 
+	// Deletes all audit data records up until a specified end date.
     Requests.DeleteAuditDataRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2288,7 +2290,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608051.aspx
-	// Deletes instances of a recurring appointment master that have an “Open” state. 
+	// Deletes instances of a recurring appointment master that have an “Open” state.
     Requests.DeleteOpenInstancesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2301,7 +2303,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607754.aspx
-	// Deletes an option value in a global or local option set. 
+	// Deletes an option value in a global or local option set.
     Requests.DeleteOptionValueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2314,7 +2316,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607515.aspx
-	// Creates an email activity record from an incoming email message. 
+	// Creates an email activity record from an incoming email message.
     Requests.DeliverIncomingEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2331,7 +2333,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608033.aspx
-	// Creates an email activity record from the specified email message 
+	// Creates an email activity record from the specified email message
     Requests.DeliverPromoteEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2352,7 +2354,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608078.aspx
-	// Deprovisions a language. 
+	// Deprovisions a language.
     Requests.DeprovisionLanguageRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2365,7 +2367,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607926.aspx
-	// Creates a bulk operation that distributes a campaign activity. 
+	// Creates a bulk operation that distributes a campaign activity.
     Requests.DistributeCampaignActivityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2407,7 +2409,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622402.aspx
-	// Exports a data map as an XML formatted data. 
+	// Exports a data map as an XML formatted data.
     Requests.ExportMappingsImportMapRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2428,7 +2430,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607590.aspx
-	// Exports a solution. 
+	// Exports a solution.
     Requests.ExportSolutionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2441,7 +2443,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608097.aspx
-	// Exports all translations for a specific solution to a compressed file. 
+	// Exports all translations for a specific solution to a compressed file.
     Requests.ExportTranslationRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2473,7 +2475,7 @@
             writeable: true
         }
     });
-    
+
     // MSDN: https://msdn.microsoft.com/en-us/library/mt491160.aspx
 	// Performs a full-text search on knowledge articles in Dynamics 365 using the specified search text.
     Requests.FullTextSearchKnowledgeArticleRequest = Object.create(Requests.Request.prototype, {
@@ -2488,7 +2490,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593066.aspx
-	// Generates an invoice from an opportunity. 
+	// Generates an invoice from an opportunity.
     Requests.GenerateInvoiceFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2501,7 +2503,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607591.aspx
-	// Generates a quote from an opportunity. 
+	// Generates a quote from an opportunity.
     Requests.GenerateQuoteFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2514,7 +2516,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607659.aspx
-	// Generates a sales order (order) from an opportunity. 
+	// Generates a sales order (order) from an opportunity.
     Requests.GenerateSalesOrderFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2527,7 +2529,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593014.aspx
-	// Returns an existing social profile record if one exists, otherwise generates a new one and returns it. 
+	// Returns an existing social profile record if one exists, otherwise generates a new one and returns it.
     Requests.GenerateSocialProfileRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2548,7 +2550,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607526.aspx
-	// Retrieves the products from an opportunity and copy them to the invoice. 
+	// Retrieves the products from an opportunity and copy them to the invoice.
     Requests.GetInvoiceProductsFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2569,7 +2571,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607548.aspx
-	// Retrieves the products from an opportunity and copy them to the quote. 
+	// Retrieves the products from an opportunity and copy them to the quote.
     Requests.GetQuoteProductsFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2590,7 +2592,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607869.aspx
-	// Retrieves the products from an opportunity and copy them to the sales order. 
+	// Retrieves the products from an opportunity and copy them to the sales order.
     Requests.GetSalesOrderProductsFromOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2611,7 +2613,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593007.aspx
-	// Returns a tracking token that can then be passed as a parameter to the SendEmailRequest message. 
+	// Returns a tracking token that can then be passed as a parameter to the SendEmailRequest message.
     Requests.GetTrackingTokenEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2637,7 +2639,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607768.aspx
-	// Imports the XML representation of a data map and create an import map (data map) based on this data. 
+	// Imports the XML representation of a data map and create an import map (data map) based on this data.
     Requests.ImportMappingsImportMapRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2671,7 +2673,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608117.aspx
-	// Imports a solution. 
+	// Imports a solution.
     Requests.ImportSolutionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2684,7 +2686,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607744.aspx
-	// Imports translations from a compressed file. 
+	// Imports translations from a compressed file.
     Requests.ImportTranslationRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2697,7 +2699,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607647.aspx
-	// Inserts a new option value for a global or local option set. 
+	// Inserts a new option value for a global or local option set.
     Requests.InsertOptionValueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2710,7 +2712,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607839.aspx
-	// Inserts a new option into a StatusAttributeMetadata attribute. 
+	// Inserts a new option into a StatusAttributeMetadata attribute.
     Requests.InsertStatusValueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2723,7 +2725,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608101.aspx
-	// Installs the sample data. 
+	// Installs the sample data.
     Requests.InstallSampleDataRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2736,7 +2738,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607877.aspx
-	// Instantiates a set of filters for Dynamics 365 for Outlook for the specified user. 
+	// Instantiates a set of filters for Dynamics 365 for Outlook for the specified user.
     Requests.InstantiateFiltersRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2757,7 +2759,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt592993.aspx
-	// Creates an email message from a template (email template). 
+	// Creates an email message from a template (email template).
     Requests.InstantiateTemplateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2770,7 +2772,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607781.aspx
-	// Locks the total price of products and services that are specified in the invoice. 
+	// Locks the total price of products and services that are specified in the invoice.
     Requests.LockInvoicePricingRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2791,7 +2793,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607804.aspx
-	// Locks the total price of products and services that are specified in the sales order (order). 
+	// Locks the total price of products and services that are specified in the sales order (order).
     Requests.LockSalesOrderPricingRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2812,7 +2814,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607618.aspx
-	// Sets the state of an opportunity to Lost. 
+	// Sets the state of an opportunity to Lost.
     Requests.LoseOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2825,7 +2827,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607669.aspx
-	// Merges the information from two entity records of the same type. 
+	// Merges the information from two entity records of the same type.
     Requests.MergeRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2838,7 +2840,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607483.aspx
-	// Sets the order for an option set. 
+	// Sets the order for an option set.
     Requests.OrderOptionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2851,7 +2853,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622440.aspx
-	// Submits an asynchronous job that parses all import files that are associated with the specified import (data import). 
+	// Submits an asynchronous job that parses all import files that are associated with the specified import (data import).
     Requests.ParseImportRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2872,7 +2874,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593071.aspx
-	// Assigns a queue item to a user and optionally remove the queue item from the queue. 
+	// Assigns a queue item to a user and optionally remove the queue item from the queue.
     Requests.PickFromQueueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2893,7 +2895,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607787.aspx
-	// Processes the email responses from a marketing campaign. 
+	// Processes the email responses from a marketing campaign.
     Requests.ProcessInboundEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2914,7 +2916,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491163.aspx
-	// Creates a quick campaign to distribute an activity to accounts, contacts, or leads that are selected by a query. 
+	// Creates a quick campaign to distribute an activity to accounts, contacts, or leads that are selected by a query.
     Requests.PropagateByExpressionRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2927,7 +2929,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608077.aspx
-	// Provisions a new language. 
+	// Provisions a new language.
     Requests.ProvisionLanguageRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2940,7 +2942,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607699.aspx
-	// Publishes all changes to solution components. 
+	// Publishes all changes to solution components.
     Requests.PublishAllXmlRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2953,7 +2955,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622423.aspx
-	// Submits an asynchronous job to publish a duplicate rule. 
+	// Submits an asynchronous job to publish a duplicate rule.
     Requests.PublishDuplicateRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2974,7 +2976,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593011.aspx
-	// Publishes a product family record and all its child records. 
+	// Publishes a product family record and all its child records.
     Requests.PublishProductHierarchyRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -2995,7 +2997,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608018.aspx
-	// Publishes a theme and set it as the current theme. 
+	// Publishes a theme and set it as the current theme.
     Requests.PublishThemeRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3016,7 +3018,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt593076.aspx
-    // Publishes specified solution components. 
+    // Publishes specified solution components.
     Requests.PublishXmlRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3029,7 +3031,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt491164.aspx
-	// Qualifies a lead and create account, contact, and opportunity records that are linked to the originating lead record. 
+	// Qualifies a lead and create account, contact, and opportunity records that are linked to the originating lead record.
     Requests.QualifyLeadRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3050,7 +3052,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607614.aspx
-	// Qualifies the specified list and either override the list members or remove them according to the specified option. 
+	// Qualifies the specified list and either override the list members or remove them according to the specified option.
     Requests.QualifyMemberListRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3084,7 +3086,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607627.aspx
-	// Reassigns all records that are owned by the security principal (user or team) to another security principal (user or team). 
+	// Reassigns all records that are owned by the security principal (user or team) to another security principal (user or team).
     Requests.ReassignObjectsOwnerRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3097,7 +3099,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607965.aspx
-	// Reassigns all records that are owned by a specified user to another security principal (user or team). 
+	// Reassigns all records that are owned by a specified user to another security principal (user or team).
     Requests.ReassignObjectsSystemUserRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3118,7 +3120,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607675.aspx
-	// Recalculate system-computed values for rollup fields in the goal hierarchy. 
+	// Recalculate system-computed values for rollup fields in the goal hierarchy.
     Requests.RecalculateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3139,7 +3141,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593031.aspx
-	// Assigns a queue item back to the queue owner so others can pick it. 
+	// Assigns a queue item back to the queue owner so others can pick it.
     Requests.ReleaseToQueueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3160,7 +3162,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607534.aspx
-	// Removes a queue item from a queue. 
+	// Removes a queue item from a queue.
     Requests.RemoveFromQueueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3198,7 +3200,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607528.aspx
-	// Removes the parent for a system user (user) record. 
+	// Removes the parent for a system user (user) record.
     Requests.RemoveParentRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3211,7 +3213,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593107.aspx
-	// Removes a privilege from an existing role. 
+	// Removes a privilege from an existing role.
     Requests.RemovePrivilegeRoleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3232,7 +3234,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608116.aspx
-	// Removes a component from an unmanaged solution. 
+	// Removes a component from an unmanaged solution.
     Requests.RemoveSolutionComponentRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3245,7 +3247,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607735.aspx
-	// Removes a user from the auto created access team for the specified record. 
+	// Removes a user from the auto created access team for the specified record.
     Requests.RemoveUserFromRecordTeamRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3266,7 +3268,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593084.aspx
-	// Renews a contract and create the contract details for a new contract. 
+	// Renews a contract and create the contract details for a new contract.
     Requests.RenewContractRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3287,7 +3289,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607893.aspx
-	// Renews an entitlement. 
+	// Renews an entitlement.
     Requests.RenewEntitlementRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3308,7 +3310,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607752.aspx
-	// Replaces the privilege set of an existing role. 
+	// Replaces the privilege set of an existing role.
     Requests.ReplacePrivilegesRoleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3329,7 +3331,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt718082.aspx
-	// Reschedules an appointment, recurring appointment, or service appointment (service activity). 
+	// Reschedules an appointment, recurring appointment, or service appointment (service activity).
     Requests.RescheduleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3340,9 +3342,9 @@
             writeable: true
         }
     });
-    
+
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607633.aspx
-	// Resets the offline data filters for the calling user to the default filters for the organization. 
+	// Resets the offline data filters for the calling user to the default filters for the organization.
     Requests.ResetUserFiltersRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3355,7 +3357,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608006.aspx
-	// Reverts changes done to properties of a product family, product, or bundle record, and set it back to its last published (active) state. 
+	// Reverts changes done to properties of a product family, product, or bundle record, and set it back to its last published (active) state.
     Requests.RevertProductRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3368,7 +3370,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607543.aspx
-	// Sets the state of a quote to Draft. 
+	// Sets the state of a quote to Draft.
     Requests.ReviseQuoteRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3381,7 +3383,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607505.aspx
-	// Replaces the access rights on the target record for the specified security principal (user or team). 
+	// Replaces the access rights on the target record for the specified security principal (user or team).
     Requests.RevokeAccessRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3394,7 +3396,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607729.aspx
-	// Routes a queue item to a queue, a user, or a team. 
+	// Routes a queue item to a queue, a user, or a team.
     Requests.RouteToRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3420,7 +3422,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608061.aspx
-	// Sends an e-mail message. 
+	// Sends an e-mail message.
     Requests.SendEmailRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3441,7 +3443,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607523.aspx
-	// Sends an e-mail message to a recipient using an e-mail template. 
+	// Sends an e-mail message to a recipient using an e-mail template.
     Requests.SendEmailFromTemplateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3454,7 +3456,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607670.aspx
-	// Sends a fax. 
+	// Sends a fax.
     Requests.SendFaxRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3467,7 +3469,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607717.aspx
-	// Sends a bulk email message that is created from a template. 
+	// Sends a bulk email message that is created from a template.
     Requests.SendTemplateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3480,7 +3482,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608087.aspx
-	// Assigns equipment (facility/equipment) to a specific business unit. 
+	// Assigns equipment (facility/equipment) to a specific business unit.
     Requests.SetBusinessEquipmentRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3493,7 +3495,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593023.aspx
-	// Moves a system user (user) to a different business unit. 
+	// Moves a system user (user) to a different business unit.
     Requests.SetBusinessSystemUserRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3514,7 +3516,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608039.aspx
-	// Sets or restore the data encryption key. 
+	// Sets or restore the data encryption key.
     Requests.SetDataEncryptionKeyRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3540,7 +3542,7 @@
     });
 
     // MSDN: https://msdn.microsoft.com/en-us/library/mt607609.aspx
-    // Sets localized labels for a limited set of entity attributes. 
+    // Sets localized labels for a limited set of entity attributes.
     Requests.SetLocLabelsRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3553,7 +3555,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607617.aspx
-	// Sets a new parent system user (user) for the specified user. 
+	// Sets a new parent system user (user) for the specified user.
     Requests.SetParentSystemUserRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3587,7 +3589,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607765.aspx
-	// Links an instance of a report entity to related entities. 
+	// Links an instance of a report entity to related entities.
     Requests.SetReportRelatedRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3600,7 +3602,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608027.aspx
-	// Submits an asynchronous job that transforms the parsed data. 
+	// Submits an asynchronous job that transforms the parsed data.
     Requests.TransformImportRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3613,7 +3615,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt622443.aspx
-	// Validates the configuration of a Microsoft Azure Service Bus solution’s service endpoint. 
+	// Validates the configuration of a Microsoft Azure Service Bus solution’s service endpoint.
     Requests.TriggerServiceEndpointCheckRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3647,7 +3649,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608015.aspx
-	// Unlocks pricing for an invoice. 
+	// Unlocks pricing for an invoice.
     Requests.UnlockInvoicePricingRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3660,7 +3662,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt608026.aspx
-	// Unlocks pricing for a sales order (order). 
+	// Unlocks pricing for a sales order (order).
     Requests.UnlockSalesOrderPricingRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3673,7 +3675,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt593018.aspx
-	// Submits an asynchronous job to unpublish a duplicate rule. 
+	// Submits an asynchronous job to unpublish a duplicate rule.
     Requests.UnpublishDuplicateRuleRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3699,7 +3701,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607949.aspx
-	// Updates an option value in a global or local option set. 
+	// Updates an option value in a global or local option set.
     Requests.UpdateOptionValueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3712,7 +3714,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607561.aspx
-	// Updates values of the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice. 
+	// Updates values of the property instances (dynamic property instances) for a product added to an opportunity, quote, order, or invoice.
     Requests.UpdateProductPropertiesRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3738,7 +3740,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607556.aspx
-	// Updates an option set value in for a StateAttributeMetadata attribute. 
+	// Updates an option set value in for a StateAttributeMetadata attribute.
     Requests.UpdateStateValueRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3751,7 +3753,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607767.aspx
-	// Verifies that an appointment or service appointment (service activity) has valid available resources for the activity, duration, and site, as appropriate. 
+	// Verifies that an appointment or service appointment (service activity) has valid available resources for the activity, duration, and site, as appropriate.
     Requests.ValidateRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3781,7 +3783,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607971.aspx
-	// Sets the state of an opportunity to Won. 
+	// Sets the state of an opportunity to Won.
     Requests.WinOpportunityRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
@@ -3794,7 +3796,7 @@
     });
 
 	// MSDN: https://msdn.microsoft.com/en-us/library/mt607710.aspx
-	// Sets the state of a quote to Won. 
+	// Sets the state of a quote to Won.
     Requests.WinQuoteRequest = Object.create(Requests.Request.prototype, {
         method: {
             value: "POST",
