@@ -24,8 +24,7 @@ The package name is xrm-webapi-client, check it out:
 ## How to build it
 For bootstrapping, simply run ```npm install``` once initially.
 
-For every build, you can just call ```npm run build```.
-Note: For Windows you'll have to delete the `Publish` and `-p` directories before each build, as Windows does not know `mkdir -p`, which causes the issues. This will be resolved eventually.
+For every build, you can just call ```npm run build```. You'll find the build output in the Publish directory.
 
 [![NPM version](https://img.shields.io/npm/v/xrm-webapi-client.svg?style=flat)](https://www.npmjs.com/package/xrm-webapi-client)
 
@@ -42,7 +41,7 @@ The client supports creation of records. You have to pass the entity logical nam
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     entity: {name: "Adventure Works"}
 };
 
@@ -66,7 +65,7 @@ You can always pass query parameters which will be appended to your retrieve req
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     entityId: "00000000-0000-0000-0000-000000000001"
 };
 
@@ -83,8 +82,8 @@ WebApiClient.Retrieve(request)
 
 ```JavaScript
 var request = {
-    entityName: "contact", 
-    alternateKey: 
+    entityName: "contact",
+    alternateKey:
         [
             { property: "firstname", value: "Joe" },
             { property: "emailaddress1", value: "abc@example.com"}
@@ -114,7 +113,7 @@ By setting this to true, each retrieve multiple request will check for an @odata
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null"
 };
 
@@ -131,7 +130,7 @@ WebApiClient.Retrieve(request)
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     fetchXml: "<fetch mapping='logical'>" +
                 "<entity name='account'>" +
                     "<attribute name='accountid'/>" +
@@ -156,7 +155,7 @@ You can additionally pass headers to the request, that will be appended to each 
 
 ```JavaScript
 WebApiClient.Retrieve({
-    entityName: "account", 
+    entityName: "account",
     queryParams: "?$expand=contact_customer_accounts"
 })
 .then(function(response){
@@ -177,7 +176,7 @@ Update requests are supported. You have to pass the entity logical name, the ID 
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     entityId: "00000000-0000-0000-0000-000000000001",
     entity: { name: "Contoso" }
 };
@@ -196,7 +195,7 @@ Delete requests are supported. You have to pass the entity logical name, and ID 
 
 ```JavaScript
 var request = {
-    entityName: "account", 
+    entityName: "account",
     entityId: "00000000-0000-0000-0000-000000000001"
 };
 
@@ -216,12 +215,12 @@ This example associates an opportuntiy to an account:
 ```JavaScript
 var request = {
     relationShip: "opportunity_customer_accounts",
-    source: 
+    source:
         {
             entityName: "opportunity",
             entityId: "00000000-0000-0000-0000-000000000001"
         },
-    target: 
+    target:
         {
             entityName: "account",
             entityId: "00000000-0000-0000-0000-000000000002"
@@ -244,12 +243,12 @@ This example disassociates an opportuntiy from an account:
 ```JavaScript
 var request = {
     relationShip: "opportunity_customer_accounts",
-    source: 
+    source:
         {
             entityName: "opportunity",
             entityId: "00000000-0000-0000-0000-000000000001"
         },
-    target: 
+    target:
         {
             entityName: "account",
             entityId: "00000000-0000-0000-0000-000000000002"
@@ -280,7 +279,7 @@ The WhoAmI request does not need any parameters, therefore we can just pass the 
 
 ```JavaScript
 var request = WebApiClient.Requests.WhoAmIRequest;
-            
+
 WebApiClient.Execute(request)
     .then(function(response){
         // Process response
@@ -425,7 +424,7 @@ var requests = [];
 
 for (var i = 0; i < 5; i++) {
     var request = {
-        entityName: "account", 
+        entityName: "account",
         entity: {name: "Adventure Works Nr. " + i}
     };
     requests.push(WebApiClient.Create(request));
@@ -467,7 +466,7 @@ This could look something like this:
 ``` JavaScript
 // Parameters for create request
 var request = {
-    entityName: "account", 
+    entityName: "account",
     entity: {name: "Adventure Works"},
     headers: [ { key: "headerKey", value: "headerValue" }]
 };
@@ -483,7 +482,7 @@ headers: [ { key: "Prefer", value: "odata.maxpagesize=5000" }]
 
 ### API Version
 The default API version is 8.0.
-You can however change it to 8.1 if needed by using 
+You can however change it to 8.1 if needed by using
 
 ```JavaScript
 WebApiClient.ApiVersion = "8.1";

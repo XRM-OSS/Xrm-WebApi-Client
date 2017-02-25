@@ -35,6 +35,9 @@
     /// <summary>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</summary>
     WebApiClient.PrettifyErrors = true;
 
+    /// <summary>Set to false for sending all requests synchronously. True by default</summary>
+    WebApiClient.Async = true;
+
     // Override promise. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
     // In addition to that, users don't have to import it themselves for using own promises in legacy browsers.
@@ -188,13 +191,7 @@
         return "";
     }
 
-    WebApiClient.SendRequest = function (method, url, payload, requestHeaders, previousResponse) {
-    	/// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
-	    /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
-	    /// <param name="url" type="String">URL target for request.</param>
-	    /// <param name="payload" type="Object">Payload for request.</param>
-	    /// <param name="requestHeaders" type="Array">Array of headers that consist of objects with key and value property.</param>
-	    /// <returns>Promise for sent request.</returns>
+    function SendAsync(method, url, payload, requestHeaders, previousResponse) {
         var xhr = new XMLHttpRequest();
 
         var promise = new Promise(function(resolve, reject) {
@@ -211,7 +208,7 @@
 
                     // Results are paged, we don't have all results at this point
                     if (nextLink && WebApiClient.ReturnAllPages) {
-                        resolve(WebApiClient.SendRequest("GET", nextLink, null, requestHeaders, response));
+                        resolve(SendAsync("GET", nextLink, null, requestHeaders, response));
                     }
                     else {
                         resolve(response);
@@ -248,6 +245,73 @@
         }
 
         return promise;
+    }
+
+    function SendSync(method, url, payload, requestHeaders, previousResponse) {
+        var xhr = new XMLHttpRequest();
+        var response;
+
+        xhr.onload = function() {
+            if(xhr.readyState !== 4) {
+                return;
+            }
+
+            if(xhr.status === 200){
+                response = JSON.parse(xhr.responseText);
+                var nextLink = response["@odata.nextLink"];
+
+                response = MergeResults(previousResponse, response);
+
+                // Results are paged, we don't have all results at this point
+                if (nextLink && WebApiClient.ReturnAllPages) {
+                    SendSync("GET", nextLink, null, requestHeaders, response);
+                }
+            }
+            else if (xhr.status === 204) {
+                if (method.toLowerCase() === "post") {
+                    response = xhr.getResponseHeader("OData-EntityId");
+                }
+                // No content returned for delete, update, ...
+                else {
+                    response = xhr.statusText;
+                }
+            }
+            else {
+                throw new Error(FormatError(xhr));
+            }
+        };
+        xhr.onerror = function() {
+            throw new Error(FormatError(xhr));
+        };
+
+        xhr.open(method, url, false);
+
+        AppendHeaders(xhr, DefaultHeaders);
+        AppendHeaders(xhr, requestHeaders);
+
+        // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
+        if (payload) {
+            xhr.send(JSON.stringify(payload));
+        } else {
+            xhr.send();
+        }
+
+        return response;
+    }
+
+    WebApiClient.SendRequest = function (method, url, payload, requestHeaders, previousResponse) {
+      /// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
+      /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
+      /// <param name="url" type="String">URL target for request.</param>
+      /// <param name="payload" type="Object">Payload for request.</param>
+      /// <param name="requestHeaders" type="Array">Array of headers that consist of objects with key and value property.</param>
+      /// <returns>Promise for sent request.</returns>
+
+      if (WebApiClient.Async) {
+          return SendAsync(method, url, payload, requestHeaders, previousResponse);
+      } else {
+          return SendSync(method, url, payload, requestHeaders, previousResponse);
+      }
     };
 
     WebApiClient.Configure = function (configuration) {

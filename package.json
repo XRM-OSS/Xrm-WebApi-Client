@@ -13,6 +13,7 @@
     "url": "https://github.com/DigitalFlow"
   },
   "devDependencies": {
+    "bestzip": "^1.1.3",
     "bluebird": "^3.4.6",
     "browserify": "latest",
     "jasmine-core": "*",
@@ -21,6 +22,7 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.2",
+    "rimraf": "^2.6.1",
     "sinon": "^1.17.6",
     "uglify-js": "^2.7.3"
   },
@@ -29,12 +31,14 @@
     "Publish"
   ],
   "scripts": {
+    "clean": "rimraf Publish",
     "lint": "jshint src/js/WebApiClient.Core.js src/js/WebApiClient.Requests.js src/js/WebApiClient.js",
     "build-js": "browserify src/js/WebApiClient.js -s WebApiClient -o Publish/WebApiClient.js",
-    "prebuild-js": "npm run lint && mkdir -p Publish",
+    "prebuild-js": "npm run lint && npm run clean && mkdir Publish",
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",
     "uglify": "uglifyjs Publish/WebApiClient.js --no-dead-code --comments /@preserve.*/ -o Publish/WebApiClient.min.js",
-    "build": "npm run test && npm run uglify && zip Publish/release.zip Publish/*"
+    "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js",
+    "build": "npm run test && npm run uglify && npm run zip"
   }
 }
