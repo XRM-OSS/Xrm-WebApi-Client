@@ -191,7 +191,7 @@
         return "";
     }
 
-    function SendAsync(method, url, payload, requestHeaders, previousResponse) {
+    function SendAsync(method, url, payload, parameters, previousResponse) {
         var xhr = new XMLHttpRequest();
 
         var promise = new Promise(function(resolve, reject) {
@@ -207,8 +207,8 @@
                     response = MergeResults(previousResponse, response);
 
                     // Results are paged, we don't have all results at this point
-                    if (nextLink && WebApiClient.ReturnAllPages) {
-                        resolve(SendAsync("GET", nextLink, null, requestHeaders, response));
+                    if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                        resolve(SendAsync("GET", nextLink, null, parameters, response));
                     }
                     else {
                         resolve(response);
@@ -235,7 +235,7 @@
         xhr.open(method, url, true);
 
         AppendHeaders(xhr, DefaultHeaders);
-        AppendHeaders(xhr, requestHeaders);
+        AppendHeaders(xhr, parameters.headers);
 
         // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
         if (payload) {
@@ -247,7 +247,7 @@
         return promise;
     }
 
-    function SendSync(method, url, payload, requestHeaders, previousResponse) {
+    function SendSync(method, url, payload, parameters, previousResponse) {
         var xhr = new XMLHttpRequest();
         var response;
 
@@ -263,8 +263,8 @@
                 response = MergeResults(previousResponse, response);
 
                 // Results are paged, we don't have all results at this point
-                if (nextLink && WebApiClient.ReturnAllPages) {
-                    SendSync("GET", nextLink, null, requestHeaders, response);
+                if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    SendSync("GET", nextLink, null, parameters, response);
                 }
             }
             else if (xhr.status === 204) {
@@ -287,7 +287,7 @@
         xhr.open(method, url, false);
 
         AppendHeaders(xhr, DefaultHeaders);
-        AppendHeaders(xhr, requestHeaders);
+        AppendHeaders(xhr, parameters.headers);
 
         // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
         if (payload) {
@@ -299,7 +299,7 @@
         return response;
     }
 
-    WebApiClient.SendRequest = function (method, url, payload, requestHeaders, previousResponse) {
+    WebApiClient.SendRequest = function (method, url, payload, parameters, previousResponse) {
       /// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
       /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
       /// <param name="url" type="String">URL target for request.</param>
@@ -307,10 +307,23 @@
       /// <param name="requestHeaders" type="Array">Array of headers that consist of objects with key and value property.</param>
       /// <returns>Promise for sent request.</returns>
 
-      if (WebApiClient.Async) {
-          return SendAsync(method, url, payload, requestHeaders, previousResponse);
+      // Fallback for request headers array as fourth parameter
+      if (Array.isArray(parameters)) {
+          parameters = {
+              headers: parameters
+          };
+      }
+
+      var asynchronous = WebApiClient.Async;
+
+      if (typeof(parameters.async) !== "undefined") {
+          asynchronous = parameters.async;
+      }
+
+      if (asynchronous) {
+          return SendAsync(method, url, payload, parameters, previousResponse);
       } else {
-          return SendSync(method, url, payload, requestHeaders, previousResponse);
+          return SendSync(method, url, payload, parameters, previousResponse);
       }
     };
 
@@ -342,7 +355,7 @@
 
         var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
 
-        return WebApiClient.SendRequest("POST", url, params.entity, params.headers);
+        return WebApiClient.SendRequest("POST", url, params.entity, params);
     };
 
     WebApiClient.Retrieve = function(parameters) {
@@ -384,7 +397,7 @@
             url += params.queryParams;
         }
 
-        return WebApiClient.SendRequest("GET", url, null, params.headers);
+        return WebApiClient.SendRequest("GET", url, null, params);
     };
 
     WebApiClient.Update = function(parameters) {
@@ -399,7 +412,7 @@
 
         var url = GetRecordUrl(params);
 
-        return WebApiClient.SendRequest("PATCH", url, params.entity, params.headers);
+        return WebApiClient.SendRequest("PATCH", url, params.entity, params);
     };
 
     WebApiClient.Delete = function(parameters) {
@@ -409,7 +422,7 @@
         var params = parameters || {};
         var url = GetRecordUrl(params);
 
-        return WebApiClient.SendRequest("DELETE", url, null, params.headers);
+        return WebApiClient.SendRequest("DELETE", url, null, params);
     };
 
     WebApiClient.Associate = function(parameters) {
@@ -433,7 +446,7 @@
 
         var payload = { "@odata.id": GetRecordUrl(params.source) };
 
-        return WebApiClient.SendRequest("POST", url, payload, params.headers);
+        return WebApiClient.SendRequest("POST", url, payload, params);
     };
 
     WebApiClient.Disassociate = function(parameters) {
@@ -459,7 +472,7 @@
 
         var url = targetUrl + relationShip;
 
-        return WebApiClient.SendRequest("DELETE", url, null, params.headers);
+        return WebApiClient.SendRequest("DELETE", url, null, params);
     };
 
     WebApiClient.Execute = function(request) {
@@ -471,7 +484,7 @@
             throw new Error("Request for execution must be in prototype chain of WebApiClient.Request");
         }
 
-        return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request.headers);
+        return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request);
     };
 
     WebApiClient.Expand = function (parameters) {
@@ -498,7 +511,7 @@
                     continue;
                 }
 
-                record[name] = WebApiClient.SendRequest("GET", record[attribute], null, params.headers);
+                record[name] = WebApiClient.SendRequest("GET", record[attribute], null, params);
 
                 // Delete @odata.nextLink property
                 delete record[attribute];

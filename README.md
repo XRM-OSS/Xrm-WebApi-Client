@@ -35,6 +35,32 @@ You can always download the browserified version of this framework by downloadin
 [![Build Status](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client.svg?branch=master)](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client)
 
 ## Operations
+### Synchronous vs Asynchronous
+Per default, all requests are sent asynchronously.
+This is the suggested way of sending requests, however, sometimes there is the need for using synchronous requests.
+
+For example if you want to use a function for hiding / enabling a ribbon bar button, it has to return either true or false for the visibility of the button. In this case, you would need to use a synchronous request for being able to directly return values.
+
+Be sure to avoid synchronous requests if it is possible and use asynchronous requests instead.
+
+For sending requests synchronously, you can either set ```WebApiClient.Async``` to false, which will configure the WebApiClient to send all requests synchronously, or pass an ```async``` property in your request, like so:
+
+```JavaScript
+var request = {
+    entityName: "account",
+    entity: {name: "Adventure Works"},
+    async: false
+};
+
+try {
+    var response = WebApiClient.Create(request);
+
+    // Process response
+}
+catch (error) {
+    // Handle error
+}
+```
 
 ### Create
 The client supports creation of records. You have to pass the entity logical name, and a data object:
@@ -108,6 +134,16 @@ WebApiClient.ReturnAllPages = true;
 ```
 
 By setting this to true, each retrieve multiple request will check for an @odata.nextLink property inside the response, call the next page and concatenate the results, until all records have been retrieved.
+
+You can also pass this option per-request, like this:
+
+```JavaScript
+var request = {
+    entityName: "account",
+    queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null",
+    returnAllPages: true
+};
+```
 
 ##### Retrieve by query expression:
 

@@ -20,6 +20,13 @@ describe("WebApiClient", function() {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     };
 
+    var defaults = {
+        ApiVersion: WebApiClient.ApiVersion,
+        ReturnAllPages: WebApiClient.ReturnAllPages,
+        PrettifyErrors: WebApiClient.PrettifyErrors,
+        Async: WebApiClient.Async
+    };
+
     beforeEach(function() {
         account = {
             Name: "Adventure Works"
@@ -28,6 +35,8 @@ describe("WebApiClient", function() {
         contact = {
             FirstName: "Joe"
         };
+
+        WebApiClient.Configure(defaults);
 
         xhr = sinon.fakeServer.create();
         xhr.autoRespond = true;
@@ -912,6 +921,55 @@ describe("WebApiClient", function() {
         });
     });
 
+    describe("Synchronous requests", function() {
+        // We only test retrieve. If this works, all other requests should also work like the async ones
+        it("should retrieve by id with global sync flag", function(){
+            WebApiClient.Async = false;
+            var response = WebApiClient.Retrieve({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001"});
+            expect(response).toEqual(account);
+        });
+
+        // We only test retrieve. If this works, all other requests should also work like the async ones
+        it("should retrieve by id with per request sync flag", function(){
+            var response = WebApiClient.Retrieve({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001", async: false});
+            expect(response).toEqual(account);
+        });
+
+        it("should retrieve multiple with query params", function(){
+            var request = {
+                entityName: "account",
+                queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null",
+                async: false
+            };
+
+            var response = WebApiClient.Retrieve(request);
+            expect(response).toEqual([account]);
+        });
+
+        it("should per default only retrieve first page", function(){
+            var request = {
+                entityName: "account",
+                queryParams: "?$select=pagingtestfirst",
+                async: false
+            };
+
+            var response = WebApiClient.Retrieve(request);
+            expect(response.value.length).toEqual(1);
+        });
+
+        it("should retrieve all pages if wanted", function(){
+            var request = {
+                entityName: "account",
+                queryParams: "?$select=pagingtestfirst",
+                async: false,
+                returnAllPages: true
+            };
+
+            var response = WebApiClient.Retrieve(request);
+            expect(response.value.length).toEqual(2);
+        });
+      });
+
     describe("Errors", function() {
         it("should be prettified by default", function(done){
             WebApiClient.PrettifyErrors = true;
@@ -954,12 +1012,6 @@ describe("WebApiClient", function() {
 
     describe("Configure", function() {
         it("should apply values", function(){
-            var before = {
-                ApiVersion: WebApiClient.ApiVersion,
-                ReturnAllPages: WebApiClient.ReturnAllPages,
-                PrettifyErrors: WebApiClient.PrettifyErrors
-            };
-
             WebApiClient.Configure({
                 ApiVersion: "8.2",
                 ReturnAllPages: true,
@@ -969,8 +1021,6 @@ describe("WebApiClient", function() {
             expect(WebApiClient.ApiVersion).toBe("8.2");
             expect(WebApiClient.ReturnAllPages).toBe(true);
             expect(WebApiClient.PrettifyErrors).toBe(false);
-
-            WebApiClient.Configure(before);
         });
     });
 
