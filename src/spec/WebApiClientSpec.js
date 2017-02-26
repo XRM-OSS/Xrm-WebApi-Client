@@ -968,7 +968,39 @@ describe("WebApiClient", function() {
             var response = WebApiClient.Retrieve(request);
             expect(response.value.length).toEqual(2);
         });
-      });
+
+        it("should expand all deferred properties for single record", function(){
+            var account = {
+                accountid: "someid",
+                "contact_customer_accounts@odata.nextLink": fakeUrl + "/api/data/v8.0/account(someid)/contact_customer_accounts",
+                "Account_Tasks@odata.nextLink": fakeUrl + "/api/data/v8.0/account(someid)/Account_Tasks",
+                name: "Adventure Works"
+            };
+
+            var response = WebApiClient.Expand({records: [account], async: false});
+            expect(response[0].accountid).toEqual(account.accountid);
+            expect(response[0].name).toEqual(account.name);
+            expect(response[0].contact_customer_accounts).toEqual([{contactid: "firstContactid"}, {contactid: "secondContactid"}]);
+            expect(response[0].Account_Tasks).toEqual([{taskid: "firstTaskid"}, {taskid: "secondTaskid"}]);
+            expect(response[0]["contact_customer_accounts@odata.nextLink"]).toBeUndefined();
+            expect(response[0]["Account_Tasks@odata.nextLink"]).toBeUndefined();
+        });
+    });
+
+    describe("Send Request", function() {
+        it("should handle legacy headers array as fourth parameter", function(done){
+            spyOn(XMLHttpRequest.prototype, 'setRequestHeader').and.callThrough();
+
+            WebApiClient.SendRequest("POST", WebApiClient.GetApiUrl() + "accounts", {}, [{key: "MSCRM.MergeLabels", value: "true"}])
+            .then(function (result) {
+                expect(XMLHttpRequest.prototype.setRequestHeader).toHaveBeenCalledWith("MSCRM.MergeLabels", "true");
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            .finally(done);
+        });
+    });
 
     describe("Errors", function() {
         it("should be prettified by default", function(done){

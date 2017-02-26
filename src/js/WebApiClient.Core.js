@@ -299,6 +299,14 @@
         return response;
     }
 
+    function GetAsync (parameters) {
+      if (typeof(parameters.async) !== "undefined") {
+          return parameters.async;
+      }
+
+      return WebApiClient.Async;
+    }
+
     WebApiClient.SendRequest = function (method, url, payload, parameters, previousResponse) {
       /// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
       /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
@@ -314,11 +322,7 @@
           };
       }
 
-      var asynchronous = WebApiClient.Async;
-
-      if (typeof(parameters.async) !== "undefined") {
-          asynchronous = parameters.async;
-      }
+      var asynchronous = GetAsync(parameters);
 
       if (asynchronous) {
           return SendAsync(method, url, payload, parameters, previousResponse);
@@ -346,7 +350,7 @@
     WebApiClient.Create = function(parameters) {
     	/// <summary>Creates a given record in CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entity' (record) and optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
 
         if ((!params.entityName && !params.overriddenSetName) || !params.entity) {
@@ -361,7 +365,7 @@
     WebApiClient.Retrieve = function(parameters) {
     	/// <summary>Retrieves records from CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', one of 'entityId', 'alternateKey', 'fetchXml' or 'queryParams' and optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
 
         if (!params.entityName && !params.overriddenSetName) {
@@ -403,7 +407,7 @@
     WebApiClient.Update = function(parameters) {
     	/// <summary>Updates a given record in CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entityId', 'entity' (record) and optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
 
         if (!params.entity) {
@@ -418,7 +422,7 @@
     WebApiClient.Delete = function(parameters) {
     	/// <summary>Deletes a given record in CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'entityName' or 'overriddenSetName', 'entityId' and optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
         var url = GetRecordUrl(params);
 
@@ -428,7 +432,7 @@
     WebApiClient.Associate = function(parameters) {
     	/// <summary>Associates two given records in CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'relationShip' name, 'source' and 'target' that both have 'entityName' or 'overriddenSetName' and 'entityId' set. Optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
 
         if (!params.relationShip) {
@@ -452,7 +456,7 @@
     WebApiClient.Disassociate = function(parameters) {
     	/// <summary>Disassociates two given records in CRM.</summary>
 	    /// <param name="parameters" type="Object">Object that contains 'relationShip' name, 'source' and 'target' that both have 'entityName' or 'overriddenSetName' and 'entityId' set. Optional 'headers'.</param>
-	    /// <returns>Promise for sent request.</returns>
+	    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
 
         if (!params.relationShip) {
@@ -476,6 +480,9 @@
     };
 
     WebApiClient.Execute = function(request) {
+    /// <summary>Executes the passed request</summary>
+    /// <param name="request" type="Object">Request object that inherits from WebApiClient.Requests.Request</param>
+    /// <returns>Promise for sent request or result if sync</returns>
         if (!request) {
             throw new Error("You need to pass a request!");
         }
@@ -490,11 +497,12 @@
     WebApiClient.Expand = function (parameters) {
     /// <summary>Expands all odata.nextLink / deferred properties for an array of records</summary>
     /// <param name="parameters" type="Object">Object that contains 'records' array or object. Optional 'headers'.</param>
-    /// <returns>Promise for sent request.</returns>
+    /// <returns>Promise for sent request or result if sync.</returns>
         var params = parameters || {};
         var records = params.records;
 
         var requests = [];
+        var asynchronous = GetAsync(parameters);
 
         for (var i = 0; i < records.length; i++) {
             var record = records[i];
@@ -517,10 +525,16 @@
                 delete record[attribute];
             }
 
-            requests.push(Promise.props(record));
+            if (asynchronous) {
+                requests.push(Promise.props(record));
+            }
         }
 
-        return Promise.all(requests);
+        if (asynchronous) {
+            return Promise.all(requests);
+        } else {
+            return records;
+        }
     };
 
     module.exports = WebApiClient;
