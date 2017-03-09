@@ -313,21 +313,22 @@
       /// <param name="url" type="String">URL target for request.</param>
       /// <param name="payload" type="Object">Payload for request.</param>
       /// <param name="requestHeaders" type="Array">Array of headers that consist of objects with key and value property.</param>
-      /// <returns>Promise for sent request.</returns>
+      /// <returns>Promise for sent request or result if sync.</returns>
+      var params = parameters || {};
 
       // Fallback for request headers array as fourth parameter
-      if (Array.isArray(parameters)) {
-          parameters = {
-              headers: parameters
+      if (Array.isArray(params)) {
+          params = {
+              headers: params
           };
       }
 
-      var asynchronous = GetAsync(parameters);
+      var asynchronous = GetAsync(params);
 
       if (asynchronous) {
-          return SendAsync(method, url, payload, parameters, previousResponse);
+          return SendAsync(method, url, payload, params, previousResponse);
       } else {
-          return SendSync(method, url, payload, parameters, previousResponse);
+          return SendSync(method, url, payload, params, previousResponse);
       }
     };
 

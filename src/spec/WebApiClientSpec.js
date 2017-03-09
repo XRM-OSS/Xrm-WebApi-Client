@@ -1000,6 +1000,17 @@ describe("WebApiClient", function() {
             })
             .finally(done);
         });
+
+        it("should not fail if parameters are ommitted", function(done){
+            WebApiClient.SendRequest("POST", WebApiClient.GetApiUrl() + "accounts")
+            .then(function (result) {
+                expect(result).toBeDefined();
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            .finally(done);
+        });
     });
 
     describe("Errors", function() {
