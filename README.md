@@ -1,5 +1,49 @@
 # Dynamics CRM JavaScript Web API Client
 
+**Table of Contents**
+
+- [Dynamics CRM JavaScript Web API Client](#)
+	- [Purpose](#)
+	- [Requirements](#)
+		- [CRM](#)
+		- [Browser](#)
+	- [How to obtain it](#)
+		- [NPM](#)
+		- [GitHub Release](#)
+	- [How to build it](#)
+	- [Build Status](#)
+	- [Operations](#)
+		- [Synchronous vs Asynchronous](#)
+		- [Create](#)
+		- [Retrieve](#)
+			- [Retrieve single records](#)
+				- [Retrieve by ID:](#)
+				- [Retrieve by alternate key:](#)
+			- [Retrieve multiple records](#)
+				- [Retrieve by query expression:](#)
+				- [Retrieve by FetchXml:](#)
+			- [Auto expand collection-valued navigation properties](#)
+		- [Update](#)
+		- [Delete](#)
+		- [Associate](#)
+		- [Disassociate](#)
+		- [Execute](#)
+			- [No parameter request](#)
+			- [Parametrized request](#)
+		- [Configuration](#)
+		- [Errors](#)
+		- [Set Names](#)
+		- [Not yet implemented requests](#)
+		- [Promises](#)
+	- [Headers](#)
+		- [Header Format](#)
+		- [Default Headers](#)
+		- [Request Headers](#)
+			- [Page size](#)
+		- [API Version](#)
+    - [Remarks](#)
+        - [CRM App](#)
+
 ## Purpose
 This is a framework for easing working with the Dynamics CRM WebApi using JavaScript.
 It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framework for handling requests asynchronously based on promises.
@@ -524,3 +568,8 @@ You can however change it to 8.1 if needed by using
 ```JavaScript
 WebApiClient.ApiVersion = "8.1";
 ```
+
+## Remarks
+### CRM App
+For using WebApiClient with the CRM App, you'll have to use the normal (= not uglified) version.
+When using uglified JS in the CRM App, you might receive invalid character errors. This is not only valid for the WebApiClient, but also for some other uglified code.
