@@ -15,11 +15,11 @@
     + [Create](#create)
     + [Retrieve](#retrieve)
       - [Retrieve single records](#retrieve-single-records)
-        * [Retrieve by ID:](#retrieve-by-id-)
-        * [Retrieve by alternate key:](#retrieve-by-alternate-key-)
+        * [Retrieve by ID](#retrieve-by-id)
+        * [Retrieve by alternate key](#retrieve-by-alternate-key)
       - [Retrieve multiple records](#retrieve-multiple-records)
-        * [Retrieve by query expression:](#retrieve-by-query-expression-)
-        * [Retrieve by FetchXml:](#retrieve-by-fetchxml-)
+        * [Retrieve by query expression](#retrieve-by-query-expression)
+        * [Retrieve by FetchXml](#retrieve-by-fetchxml)
       - [Auto expand collection-valued navigation properties](#auto-expand-collection-valued-navigation-properties)
     + [Update](#update)
     + [Delete](#delete)
@@ -130,7 +130,7 @@ You have to pass at least the entity logical name.
 You can always pass query parameters which will be appended to your retrieve requests.
 
 #### Retrieve single records
-##### Retrieve by ID:
+##### Retrieve by ID
 
 ```JavaScript
 var request = {
@@ -147,7 +147,7 @@ WebApiClient.Retrieve(request)
     });
 ```
 
-##### Retrieve by alternate key:
+##### Retrieve by alternate key
 
 ```JavaScript
 var request = {
@@ -188,7 +188,7 @@ var request = {
 };
 ```
 
-##### Retrieve by query expression:
+##### Retrieve by query expression
 
 ```JavaScript
 var request = {
@@ -205,7 +205,7 @@ WebApiClient.Retrieve(request)
     });
 ```
 
-##### Retrieve by FetchXml:
+##### Retrieve by FetchXml
 
 ```JavaScript
 var request = {
