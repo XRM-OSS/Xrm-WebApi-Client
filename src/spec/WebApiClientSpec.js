@@ -919,6 +919,29 @@ describe("WebApiClient", function() {
 
             xhr.respond();
         });
+
+        it("should not expand paging links", function(done){
+            var account = {
+                accountid: "someid",
+                "@odata.nextLink": fakeUrl + "/api/data/v8.0/account(someid)",
+                name: "Adventure Works"
+            };
+
+            spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
+
+            WebApiClient.Expand({records: [account]})
+                .then(function (result) {
+                    expect(XMLHttpRequest.prototype.send.calls.count()).toBe(0);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
+
     });
 
     describe("Synchronous requests", function() {

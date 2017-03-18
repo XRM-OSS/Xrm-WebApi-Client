@@ -2,7 +2,7 @@ language: node_js
 node_js: node
 script: npm run build
 before_deploy:
-  - sed -i "s/v0.0.0/$TRAVIS_TAG/g" package.json
+  - sed -i "s/WebApiClient build version v0.0.0/WebApiClient build version $TRAVIS_TAG/g" package.json
 deploy:
   - provider: releases
     api_key:

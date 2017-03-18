@@ -22,6 +22,9 @@
  * SOFTWARE.
  *
 */
+/** @preserve
+ * WebApiClient build version v0.0.0
+*/
 (function (undefined) {
     "use strict";
     var WebApiClient = {};
@@ -516,7 +519,8 @@
                 var name = attribute.replace("@odata.nextLink", "");
 
                 // If nothing changed, this was not a deferred attribute
-                if (name === attribute) {
+                // !name will return true if name is empty string, which would have been a paging nextLink
+                if (!name || name === attribute) {
                     continue;
                 }
 
