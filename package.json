@@ -30,6 +30,15 @@
     "src",
     "Publish"
   ],
+  "keywords": [
+    "dynamics-crm-webapi",
+    "webapi",
+    "webapiclient",
+    "dynamics-crm",
+    "dynamics-365",
+    "crm",
+    "xrm"
+  ],
   "scripts": {
     "clean": "rimraf Publish",
     "lint": "jshint src/js/WebApiClient.Core.js src/js/WebApiClient.Requests.js src/js/WebApiClient.js",
