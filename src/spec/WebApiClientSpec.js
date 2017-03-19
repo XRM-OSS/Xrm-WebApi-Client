@@ -297,7 +297,7 @@ describe("WebApiClient", function() {
             };
             requests.push(WebApiClient.Disassociate(disassociateRequest));
 
-            Promise.all(requests)
+            WebApiClient.Promise.all(requests)
             .then(function (results){
                 expect(results).toBeDefined();
             })

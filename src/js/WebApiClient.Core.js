@@ -41,10 +41,9 @@
     /// <summary>Set to false for sending all requests synchronously. True by default</summary>
     WebApiClient.Async = true;
 
-    // Override promise. This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of
+    // This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
-    // In addition to that, users don't have to import it themselves for using own promises in legacy browsers.
-    global.Promise = require("bluebird");
+    var Promise = require("bluebird");
 
     function GetCrmContext() {
         if (typeof (GetGlobalContext) !== "undefined") {
@@ -519,7 +518,6 @@
                 var name = attribute.replace("@odata.nextLink", "");
 
                 // If nothing changed, this was not a deferred attribute
-                // !name will return true if name is empty string, which would have been a paging nextLink
                 if (!name || name === attribute) {
                     continue;
                 }

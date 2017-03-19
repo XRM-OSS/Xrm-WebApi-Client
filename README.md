@@ -493,9 +493,10 @@ WebApiClient.SendRequest("POST", url, payload)
 ```
 
 ### Promises
-This client uses bluebird for handling promises in a cross-browser compliant way.
-For this reason bluebird is exported as global implementation of promises (and also overrides browser native Promises).
-The decision to override native Promises was made to give you a constant usage experience across all browsers.
+This client uses bluebird internally for handling promises in a cross-browser compliant way.
+Therefore the promises returned by all asynchronous requests are also bluebird promises.
+Bluebird itself is not exported globally anymore as of v3.0.0, but can be accessed by using ```WebApiClient.Promise```.
+This decision was made for not causing issues with other scripts. CRM itself seems to be using bluebird as well (it can be found using the debugger loaded as MS default script on forms), so we don't want to inject differing versions of it, that might cause problems.
 
 Using promises you can do something like this, too:
 ```Javascript
@@ -509,7 +510,7 @@ for (var i = 0; i < 5; i++) {
     requests.push(WebApiClient.Create(request));
 }
 
-Promise.all(requests)
+WebApiClient.Promise.all(requests)
     .then(function(response){
         // Process response
     })
