@@ -79,6 +79,7 @@
         firstResponse.value = firstResponse.value.concat(secondResponse.value);
 
         delete firstResponse["@odata.nextLink"];
+        delete firstResponse["@Microsoft.Dynamics.CRM.fetchxmlpagingcookie"];
 
         return firstResponse;
     }
@@ -193,7 +194,44 @@
         return "";
     }
 
-    function SendAsync(method, url, payload, parameters, previousResponse) {
+    function GetNextLink (response) {
+        return response["@odata.nextLink"];
+    }
+
+    function GetPagingCookie(response) {
+        return response["@Microsoft.Dynamics.CRM.fetchxmlpagingcookie"];
+    }
+
+    function SetCookie (pagingCookie, parameters) {
+        var unescapedCookie = unescape(pagingCookie);
+
+        // Parse cookie that we retrieved with response
+        var parser = new DOMParser();
+        var cookieXml = parser.parseFromString(unescapedCookie, "text/xml");
+
+        var cookie = cookieXml.documentElement;
+
+        var pageNumber = cookie.getAttribute("pagenumber");
+        var cookieValue = unescape(cookie.getAttribute("pagingcookie"));
+
+        // Parse our original fetch XML, we will inject the paging information in here
+        var fetchXml = parser.parseFromString(parameters.fetchXml, "text/xml");
+        var fetch = fetchXml.documentElement;
+
+        fetch.setAttribute("page", pageNumber);
+        fetch.setAttribute("paging-cookie", cookieValue);
+
+        // Serialize modified fetch with paging information
+        var serializer = new XMLSerializer();
+        return serializer.serializeToString(fetchXml);
+    }
+
+    function SetPreviousResponse (parameters, response) {
+        // Set previous response
+        parameters._previousResponse = response;
+    }
+
+    function SendAsync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
 
         var promise = new Promise(function(resolve, reject) {
@@ -204,15 +242,28 @@
 
                 if(xhr.status === 200){
                     var response = JSON.parse(xhr.responseText);
-                    var nextLink = response["@odata.nextLink"];
+                    var nextLink = GetNextLink(response);
+                    var pagingCookie = GetPagingCookie(response);
 
-                    response = MergeResults(previousResponse, response);
+                    response = MergeResults(parameters._previousResponse, response);
 
                     // Results are paged, we don't have all results at this point
                     if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                        resolve(SendAsync("GET", nextLink, null, parameters, response));
+                        SetPreviousResponse(parameters, response);
+
+                        resolve(SendAsync("GET", nextLink, null, parameters));
+                    }
+                    else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                        var nextPageFetch = SetCookie(pagingCookie, parameters);
+
+                        SetPreviousResponse(parameters, response);
+
+                        parameters.fetchXml = nextPageFetch;
+
+                        resolve(WebApiClient.Retrieve(parameters));
                     }
                     else {
+
                         resolve(response);
                     }
                 }
@@ -249,7 +300,7 @@
         return promise;
     }
 
-    function SendSync(method, url, payload, parameters, previousResponse) {
+    function SendSync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
         var response;
 
@@ -260,13 +311,25 @@
 
             if(xhr.status === 200){
                 response = JSON.parse(xhr.responseText);
-                var nextLink = response["@odata.nextLink"];
+                var nextLink = GetNextLink(response);
+                var pagingCookie = GetPagingCookie(response);
 
-                response = MergeResults(previousResponse, response);
+                response = MergeResults(parameters._previousResponse, response);
 
                 // Results are paged, we don't have all results at this point
                 if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                    SendSync("GET", nextLink, null, parameters, response);
+                    SetPreviousResponse(parameters, response);
+
+                    SendSync("GET", nextLink, null, parameters);
+                }
+                else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    var nextPageFetch = SetCookie(pagingCookie, parameters);
+
+                    SetPreviousResponse(parameters, response);
+
+                    parameters.fetchXml = nextPageFetch;
+
+                    WebApiClient.Retrieve(parameters);
                 }
             }
             else if (xhr.status === 204) {

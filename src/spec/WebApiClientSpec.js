@@ -83,6 +83,25 @@ describe("WebApiClient", function() {
             })]
         );
 
+        // Respond with paging cookie in results
+        var retrieveAccountUrlFirstPageCookie = RegExp.escape(fakeUrl + '/api/data/v8.0/accounts?fetchXml='
+        + escape('<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>'));
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlFirstPageCookie),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({
+                value: [ { Name: "Adventure Works1" } ],
+                "@Microsoft.Dynamics.CRM.fetchxmlpagingcookie": '<cookie pagenumber="2" pagingcookie="%253ccookie%2520page%253d%25221%2522%253e%253cname%2520last%253d%2522Test1%2522%2520first%253d%2522Adventure%2520GmbH%2520%2528Beispiel%2529%2522%2520%252f%253e%253caccountid%2520last%253d%2522%257bD91966C7-511D-E711-80FC-5065F38B0361%257d%2522%2520first%253d%2522%257bE3753E98-511D-E711-80FB-5065F38ABA91%257d%2522%2520%252f%253e%253c%252fcookie%253e" istracking="False" />'
+            })]
+        );
+
+        // Respond to paged fetchXml request
+        var retrieveAccountUrlSecondPageCookie = RegExp.escape(fakeUrl + '/api/data/v8.0/accounts?fetchXml='
+        + escape('<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false" page="2" paging-cookie="&lt;cookie page=&quot;1&quot;&gt;&lt;name last=&quot;Test1&quot; first=&quot;Adventure GmbH (Beispiel)&quot; /&gt;&lt;accountid last=&quot;{D91966C7-511D-E711-80FC-5065F38B0361}&quot; first=&quot;{E3753E98-511D-E711-80FB-5065F38ABA91}&quot; /&gt;&lt;/cookie&gt;">  <entity name="account">    <attribute name="name"/>    <attribute name="primarycontactid"/>    <attribute name="telephone1"/>    <attribute name="accountid"/>    <order attribute="name" descending="false"/>  </entity></fetch>'));
+        xhr.respondWith("GET", new RegExp(retrieveAccountUrlSecondPageCookie),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({
+                value: [ { Name: "Adventure Works2" } ]
+            })]
+        );
+
         // Respond to Retrieve Request for contact with alternate key
         var retrieveByAlternateKeyUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contacts(firstname='Joe',emailaddress1='abc@example.com')");
         xhr.respondWith("GET", new RegExp(retrieveByAlternateKeyUrl),
@@ -403,6 +422,26 @@ describe("WebApiClient", function() {
             var request = {
                 entityName: "account",
                 queryParams: "?$select=pagingtestfirst"
+            };
+
+            WebApiClient.Retrieve(request)
+                .then(function(response){
+                    expect(response.value.length).toEqual(2);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should retrieve all pages with fetchXml cookies async", function(done){
+            var request = {
+                entityName: "account",
+                fetchXml: '<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
+                returnAllPages: true
             };
 
             WebApiClient.Retrieve(request)
@@ -986,6 +1025,18 @@ describe("WebApiClient", function() {
                 queryParams: "?$select=pagingtestfirst",
                 async: false,
                 returnAllPages: true
+            };
+
+            var response = WebApiClient.Retrieve(request);
+            expect(response.value.length).toEqual(2);
+        });
+
+        it("should retrieve all pages with fetchXml cookies sync", function(){
+            var request = {
+                entityName: "account",
+                fetchXml: '<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
+                returnAllPages: true,
+                async: false
             };
 
             var response = WebApiClient.Retrieve(request);
