@@ -453,19 +453,11 @@ If you need to use requests, that are not yet implemented (such as custom action
 This might look something like this:
 
 ```JavaScript
-WebApiClient.Requests.AddToQueueRequest = Object.create(WebApiClient.Requests.Request.prototype, {
-    method: {
-        value: "POST"
-    },
-    name: {
-        value: "AddToQueue"
-    },
-    bound: {
-        value: true
-    },
-    entityName: {
-        value: "queue"
-    }
+WebApiClient.Requests.AddToQueueRequest = WebApiClient.Requests.Request.prototype.with({
+    method: "POST",
+    name: "AddToQueue",
+    bound: true,
+    entityName: "queue"
 });
 
 ```
