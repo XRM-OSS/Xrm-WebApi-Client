@@ -206,6 +206,10 @@ WebApiClient.Retrieve(request)
 ```
 
 ##### Retrieve by FetchXml
+FetchXml requests have some special behaviour implemented. Short fetchXml will be sent as GET request using a fetchXml URL query parameter.
+There is however an URL length limit of 2048 chars, so large fetchXml requests would fail, since they exceed this limit.
+Since release v3.1.0, the request will automatically be sent as POST batch request, so that large fetchXml can be executed as well.
+You don't have to do anything for this to happen, the URL length is checked automatically before sending the request.
 
 ```JavaScript
 var request = {
@@ -520,6 +524,8 @@ WebApiClient.Promise.all(requests)
 ```
 
 ## Headers
+There is a defined set of default headers, which are sent on each request, as well as per-request headers.
+Per-request headers override possibly existing default headers with the same key value.
 
 ### Header Format
 Headers are represented as objects containing a key and a value property:
@@ -551,7 +557,6 @@ var request = {
     headers: [ { key: "headerKey", value: "headerValue" }]
 };
 ```
-Note: Currently your request headers are simply added after the default headers. Watch out for interferences.
 
 #### Page size
 If you want to set a max page size for your request (supported are up to 5000 records per rage), you can pass the following header:

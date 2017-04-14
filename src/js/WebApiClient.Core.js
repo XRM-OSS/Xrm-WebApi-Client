@@ -29,6 +29,8 @@
     "use strict";
     var WebApiClient = {};
 
+    var batchName = "batch_UrlLimitExeedingRequest";
+
 	/// <summary>The API version that will be used when sending requests. Default is "8.0"</summary>
     WebApiClient.ApiVersion = "8.0";
 
@@ -231,6 +233,77 @@
         parameters._previousResponse = response;
     }
 
+    function MergeHeaders() {
+        var headers = [];
+
+        if (!arguments) {
+            return headers;
+        }
+
+        for(var i = 0; i < arguments.length; i++) {
+            var headersToAdd = arguments[i];
+
+            if (!headersToAdd || !Array.isArray(headersToAdd)) {
+                continue;
+            }
+
+            for (var j = 0; j < headersToAdd.length; j++) {
+                var header = headersToAdd[j];
+                VerifyHeader(header);
+
+                var addHeader = true;
+
+                for (var k = 0; k < headers.length; k++) {
+                  if (headers[k].key === header.key) {
+                      addHeader = false;
+                      break;
+                  }
+                }
+
+                if (addHeader) {
+                    headers.push(header);
+                }
+            }
+        }
+
+        return headers;
+    }
+
+    function ParseRespone(xhr) {
+        var responseText = xhr.responseText;
+        var responses = [];
+
+        // Check if it is a batch response
+        if (responseText && /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText)) {
+            var matches = responseText.match(/^{[\s\S]*?(?=^}$)^}$/gm);
+
+            for (var i = 0; i < matches.length; i++) {
+                responses.push(JSON.parse(matches[i]));
+            }
+
+            if (responses.length === 1) {
+                return responses[0];
+            }
+            else {
+                return responses;
+            }
+        }
+        else {
+            return JSON.parse(xhr.responseText);
+        }
+    }
+
+    function CreateBatchPayload (batchName, method, url) {
+        return "--" + batchName + "\n" +
+          "Content-Type: application/http\n" +
+          "Content-Transfer-Encoding: binary\n\n" +
+          method + " " + url + " HTTP/1.1\n" +
+          "Content-Type: application/json\n" +
+          "OData-Version: 4.0\n" +
+          "OData-MaxVersion: 4.0\n\n" +
+          "--" + batchName + "--";
+    }
+
     function SendAsync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
 
@@ -241,7 +314,13 @@
                 }
 
                 if(xhr.status === 200){
-                    var response = JSON.parse(xhr.responseText);
+                    var response = ParseRespone(xhr);
+
+                    // If we received multiple responses, it was a custom batch. Just resolve all matches
+                    if (Array.isArray(response)) {
+                        resolve(response);
+                    }
+
                     var nextLink = GetNextLink(response);
                     var pagingCookie = GetPagingCookie(response);
 
@@ -263,7 +342,6 @@
                         resolve(WebApiClient.Retrieve(parameters));
                     }
                     else {
-
                         resolve(response);
                     }
                 }
@@ -285,14 +363,32 @@
             };
         });
 
+        var headers = [];
+
+        if (method && method.toLowerCase() === "get" && url && url.length > 2048) {
+            payload = CreateBatchPayload(batchName, method, url);
+
+            url = WebApiClient.GetApiUrl() + "$batch";
+            method = "POST";
+
+            headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batchName});
+        }
+
         xhr.open(method, url, true);
 
-        AppendHeaders(xhr, DefaultHeaders);
-        AppendHeaders(xhr, parameters.headers);
+        headers = MergeHeaders(headers, parameters.headers, DefaultHeaders);
+
+        AppendHeaders(xhr, headers);
 
         // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
         if (payload) {
-            xhr.send(JSON.stringify(payload));
+            // For batch requests, we just want to send a string body
+            if (typeof(payload) === "string") {
+                xhr.send(payload);
+            }
+            else {
+              xhr.send(JSON.stringify(payload));
+            }
         } else {
             xhr.send();
         }
@@ -310,7 +406,13 @@
             }
 
             if(xhr.status === 200){
-                response = JSON.parse(xhr.responseText);
+                response = ParseRespone(xhr);
+
+                // If we received multiple responses, it was a custom batch. Just resolve all matches
+                if (Array.isArray(response)) {
+                    return;
+                }
+
                 var nextLink = GetNextLink(response);
                 var pagingCookie = GetPagingCookie(response);
 
@@ -349,14 +451,32 @@
             throw new Error(FormatError(xhr));
         };
 
+        var headers = [];
+
+        if (method && method.toLowerCase() === "get" && url && url.length > 2048) {
+            payload = CreateBatchPayload(batchName, method, url);
+
+            url = WebApiClient.GetApiUrl() + "$batch";
+            method = "POST";
+
+            headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batchName});
+        }
+
         xhr.open(method, url, false);
 
-        AppendHeaders(xhr, DefaultHeaders);
-        AppendHeaders(xhr, parameters.headers);
+        headers = MergeHeaders(headers, parameters.headers, DefaultHeaders);
+
+        AppendHeaders(xhr, headers);
 
         // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
         if (payload) {
-            xhr.send(JSON.stringify(payload));
+            // For batch requests, we just want to send a string body
+            if (typeof(payload) === "string") {
+                xhr.send(payload);
+            }
+            else {
+              xhr.send(JSON.stringify(payload));
+            }
         } else {
             xhr.send();
         }
@@ -372,7 +492,7 @@
       return WebApiClient.Async;
     }
 
-    WebApiClient.SendRequest = function (method, url, payload, parameters, previousResponse) {
+    WebApiClient.SendRequest = function (method, url, payload, parameters) {
       /// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
       /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
       /// <param name="url" type="String">URL target for request.</param>
@@ -391,9 +511,9 @@
       var asynchronous = GetAsync(params);
 
       if (asynchronous) {
-          return SendAsync(method, url, payload, params, previousResponse);
+          return SendAsync(method, url, payload, params);
       } else {
-          return SendSync(method, url, payload, params, previousResponse);
+          return SendSync(method, url, payload, params);
       }
     };
 

@@ -209,6 +209,52 @@ describe("WebApiClient", function() {
         xhr.respondWith("POST", new RegExp(publishXml),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
+
+        // fetchXml Batch
+        var fetchXmlBatch = RegExp.escape(fakeUrl + "/api/data/v8.0/$batch");
+
+        var batchResponse = '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9\n' +
+                            'Content-Type: application/http\n' +
+                            'Content-Transfer-Encoding: binary\n' +
+                            '\n' +
+                            'HTTP/1.1 200 OK\n' +
+                            'Content-Type: application/json; odata.metadata=minimal\n' +
+                            'OData-Version: 4.0\n' +
+                            '\n' +
+                            '{\n' +
+                            '  "@odata.context":"https://org/api/data/v8.0/$metadata#accounts(name,accountid)","value":[\n' +
+                            '    {\n' +
+                            '      "@odata.etag":"W633807","name":"Adventure GmbH (Beispiel)","accountid":"e3753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633809","name":"Blue Airlines (Beispiel)","accountid":"e7753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633811","name":"Contoso Pharma (Beispiel)","accountid":"eb753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633814","name":"Ein-Datum-Unternehmen (Beispiel)","accountid":"ef753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633808","name":"Fabrikam KG (Beispiel)","accountid":"e5753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633815","name":"Hanno Starker (Beispiel)","accountid":"f1753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633805","name":"Kaffee Viersen (Beispiel)","accountid":"df753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633806","name":"Litware KG (Beispiel)","accountid":"e1753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633812","name":"Ski und Sport (Beispiel)","accountid":"ed753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633810","name":"Stadtwerke (Beispiel)","accountid":"e9753e98-511d-e711-80fb-5065f38aba91"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633816","name":"Test1","accountid":"d91966c7-511d-e711-80fc-5065f38b0361"\n' +
+                            '    },{\n' +
+                            '      "@odata.etag":"W633817","name":"Test2","accountid":"95fb99d5-511d-e711-80fc-5065f38b0361"\n' +
+                            '    }\n' +
+                            '  ]\n' +
+                            '}\n' +
+                            '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9--\n';
+
+        xhr.respondWith("POST", new RegExp(fetchXmlBatch),
+            [200, { "Content-Type": "multipart/mixed; boundary=batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9" }, batchResponse]
+        );
     });
 
     afterEach(function() {
@@ -490,6 +536,21 @@ describe("WebApiClient", function() {
             WebApiClient.Retrieve({entityName: "account", fetchXml: fetchXml})
                 .then(function(response){
                     expect(response).toEqual(account);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should send batch for long fetchXml", function(done){
+        	var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\"><entity name=\"account\"><attribute name=\"name\" /><order attribute=\"name\" descending=\"false\" /><filter type=\"and\"><condition attribute=\"name\" operator=\"like\" value=\"%\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /></filter></entity></fetch>";
+            WebApiClient.Retrieve({entityName: "account", fetchXml: fetchXml})
+                .then(function(response){
+                    expect(response.value.length).toBe(12);
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
@@ -1041,6 +1102,12 @@ describe("WebApiClient", function() {
 
             var response = WebApiClient.Retrieve(request);
             expect(response.value.length).toEqual(2);
+        });
+
+        it("should send batch for long fetchXml sync", function(){
+          var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\"><entity name=\"account\"><attribute name=\"name\" /><order attribute=\"name\" descending=\"false\" /><filter type=\"and\"><condition attribute=\"name\" operator=\"like\" value=\"%\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /></filter></entity></fetch>";
+          var response = WebApiClient.Retrieve({entityName: "account", fetchXml: fetchXml, async: false});
+          expect(response.value.length).toBe(12);
         });
 
         it("should expand all deferred properties for single record", function(){
