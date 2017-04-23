@@ -114,6 +114,16 @@ describe("WebApiClient", function() {
             [200, { "Content-Type": "application/json" }, JSON.stringify(contact)]
         );
 
+        // Respond to update Request for contact with alternate key
+        xhr.respondWith("PATCH", new RegExp(retrieveByAlternateKeyUrl),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+
+        // Respond to delete Request for contact with alternate key
+        xhr.respondWith("DELETE", new RegExp(retrieveByAlternateKeyUrl),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+
         // Respond to update Request for account
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl),
@@ -621,6 +631,27 @@ describe("WebApiClient", function() {
             xhr.respond();
         });
 
+        it("should update record by alternate key and return", function(done){
+            WebApiClient.Update({
+                entityName: "contact",
+                alternateKey: [
+                    { property: "firstname", value: "Joe" },
+                    { property: "emailaddress1", value: "abc@example.com"}
+                ],
+                entity: account
+            })
+            .then(function(response){
+                expect(response).toBeDefined();
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            // Wait for promise
+            .finally(done);
+
+            xhr.respond();
+        });
+
         it("should update record and return record representation if http 201", function(done){
             WebApiClient.Update({entityName: "lead", entityId: "00000000-0000-0000-0000-000000000001",  entity: account, headers: [{key: "Prefer", value: "return=representation"}]})
                 .then(function(response){
@@ -659,6 +690,26 @@ describe("WebApiClient", function() {
                 })
                 // Wait for promise
                 .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should delete record by alternate key and return", function(done){
+            WebApiClient.Delete({
+                entityName: "contact",
+                alternateKey: [
+                    { property: "firstname", value: "Joe" },
+                    { property: "emailaddress1", value: "abc@example.com"}
+                ]
+            })
+            .then(function(response){
+                expect(response).toBeDefined();
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            // Wait for promise
+            .finally(done);
 
             xhr.respond();
         });

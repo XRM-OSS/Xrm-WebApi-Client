@@ -23,8 +23,10 @@
         * [Retrieve by FetchXml](#retrieve-by-fetchxml)
       - [Auto expand collection-valued navigation properties](#auto-expand-collection-valued-navigation-properties)
     + [Update](#update)
+      - [Update by alternate key](#update-by-alternate-key)
       - [Return updated record in update response](#return-updated-record-in-update-response)
     + [Delete](#delete)
+      - [Delete by alternate key](#delete-by-alternate-key)
     + [Associate](#associate)
     + [Disassociate](#disassociate)
     + [Execute](#execute)
@@ -295,6 +297,28 @@ WebApiClient.Update(request)
     });
 ```
 
+#### Update by alternate key
+
+```JavaScript
+var request = {
+    entityName: "contact",
+    alternateKey:
+        [
+            { property: "firstname", value: "Joe" },
+            { property: "emailaddress1", value: "abc@example.com"}
+        ],
+    entity: { lastname: "Doe" }
+};
+
+WebApiClient.Update(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
 #### Return updated record in update response
 This feature is available from Dynamics365 v8.2 upwards.
 For returning the full record after applying the updates from your request, set an appropriate Prefer header as follows:
@@ -323,6 +347,27 @@ Delete requests are supported. You have to pass the entity logical name, and ID 
 var request = {
     entityName: "account",
     entityId: "00000000-0000-0000-0000-000000000001"
+};
+
+WebApiClient.Delete(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+#### Delete by alternate key
+
+```JavaScript
+var request = {
+    entityName: "contact",
+    alternateKey:
+        [
+            { property: "firstname", value: "Joe" },
+            { property: "emailaddress1", value: "abc@example.com"}
+        ]
 };
 
 WebApiClient.Delete(request)

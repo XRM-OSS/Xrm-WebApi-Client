@@ -167,11 +167,19 @@
     function GetRecordUrl (parameters) {
         var params = parameters || {};
 
-        if ((!params.entityName && !params.overriddenSetName) || !params.entityId) {
-            throw new Error("Need entity name or overridden set name and entity id for getting record url!");
+        if ((!params.entityName && !params.overriddenSetName) || (!params.entityId && !params.alternateKey)) {
+            throw new Error("Need entity name or overridden set name and entity id or alternate key for getting record url!");
         }
 
-        return WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName) + "(" + RemoveIdBrackets(params.entityId) + ")";
+        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
+
+        if (params.alternateKey) {
+            url += BuildAlternateKeyUrl(params);
+        } else {
+            url += "(" + RemoveIdBrackets(params.entityId) + ")";
+        }
+
+        return url;
     }
 
     function FormatError (xhr) {
@@ -499,6 +507,29 @@
       return WebApiClient.Async;
     }
 
+    function BuildAlternateKeyUrl (params) {
+        if (!params || !params.alternateKey) {
+            return "";
+        }
+
+        var url = "(";
+
+        for (var i = 0; i < params.alternateKey.length; i++) {
+            var key = params.alternateKey[i];
+
+            url += key.property + "='" + key.value + "'";
+
+            if (i + 1 === params.alternateKey.length) {
+                url += ")";
+            }
+            else {
+                url += ",";
+            }
+        }
+
+        return url;
+    }
+
     WebApiClient.SendRequest = function (method, url, payload, parameters) {
       /// <summary>Sends request using given method, url, payload and additional per-request headers.</summary>
       /// <param name="method" type="String">Method type of request to send, such as "GET".</param>
@@ -571,23 +602,10 @@
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
         }
         else if (params.fetchXml) {
-        	url += "?fetchXml=" + escape(params.fetchXml);
+        	  url += "?fetchXml=" + escape(params.fetchXml);
         }
         else if (params.alternateKey) {
-            url += "(";
-
-            for (var i = 0; i < params.alternateKey.length; i++) {
-                var key = params.alternateKey[i];
-
-                url += key.property + "='" + key.value + "'";
-
-                if (i + 1 === params.alternateKey.length) {
-                    url += ")";
-                }
-                else {
-                    url += ",";
-                }
-            }
+            url += BuildAlternateKeyUrl(params);
         }
 
         if (params.queryParams) {
