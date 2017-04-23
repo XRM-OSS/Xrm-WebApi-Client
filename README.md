@@ -127,7 +127,7 @@ WebApiClient.Create(request)
 
 #### Return created record in create response
 This feature is available from Dynamics365 v8.2 upwards.
-For returning the full record that was created from your request, set an appropriate Prefer headers as follows:
+For returning the full record that was created from your request, set an appropriate Prefer header as follows:
 
 ```JavaScript
 var request = {
@@ -297,7 +297,7 @@ WebApiClient.Update(request)
 
 #### Return updated record in update response
 This feature is available from Dynamics365 v8.2 upwards.
-For returning the full record after applying the updates from your request, set an appropriate Prefer headers as follows:
+For returning the full record after applying the updates from your request, set an appropriate Prefer header as follows:
 
 ```JavaScript
 var request = {
