@@ -13,6 +13,7 @@
   * [Operations](#operations)
     + [Synchronous vs Asynchronous](#synchronous-vs-asynchronous)
     + [Create](#create)
+      - [Return created record in create response](#return-created-record-in-create-response)
     + [Retrieve](#retrieve)
       - [Retrieve single records](#retrieve-single-records)
         * [Retrieve by ID](#retrieve-by-id)
@@ -22,6 +23,7 @@
         * [Retrieve by FetchXml](#retrieve-by-fetchxml)
       - [Auto expand collection-valued navigation properties](#auto-expand-collection-valued-navigation-properties)
     + [Update](#update)
+      - [Return updated record in update response](#return-updated-record-in-update-response)
     + [Delete](#delete)
     + [Associate](#associate)
     + [Disassociate](#disassociate)
@@ -112,6 +114,26 @@ The client supports creation of records. You have to pass the entity logical nam
 var request = {
     entityName: "account",
     entity: {name: "Adventure Works"}
+};
+
+WebApiClient.Create(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+#### Return created record in create response
+This feature is available from Dynamics365 v8.2 upwards.
+For returning the full record that was created from your request, set an appropriate Prefer headers as follows:
+
+```JavaScript
+var request = {
+    entityName: "account",
+    entity: {name: "Adventure Works"},
+    headers: [{key: "Prefer", value: "return=representation"}]
 };
 
 WebApiClient.Create(request)
@@ -262,6 +284,27 @@ var request = {
     entityName: "account",
     entityId: "00000000-0000-0000-0000-000000000001",
     entity: { name: "Contoso" }
+};
+
+WebApiClient.Update(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+#### Return updated record in update response
+This feature is available from Dynamics365 v8.2 upwards.
+For returning the full record after applying the updates from your request, set an appropriate Prefer headers as follows:
+
+```JavaScript
+var request = {
+    entityName: "account",
+    entityId: "00000000-0000-0000-0000-000000000001",
+    entity: { name: "Contoso" },
+    headers: [{key: "Prefer", value: "return=representation"}]
 };
 
 WebApiClient.Update(request)

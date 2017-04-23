@@ -275,6 +275,7 @@
 
         // Check if it is a batch response
         if (responseText && /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText)) {
+            // Regex matches JSON literals in batch responses to parse all JSON objects that were returned
             var matches = responseText.match(/^{[\s\S]*?(?=^}$)^}$/gm);
 
             for (var i = 0; i < matches.length; i++) {
@@ -344,6 +345,9 @@
                     else {
                         resolve(response);
                     }
+                }
+                else if (xhr.status === 201) {
+                    resolve(ParseRespone(xhr));
                 }
                 else if (xhr.status === 204) {
                     if (method.toLowerCase() === "post") {
@@ -433,6 +437,9 @@
 
                     WebApiClient.Retrieve(parameters);
                 }
+            }
+            else if (xhr.status === 201) {
+                response = ParseRespone(xhr);
             }
             else if (xhr.status === 204) {
                 if (method.toLowerCase() === "post") {

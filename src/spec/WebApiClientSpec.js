@@ -47,6 +47,12 @@ describe("WebApiClient", function() {
             [204, { "Content-Type": "application/json", "OData-EntityId": "Fake-Account-Url" }, JSON.stringify(successMock)]
         );
 
+        // Respond to create request with return=representation
+        var createLeadUrlRepresentation = new RegExp(RegExp.escape(fakeUrl + "/api/data/v8.0/leads"));
+        xhr.respondWith("POST", createLeadUrlRepresentation,
+            [201, { "Content-Type": "application/json" }, JSON.stringify(account)]
+        );
+
         // Respond to Retrieve by id Request for account
         var retrieveAccountByIdUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("GET", new RegExp(retrieveAccountByIdUrl),
@@ -112,6 +118,12 @@ describe("WebApiClient", function() {
         var updateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)");
         xhr.respondWith("PATCH", new RegExp(updateAccountUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+
+        // Respond to update request with return=representation
+        var updateLeadUrlRepresentation = RegExp.escape(fakeUrl + "/api/data/v8.0/leads(00000000-0000-0000-0000-000000000001)");
+        xhr.respondWith("PATCH", new RegExp(updateLeadUrlRepresentation),
+            [201, { "Content-Type": "application/json" }, JSON.stringify(account)]
         );
 
         // Respond to Delete Request for account
@@ -401,6 +413,20 @@ describe("WebApiClient", function() {
 
             xhr.respond();
         });
+
+        it("should create record and parse returned record if http 201", function(done){
+            WebApiClient.Create({entityName: "lead", entity: account, headers: [{key: "Prefer", value: "return=representation"}]})
+                .then(function(response){
+                    expect(response).toEqual(account);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
     });
 
     describe("Retrieve", function() {
@@ -585,6 +611,20 @@ describe("WebApiClient", function() {
             WebApiClient.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001",  entity: account})
                 .then(function(response){
                     expect(response).toBeDefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should update record and return record representation if http 201", function(done){
+            WebApiClient.Update({entityName: "lead", entityId: "00000000-0000-0000-0000-000000000001",  entity: account, headers: [{key: "Prefer", value: "return=representation"}]})
+                .then(function(response){
+                    expect(response).toEqual(account);
                 })
                 .catch(function(error) {
                     expect(error).toBeUndefined();
@@ -1125,6 +1165,16 @@ describe("WebApiClient", function() {
             expect(response[0].Account_Tasks).toEqual([{taskid: "firstTaskid"}, {taskid: "secondTaskid"}]);
             expect(response[0]["contact_customer_accounts@odata.nextLink"]).toBeUndefined();
             expect(response[0]["Account_Tasks@odata.nextLink"]).toBeUndefined();
+        });
+
+        it("should create record and return record representation if http 201", function(){
+            var response = WebApiClient.Create({entityName: "lead", entity: account, headers: [{key: "Prefer", value: "return=representation"}], async: false});
+            expect(response).toEqual(account);
+        });
+
+        it("should update record and return record representation if http 201", function(){
+            var response = WebApiClient.Update({entityName: "lead", entityId: "00000000-0000-0000-0000-000000000001",  entity: account, headers: [{key: "Prefer", value: "return=representation"}], async: false});
+            expect(response).toEqual(account);
         });
     });
 
