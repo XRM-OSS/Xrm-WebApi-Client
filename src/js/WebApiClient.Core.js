@@ -277,7 +277,7 @@
         return headers;
     }
 
-    function ParseRespone(xhr) {
+    function ParseResponse(xhr) {
         var responseText = xhr.responseText;
         var responses = [];
 
@@ -323,7 +323,7 @@
                 }
 
                 if(xhr.status === 200){
-                    var response = ParseRespone(xhr);
+                    var response = ParseResponse(xhr);
 
                     // If we received multiple responses, it was a custom batch. Just resolve all matches
                     if (Array.isArray(response)) {
@@ -355,7 +355,7 @@
                     }
                 }
                 else if (xhr.status === 201) {
-                    resolve(ParseRespone(xhr));
+                    resolve(ParseResponse(xhr));
                 }
                 else if (xhr.status === 204) {
                     if (method.toLowerCase() === "post") {
@@ -418,7 +418,7 @@
             }
 
             if(xhr.status === 200){
-                response = ParseRespone(xhr);
+                response = ParseResponse(xhr);
 
                 // If we received multiple responses, it was a custom batch. Just resolve all matches
                 if (Array.isArray(response)) {
@@ -447,7 +447,7 @@
                 }
             }
             else if (xhr.status === 201) {
-                response = ParseRespone(xhr);
+                response = ParseResponse(xhr);
             }
             else if (xhr.status === 204) {
                 if (method.toLowerCase() === "post") {

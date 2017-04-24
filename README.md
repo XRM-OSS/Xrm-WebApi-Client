@@ -639,7 +639,7 @@ var request = {
 ```
 
 #### Page size
-If you want to set a max page size for your request (supported are up to 5000 records per rage), you can pass the following header:
+If you want to set a max page size for your request (supported are up to 5000 records per page), you can pass the following header:
 
 ``` JavaScript
 headers: [ { key: "Prefer", value: "odata.maxpagesize=5000" }]
