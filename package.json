@@ -19,6 +19,7 @@
     "browserify": "latest",
     "browserify-istanbul": "^2.0.0",
     "codecov.io": "^0.1.6",
+    "coveralls": "^2.13.0",
     "jasmine-core": "*",
     "jshint": "latest",
     "karma": "^1.3.0",

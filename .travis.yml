@@ -5,6 +5,7 @@ before_deploy:
   - sed -i "s/v0.0.0/$TRAVIS_TAG/g" package.json
 before_script:
   - sed -i "s/WebApiClient build version v0.0.0/WebApiClient build version $TRAVIS_TAG/g" src/js/WebApiClient.Core.js
+after_script: "cat ./coverage/*/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 deploy:
   - provider: releases
     api_key:
