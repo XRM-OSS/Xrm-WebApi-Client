@@ -1,7 +1,12 @@
 # Dynamics CRM JavaScript Web API Client
+[![Build Status](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client.svg?branch=master)](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client) [![Coverage Status](https://coveralls.io/repos/github/DigitalFlow/Xrm-WebApi-Client/badge.svg?branch=master)](https://coveralls.io/github/DigitalFlow/Xrm-WebApi-Client?branch=master)
+
+This is a framework for easing working with the Dynamics CRM WebApi using JavaScript.
+It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framework for handling requests asynchronously based on promises.
+The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
+For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
 
 - [Dynamics CRM JavaScript Web API Client](#dynamics-crm-javascript-web-api-client)
-  * [Purpose](#purpose)
   * [Requirements](#requirements)
     + [CRM](#crm)
     + [Browser](#browser)
@@ -9,7 +14,6 @@
     + [NPM](#npm)
     + [GitHub Release](#github-release)
   * [How to build it](#how-to-build-it)
-  * [Build Status](#build-status)
   * [Operations](#operations)
     + [Synchronous vs Asynchronous](#synchronous-vs-asynchronous)
     + [Create](#create)
@@ -46,12 +50,6 @@
   * [Remarks](#remarks)
     + [CRM App](#crm-app)
 
-## Purpose
-This is a framework for easing working with the Dynamics CRM WebApi using JavaScript.
-It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framework for handling requests asynchronously based on promises.
-The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
-For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
-
 ## Requirements
 ### CRM
 This framework targets the Dynamics CRM WebApi, therefore CRM 2016 (>= v8.0) is needed.
@@ -77,9 +75,6 @@ You'll have to install [npm](https://www.npmjs.com/) on your machine.
 
 For bootstrapping, simply run ```npm install``` once initially.
 For every build, you can just call ```npm run build```. You'll find the build output in the Publish directory.
-
-## Build Status
-[![Build Status](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client.svg?branch=master)](https://travis-ci.org/DigitalFlow/Xrm-WebApi-Client)
 
 ## Operations
 ### Synchronous vs Asynchronous
