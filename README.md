@@ -6,6 +6,8 @@ It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framewo
 The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
 For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
 
+# Index
+
 - [Dynamics CRM JavaScript Web API Client](#dynamics-crm-javascript-web-api-client)
   * [Requirements](#requirements)
     + [CRM](#crm)
