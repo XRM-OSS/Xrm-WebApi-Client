@@ -1,4 +1,10 @@
 describe("WebApiClient", function() {
+    // Use loaded lib for tests in browser, require for node
+    if (typeof(require) !== "undefined") {
+        WebApiClient = require('../js/WebApiClient.js');
+        sinon = require('sinon');
+   }
+
     var fakeUrl = "http://unit-test.local";
     var account;
     var contact;
