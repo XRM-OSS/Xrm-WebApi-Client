@@ -15,12 +15,16 @@ describe("WebApiClient", function() {
 
     var errorJson = "{\r\n  \"error\":{\r\n    \"code\":\"\",\"message\":\"The function parameter 'EntityMoniker' cannot be found.\\r\\nParameter name: parameterName\",\"innererror\":{\r\n      \"message\":\"The function parameter 'EntityMoniker' cannot be found.\\r\\nParameter name: parameterName\",\"type\":\"System.ArgumentException\",\"stacktrace\":\"   at System.Web.OData.Routing.UnboundFunctionPathSegment.GetParameterValue(String parameterName)\\r\\n   at Microsoft.Crm.Extensibility.OData.CrmODataRouteDataProvider.FillUnboundFunctionData(UnboundFunctionPathSegment unboundFunctionPathSegment, HttpControllerContext controllerContext)\\r\\n   at Microsoft.Crm.Extensibility.OData.CrmODataRoutingConvention.SelectAction(ODataPath odataPath, HttpControllerContext controllerContext, ILookup`2 actionMap)\\r\\n   at System.Web.OData.Routing.ODataActionSelector.SelectAction(HttpControllerContext controllerContext)\\r\\n   at System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)\\r\\n   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()\"\r\n    }\r\n  }\r\n}";
 
-    Xrm = {};
-    Xrm.Page = {};
-    Xrm.Page.context = {};
-    Xrm.Page.context.getClientUrl = function() {
-        return fakeUrl;
+    function ExportContext() {
+        Xrm = {};
+        Xrm.Page = {};
+        Xrm.Page.context = {};
+        Xrm.Page.context.getClientUrl = function() {
+            return fakeUrl;
+        }
     }
+
+    ExportContext();
 
     RegExp.escape= function(s) {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -213,6 +217,12 @@ describe("WebApiClient", function() {
             [500, { "Content-Type": "application/json" }, errorJson]
         );
 
+        // Respond without proper error
+        var noErrorUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/noerrors");
+        xhr.respondWith("GET", new RegExp(noErrorUrl),
+            [500, { "Content-Type": "application/json" }, JSON.stringify({})]
+        );
+
         var whoAmI = RegExp.escape(fakeUrl + "/api/data/v8.0/WhoAmI()");
         xhr.respondWith("GET", new RegExp(whoAmI),
             [200, { "Content-Type": "application/json" }, JSON.stringify({UserId: "1234"})]
@@ -312,6 +322,34 @@ describe("WebApiClient", function() {
 
         it("should know the disassociate operation", function() {
             expect(WebApiClient.Disassociate).toBeDefined();
+        });
+    });
+
+    describe("Context", function() {
+        it("should throw error if no context is available", function() {
+            delete Xrm;
+
+            expect(function() { WebApiClient.GetApiUrl() }).toThrow();
+
+            ExportContext();
+        });
+
+        it("should use GetGlobalContext if available", function() {
+            GetGlobalContext = function() {
+                return {
+                  getClientUrl: function () {
+                      return fakeUrl + "Global";
+                  }
+                };
+            };
+
+            expect(WebApiClient.GetApiUrl()).toBe(fakeUrl + "Global" + "/api/data/v" + WebApiClient.ApiVersion + "/");
+
+            delete GetGlobalContext;
+        });
+
+        it("should use Xrm.Page.context if global context not available", function() {
+            expect(WebApiClient.GetApiUrl()).toBe(fakeUrl + "/api/data/v" + WebApiClient.ApiVersion + "/");
         });
     });
 
@@ -728,6 +766,16 @@ describe("WebApiClient", function() {
             }).toThrow();
         });
 
+        it("should fail if nothing is passed", function(){
+            expect(function() {
+                WebApiClient.Execute();
+            }).toThrow();
+        });
+
+        it("should allow instantiating base response", function(){
+            expect(new WebApiClient.Requests.Request()).toBeDefined();
+        });
+
         it("should allow overwriting of all attributes", function(){
             expect(function() {
                 var request = WebApiClient.Requests.WhoAmIRequest
@@ -1020,6 +1068,24 @@ describe("WebApiClient", function() {
             }).toThrow();
         });
 
+        it("should fail if source entityId is missing, since it is used directly without GetRecordUrl", function(){
+            expect(function() {
+              WebApiClient.Disassociate(
+              {
+                  relationShip: "opportunity_customer_accounts",
+                  source:
+                      {
+                          entityName: "opportunity"
+                      },
+                  target:
+                      {
+                          entityName: "account",
+                          entityId: "00000000-0000-0000-0000-000000000002"
+                      }
+              });
+            }).toThrow();
+        });
+
         it("should disassociate record and return", function(done){
             WebApiClient.Disassociate(
                 {
@@ -1207,6 +1273,18 @@ describe("WebApiClient", function() {
           expect(response.value.length).toBe(12);
         });
 
+        it("should update record and return", function(){
+            var response = WebApiClient.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001",  entity: account, async: false});
+
+            expect(response).toBeDefined();
+        });
+
+        it("should create record and return record URL", function(){
+            var response = WebApiClient.Create({entityName: "account", entity: account, async: false});
+
+            expect(response).toEqual("Fake-Account-Url");
+        });
+
         it("should expand all deferred properties for single record", function(){
             var account = {
                 accountid: "someid",
@@ -1299,6 +1377,22 @@ describe("WebApiClient", function() {
 
             xhr.respond();
         });
+
+        it("should not fail if no error found", function(done){
+            WebApiClient.PrettifyErrors = false;
+
+            WebApiClient.Retrieve({entityName: "noerror"})
+                .then(function(response){
+                    expect(response).toBeUndefined();
+                })
+                .catch(function(error) {
+                    expect(error).toBeDefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
     });
 
     describe("Configure", function() {
@@ -1327,6 +1421,11 @@ describe("WebApiClient", function() {
             var defaultHeaders = WebApiClient.GetDefaultHeaders();
 
             expect(defaultHeaders[defaultHeaders.length - 1]).toEqual(testHeader);
+        });
+
+        it("should throw on invalid header", function(){
+            var testHeader = { value: "newValue" };
+            expect(function() { WebApiClient.AppendToDefaultHeaders (testHeader); }).toThrow();
         });
     });
 

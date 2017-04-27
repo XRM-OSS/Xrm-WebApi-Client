@@ -148,7 +148,9 @@
         for(var i = 0; i < arguments.length; i++) {
             var argument = arguments[i];
 
-            DefaultHeaders.push(arguments[i]);
+            VerifyHeader(argument);
+
+            DefaultHeaders.push(argument);
         }
     };
 
