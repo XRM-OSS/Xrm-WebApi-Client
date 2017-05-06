@@ -946,6 +946,127 @@ describe("WebApiClient", function() {
         });
     });
 
+    describe("Batch", function() {
+        /* MS Test example: https://msdn.microsoft.com/en-us/library/mt607719.aspx#Example
+
+        WebApiClient.Create({entityName: "account", entity: { name: "Test" }})
+        .then(function (account) {
+        	var accountId = account.substring(account.indexOf("(")).replace("(", "").replace(")","");
+
+        	var batch = new WebApiClient.Batch();
+            var changeSet = new WebApiClient.ChangeSet();
+
+        	var task1 = WebApiClient.Create({
+                        entityName: "task",
+                        entity: {
+                          subject: "Task 1 in batch",
+                          "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                        },
+                        asBatch: true
+            });
+            changeSet.requests.push(task1);
+
+            var task2 = WebApiClient.Create({
+                        entityName: "task",
+                        entity: {
+                          subject: "Task 2 in batch",
+                          "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                        },
+                        asBatch: true
+            });
+            changeSet.requests.push(task2);
+
+            batch.changeSets.push(changeSet);
+
+            var account = WebApiClient.Retrieve({
+                        entityName: "account",
+                        entityId: accountId,
+                        queryParams: "/Account_Tasks?$select=subject",
+                        asBatch: true
+            });
+            batch.requests.push(account);
+
+        	return WebApiClient.SendBatch(batch);
+        })
+        .then(function(result) {
+        	console.log(result);
+        });
+        */
+
+
+        it("should stringify batch with changeset and plain requests properly", function() {
+            var expected = '--batch_AAA123\n' +
+            'Content-Type: multipart/mixed;boundary=changeset_BBB456\n' +
+            '\n' +
+            '--changeset_BBB456\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            'Content-ID: 1\n' +
+            '\n' +
+            'POST ' + fakeUrl + '/api/data/v8.0/tasks HTTP/1.1\n' +
+            'Content-Type: application/json;type=entry\n' +
+            '\n' +
+            '{"subject":"Task 1 in batch","regardingobjectid_account_task@odata.bind":"' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"}\n' +
+            '--changeset_BBB456\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            'Content-ID: 2\n' +
+            '\n' +
+            'POST ' + fakeUrl + '/api/data/v8.0/tasks HTTP/1.1\n' +
+            'Content-Type: application/json;type=entry\n' +
+            '\n' +
+            '{"subject":"Task 2 in batch","regardingobjectid_account_task@odata.bind":"' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"}\n' +
+            '--changeset_BBB456--\n' +
+            '\n' +
+            '--batch_AAA123\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            '\n' +
+            'GET ' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)/Account_Tasks?$select=subject HTTP/1.1\n' +
+            'Accept: application/json\n' +
+            '\n' +
+            '--batch_AAA123--\n';
+
+            var batch = new WebApiClient.Batch();
+
+            var changeSet = new WebApiClient.ChangeSet();
+
+            var task1 = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 1 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                asBatch: true
+            });
+            changeSet.requests.push(task1);
+
+            var task2 = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 2 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                asBatch: true
+            });
+            changeSet.requests.push(task2);
+
+            batch.changeSets.push(changeSet);
+
+            var account = WebApiClient.Retrieve({
+                entityName: "account",
+                entityId: "00000000-0000-0000-000000000001",
+                queryParams: "/Account_Tasks?$select=subject",
+                asBatch: true
+            });
+            batch.requests.push(account);
+
+            var actual = batch.buildPayload();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe("Associate", function() {
         it("should fail if no target passed", function(){
             expect(function() {

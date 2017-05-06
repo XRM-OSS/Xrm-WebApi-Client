@@ -548,6 +548,10 @@
           };
       }
 
+      if (params.asBatch) {
+          return new WebApiClient.BatchRequest({method: method, url: url, payload: payload, parameters: parameters});
+      }
+
       var asynchronous = GetAsync(params);
 
       if (asynchronous) {
@@ -705,6 +709,35 @@
         }
 
         return WebApiClient.SendRequest(request.method, request.buildUrl(), request.payload, request);
+    };
+
+    WebApiClient.SendBatch = function(batch) {
+    /// <summary>Executes the passed request</summary>
+    /// <param name="request" type="Object">Request object that inherits from WebApiClient.Requests.Request</param>
+    /// <returns>Promise for sent request or result if sync</returns>
+        if (!batch) {
+            throw new Error("You need to pass a batch!");
+        }
+
+        if (!(batch instanceof WebApiClient.Batch)) {
+            throw new Error("Batch for execution must be a WebApiClient.Batch object");
+        }
+
+        var url = WebApiClient.GetApiUrl() + "$batch";
+
+        if (!batch.name) {
+            throw new Error("You need to set a batchName on your batch");
+        }
+
+        if (!batch.headers) {
+            batch.headers = [];
+        }
+
+        batch.headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batch.name});
+
+        var payload = batch.buildPayload();
+
+        return WebApiClient.SendRequest("POST", url, payload, batch);
     };
 
     WebApiClient.Expand = function (parameters) {
