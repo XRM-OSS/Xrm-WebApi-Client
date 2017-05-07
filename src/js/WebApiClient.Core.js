@@ -279,25 +279,46 @@
         return headers;
     }
 
+    function IsBatch(responseText) {
+        return responseText && /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText);
+    }
+
     function ParseResponse(xhr) {
         var responseText = xhr.responseText;
-        var responses = [];
 
         // Check if it is a batch response
-        if (responseText && /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText)) {
-            // Regex matches JSON literals in batch responses to parse all JSON objects that were returned
-            var matches = responseText.match(/^{[\s\S]*?(?=^}$)^}$/gm);
+        if (IsBatch(responseText)) {
+            var responseContentType = xhr.getResponseHeader("Content-Type");
+            var batchResponseName = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
 
-            for (var i = 0; i < matches.length; i++) {
-                responses.push(JSON.parse(matches[i]));
+            var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/);
+            var changeSetResponses = [];
+
+            for (var i = 0; changeSetBoundaries && i < changechangeSetBoundaries.length; i++) {
+                var changeSetName = changeSetBoundaries[i].replace("boundary=", "");
+
+                // Find all change set responses in responseText
+                var changeSetRegex = new RegExp("--" + changeSetName + "[\\S\\s]*?(?=--" + changeSetName + ")", "gm");
+
+                changeSetResponses.push({
+                  name: changeSetName,
+                  responses: responseText.match(changeSetRegex)
+                });
             }
 
-            if (responses.length === 1) {
-                return responses[0];
+            // Find all batch responses in responseText
+            var batchRegex = new RegExp("--" + batchResponseName + "\\r\\nContent-Type: application\\/http[\\S\\s]*?(?=--" + batchResponseName + ")", "gm");
+            var batchResponsesRaw = responseText.match(batchRegex) || [];
+            var batchResponses = [];
+
+            for (var j = 0; j < batchResponsesRaw.length; j++) {
+                batchResponses.push(new WebApiClient.Response({
+                    rawData: batchResponsesRaw[j]
+                }));
             }
-            else {
-                return responses;
-            }
+
+
+            return new WebApiClient.BatchResponse({ name: batchResponseName, batchResponses: batchResponses, changeSetResponses: changeSetResponses });
         }
         else {
             return JSON.parse(xhr.responseText);
@@ -315,6 +336,10 @@
           "--" + batchName + "--";
     }
 
+    function IsOverlengthGet (method, url) {
+        return method && method.toLowerCase() === "get" && url && url.length > 2048;
+    }
+
     function SendAsync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
 
@@ -327,9 +352,15 @@
                 if(xhr.status === 200){
                     var response = ParseResponse(xhr);
 
-                    // If we received multiple responses, it was a custom batch. Just resolve all matches
-                    if (Array.isArray(response)) {
-                        resolve(response);
+                    if (response instanceof WebApiClient.BatchResponse) {
+                        // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
+                        if (parameters.fetchXml) {
+                            response = response.batchResponses[0].payload;
+                        }
+                        // If we received multiple responses, but not from overlength get, it was a custom batch. Just resolve all matches
+                        else {
+                            resolve(response);
+                        }
                     }
 
                     var nextLink = GetNextLink(response);
@@ -379,7 +410,7 @@
 
         var headers = [];
 
-        if (method && method.toLowerCase() === "get" && url && url.length > 2048) {
+        if (IsOverlengthGet(method, url)) {
             payload = CreateBatchPayload(batchName, method, url);
 
             url = WebApiClient.GetApiUrl() + "$batch";
@@ -423,8 +454,13 @@
                 response = ParseResponse(xhr);
 
                 // If we received multiple responses, it was a custom batch. Just resolve all matches
-                if (Array.isArray(response)) {
-                    return;
+                if (response instanceof WebApiClient.BatchResponse) {
+                  // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
+                  if (parameters.fetchXml) {
+                        response = response.batchResponses[0].payload;
+                    } else {
+                        return;
+                    }
                 }
 
                 var nextLink = GetNextLink(response);
@@ -470,7 +506,7 @@
 
         var headers = [];
 
-        if (method && method.toLowerCase() === "get" && url && url.length > 2048) {
+        if (IsOverlengthGet(method, url)) {
             payload = CreateBatchPayload(batchName, method, url);
 
             url = WebApiClient.GetApiUrl() + "$batch";

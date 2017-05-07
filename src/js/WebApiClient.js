@@ -19,6 +19,12 @@
     // Attach batchRequest to core
     WebApiClient.BatchRequest = require("./WebApiClient.BatchRequest.js");
 
+    // Attach batchResponse to core
+    WebApiClient.BatchResponse = require("./WebApiClient.BatchResponse.js");
+
+    // Attach response to core
+    WebApiClient.Response = require("./WebApiClient.Response.js");
+
     // Export complete WebApiClient
     module.exports = WebApiClient;
 } ());

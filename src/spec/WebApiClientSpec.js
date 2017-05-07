@@ -251,44 +251,44 @@ describe("WebApiClient", function() {
         // fetchXml Batch
         var fetchXmlBatch = RegExp.escape(fakeUrl + "/api/data/v8.0/$batch");
 
-        var batchResponse = '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9\n' +
-                            'Content-Type: application/http\n' +
-                            'Content-Transfer-Encoding: binary\n' +
-                            '\n' +
-                            'HTTP/1.1 200 OK\n' +
-                            'Content-Type: application/json; odata.metadata=minimal\n' +
-                            'OData-Version: 4.0\n' +
-                            '\n' +
-                            '{\n' +
-                            '  "@odata.context":"https://org/api/data/v8.0/$metadata#accounts(name,accountid)","value":[\n' +
-                            '    {\n' +
-                            '      "@odata.etag":"W633807","name":"Adventure GmbH (Beispiel)","accountid":"e3753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633809","name":"Blue Airlines (Beispiel)","accountid":"e7753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633811","name":"Contoso Pharma (Beispiel)","accountid":"eb753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633814","name":"Ein-Datum-Unternehmen (Beispiel)","accountid":"ef753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633808","name":"Fabrikam KG (Beispiel)","accountid":"e5753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633815","name":"Hanno Starker (Beispiel)","accountid":"f1753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633805","name":"Kaffee Viersen (Beispiel)","accountid":"df753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633806","name":"Litware KG (Beispiel)","accountid":"e1753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633812","name":"Ski und Sport (Beispiel)","accountid":"ed753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633810","name":"Stadtwerke (Beispiel)","accountid":"e9753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633816","name":"Test1","accountid":"d91966c7-511d-e711-80fc-5065f38b0361"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633817","name":"Test2","accountid":"95fb99d5-511d-e711-80fc-5065f38b0361"\n' +
-                            '    }\n' +
-                            '  ]\n' +
-                            '}\n' +
-                            '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9--\n';
+        var batchResponse = '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9\r\n' +
+                            'Content-Type: application/http\r\n' +
+                            'Content-Transfer-Encoding: binary\r\n' +
+                            '\r\n' +
+                            'HTTP/1.1 200 OK\r\n' +
+                            'Content-Type: application/json; odata.metadata=minimal\r\n' +
+                            'OData-Version: 4.0\r\n' +
+                            '\r\n' +
+                            '{\r\n' +
+                            '  "@odata.context":"https://org/api/data/v8.0/$metadata#accounts(name,accountid)","value":[\r\n' +
+                            '    {\r\n' +
+                            '      "@odata.etag":"W633807","name":"Adventure GmbH (Beispiel)","accountid":"e3753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633809","name":"Blue Airlines (Beispiel)","accountid":"e7753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633811","name":"Contoso Pharma (Beispiel)","accountid":"eb753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633814","name":"Ein-Datum-Unternehmen (Beispiel)","accountid":"ef753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633808","name":"Fabrikam KG (Beispiel)","accountid":"e5753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633815","name":"Hanno Starker (Beispiel)","accountid":"f1753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633805","name":"Kaffee Viersen (Beispiel)","accountid":"df753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633806","name":"Litware KG (Beispiel)","accountid":"e1753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633812","name":"Ski und Sport (Beispiel)","accountid":"ed753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633810","name":"Stadtwerke (Beispiel)","accountid":"e9753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633816","name":"Test1","accountid":"d91966c7-511d-e711-80fc-5065f38b0361"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633817","name":"Test2","accountid":"95fb99d5-511d-e711-80fc-5065f38b0361"\r\n' +
+                            '    }\r\n' +
+                            '  ]\r\n' +
+                            '}\r\n' +
+                            '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9--\r\n';
 
         xhr.respondWith("POST", new RegExp(fetchXmlBatch),
             [200, { "Content-Type": "multipart/mixed; boundary=batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9" }, batchResponse]

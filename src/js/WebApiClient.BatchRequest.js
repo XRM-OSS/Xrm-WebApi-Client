@@ -29,6 +29,10 @@
         if (this.payload) {
             payload += JSON.stringify(this.payload);
         }
+        else if (this.method.toLowerCase() === "delete") {
+            // Delete requests need an empty payload, pass it if not already set
+            payload += JSON.stringify({});
+        }
 
         return payload;
     };
