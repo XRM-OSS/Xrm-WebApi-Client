@@ -294,16 +294,26 @@
             var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/);
             var changeSetResponses = [];
 
-            for (var i = 0; changeSetBoundaries && i < changechangeSetBoundaries.length; i++) {
+            for (var i = 0; changeSetBoundaries && i < changeSetBoundaries.length; i++) {
                 var changeSetName = changeSetBoundaries[i].replace("boundary=", "");
 
                 // Find all change set responses in responseText
                 var changeSetRegex = new RegExp("--" + changeSetName + "[\\S\\s]*?(?=--" + changeSetName + ")", "gm");
 
-                changeSetResponses.push({
-                  name: changeSetName,
-                  responses: responseText.match(changeSetRegex)
-                });
+                var changeSetResponse = {
+                    name: changeSetName,
+                    responses: []
+                };
+
+                var changeSets = responseText.match(changeSetRegex);
+
+                for (var k = 0; k < changeSets.length; k++) {
+                    changeSetResponse.responses.push(new WebApiClient.Response({
+                        rawData: changeSets[k]
+                    }));
+                }
+
+                changeSetResponses.push(changeSetResponse);
             }
 
             // Find all batch responses in responseText

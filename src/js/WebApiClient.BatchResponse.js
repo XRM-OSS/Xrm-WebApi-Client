@@ -5,7 +5,7 @@
         var params = parameters || {};
 
         this.name = params.name;
-        this.changeSetResponses = params.changeSetResponses || {};
+        this.changeSetResponses = params.changeSetResponses || [];
         this.batchResponses = params.batchResponses || [];
     };
 
