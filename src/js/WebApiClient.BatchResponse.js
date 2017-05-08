@@ -7,6 +7,7 @@
         this.name = params.name;
         this.changeSetResponses = params.changeSetResponses || [];
         this.batchResponses = params.batchResponses || [];
+        this.isFaulted = params.isFaulted || [];
     };
 
     module.exports = BatchResponse;

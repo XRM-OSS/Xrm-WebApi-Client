@@ -288,6 +288,7 @@
 
         // Check if it is a batch response
         if (IsBatch(responseText)) {
+            var isFaulted = false;
             var responseContentType = xhr.getResponseHeader("Content-Type");
             var batchResponseName = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
 
@@ -308,9 +309,15 @@
                 var changeSets = responseText.match(changeSetRegex);
 
                 for (var k = 0; k < changeSets.length; k++) {
-                    changeSetResponse.responses.push(new WebApiClient.Response({
+                    var response = new WebApiClient.Response({
                         rawData: changeSets[k]
-                    }));
+                    });
+
+                    if (response.payload && response.payload.error) {
+                        isFaulted = true;
+                    }
+
+                    changeSetResponse.responses.push(response);
                 }
 
                 changeSetResponses.push(changeSetResponse);
@@ -322,13 +329,23 @@
             var batchResponses = [];
 
             for (var j = 0; j < batchResponsesRaw.length; j++) {
-                batchResponses.push(new WebApiClient.Response({
+                var batchResponse = new WebApiClient.Response({
                     rawData: batchResponsesRaw[j]
-                }));
+                });
+
+                if (batchResponse.payload && batchResponse.payload.error) {
+                    isFaulted = true;
+                }
+
+                batchResponses.push(batchResponse);
             }
 
-
-            return new WebApiClient.BatchResponse({ name: batchResponseName, batchResponses: batchResponses, changeSetResponses: changeSetResponses });
+            return new WebApiClient.BatchResponse({
+                name: batchResponseName,
+                batchResponses: batchResponses,
+                changeSetResponses: changeSetResponses,
+                isFaulted: isFaulted
+            });
         }
         else {
             return JSON.parse(xhr.responseText);
