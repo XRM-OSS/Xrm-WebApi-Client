@@ -20,6 +20,16 @@
 
         payload += this.method + " " + this.url + " HTTP/1.1\n";
 
+        if (this.parameters && this.parameters.headers) {
+            for (var i = 0; i < this.parameters.headers.length; i++) {
+                var header = this.parameters.headers[i];
+
+                if (["accept", "content-type"].indexOf(header.key.toLowerCase()) !== -1) {
+                    payload += header.key + ": " + header.value;
+                }
+            }
+        }
+
         if (this.method.toLowerCase() === "get") {
             payload += "Accept: application/json\n\n";
         } else {

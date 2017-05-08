@@ -10,15 +10,11 @@
     };
 
     Batch.prototype.buildPayload = function() {
-        var payload = "--" + this.name + "\n";
-
-        payload += "Content-Type: multipart/mixed;";
+        var payload = "";
 
         if (this.changeSets && this.changeSets.length > 0) {
-            payload += "boundary=" + this.changeSets[0].name;
+            payload += "--" + this.name + "\nContent-Type: multipart/mixed;boundary=" + this.changeSets[0].name + "\n\n";
         }
-
-        payload += "\n\n";
 
         for (var i = 0; i < this.changeSets.length; i++) {
             var changeSet = this.changeSets[i];
