@@ -57,6 +57,7 @@
         this.payload = null;
         this.headers = null;
         this.urlParams = null;
+        this.async = true;
     };
 
     Requests.Request.prototype.with = function (parameters) {

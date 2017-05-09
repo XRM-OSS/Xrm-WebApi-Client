@@ -7,7 +7,7 @@
         this.method = params.method;
         this.url = params.url;
         this.payload = params.payload;
-        this.parameters = params.parameters;
+        this.headers = params.headers || [];
         this.contentId = params.contentId;
     };
 
@@ -20,13 +20,11 @@
 
         payload += this.method + " " + this.url + " HTTP/1.1\n";
 
-        if (this.parameters && this.parameters.headers) {
-            for (var i = 0; i < this.parameters.headers.length; i++) {
-                var header = this.parameters.headers[i];
+        for (var i = 0; i < this.headers.length; i++) {
+            var header = this.headers[i];
 
-                if (["accept", "content-type"].indexOf(header.key.toLowerCase()) !== -1) {
-                    payload += header.key + ": " + header.value;
-                }
+            if (["accept", "content-type"].indexOf(header.key.toLowerCase()) === -1) {
+                payload += header.key + ": " + header.value + "\n";
             }
         }
 

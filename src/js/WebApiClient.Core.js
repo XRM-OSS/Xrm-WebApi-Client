@@ -352,17 +352,6 @@
         }
     }
 
-    function CreateBatchPayload (batchName, method, url) {
-        return "--" + batchName + "\n" +
-          "Content-Type: application/http\n" +
-          "Content-Transfer-Encoding: binary\n\n" +
-          method + " " + url + " HTTP/1.1\n" +
-          "Content-Type: application/json\n" +
-          "OData-Version: 4.0\n" +
-          "OData-MaxVersion: 4.0\n\n" +
-          "--" + batchName + "--";
-    }
-
     function IsOverlengthGet (method, url) {
         return method && method.toLowerCase() === "get" && url && url.length > 2048;
     }
@@ -381,7 +370,7 @@
 
                     if (response instanceof WebApiClient.BatchResponse) {
                         // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
-                        if (parameters.fetchXml) {
+                        if (parameters.isOverLengthGet) {
                             response = response.batchResponses[0].payload;
                         }
                         // If we received multiple responses, but not from overlength get, it was a custom batch. Just resolve all matches
@@ -438,12 +427,18 @@
         var headers = [];
 
         if (IsOverlengthGet(method, url)) {
-            payload = CreateBatchPayload(batchName, method, url);
+            var batch = new WebApiClient.Batch({
+                requests: [new WebApiClient.BatchRequest({
+                    method: method,
+                    url: url,
+                    payload: payload,
+                    headers: parameters.headers
+                })],
+                async: true,
+                isOverLengthGet: true
+            });
 
-            url = WebApiClient.GetApiUrl() + "$batch";
-            method = "POST";
-
-            headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batchName});
+            return WebApiClient.SendBatch(batch);
         }
 
         xhr.open(method, url, true);
@@ -483,7 +478,7 @@
                 // If we received multiple responses, it was a custom batch. Just resolve all matches
                 if (response instanceof WebApiClient.BatchResponse) {
                   // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
-                  if (parameters.fetchXml) {
+                  if (parameters.isOverLengthGet) {
                         response = response.batchResponses[0].payload;
                     } else {
                         return;
@@ -534,12 +529,18 @@
         var headers = [];
 
         if (IsOverlengthGet(method, url)) {
-            payload = CreateBatchPayload(batchName, method, url);
+            var batch = new WebApiClient.Batch({
+                requests: [new WebApiClient.BatchRequest({
+                    method: method,
+                    url: url,
+                    payload: payload,
+                    headers: parameters.headers
+                })],
+                async: false,
+                isOverLengthGet: true
+            });
 
-            url = WebApiClient.GetApiUrl() + "$batch";
-            method = "POST";
-
-            headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batchName});
+            return WebApiClient.SendBatch(batch);
         }
 
         xhr.open(method, url, false);
@@ -612,7 +613,12 @@
       }
 
       if (params.asBatch) {
-          return new WebApiClient.BatchRequest({method: method, url: url, payload: payload, parameters: parameters});
+          return new WebApiClient.BatchRequest({
+              method: method,
+              url: url,
+              payload: payload,
+              headers: params.headers
+          });
       }
 
       var asynchronous = GetAsync(params);

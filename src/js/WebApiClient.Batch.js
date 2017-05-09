@@ -7,6 +7,9 @@
         this.name = params.name || "batch_AAA123";
         this.changeSets = params.changeSets || [];
         this.requests = params.requests || [];
+        this.headers = params.headers || [];
+        this.async = params.async;
+        this.isOverLengthGet = params.isOverLengthGet;
     };
 
     Batch.prototype.buildPayload = function() {

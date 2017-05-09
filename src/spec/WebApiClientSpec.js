@@ -1065,6 +1065,22 @@ describe("WebApiClient", function() {
 
             expect(actual).toEqual(expected);
         });
+
+        if("should add custom headers to payload", function() {
+            var batchRequest = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 2 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                headers: [{key: "Prefer", value: "return=representation"}],
+                asBatch: true
+            });
+
+            var stringified = batchRequest.stringify();
+
+            expect(stringified.indexOf("Prefer: return=representation") !== -1).toBe(true);
+        });
     });
 
     describe("Associate", function() {
