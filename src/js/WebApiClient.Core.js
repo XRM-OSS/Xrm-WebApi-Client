@@ -288,63 +288,8 @@
 
         // Check if it is a batch response
         if (IsBatch(responseText)) {
-            var isFaulted = false;
-            var responseContentType = xhr.getResponseHeader("Content-Type");
-            var batchResponseName = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
-
-            var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/);
-            var changeSetResponses = [];
-
-            for (var i = 0; changeSetBoundaries && i < changeSetBoundaries.length; i++) {
-                var changeSetName = changeSetBoundaries[i].replace("boundary=", "");
-
-                // Find all change set responses in responseText
-                var changeSetRegex = new RegExp("--" + changeSetName + "[\\S\\s]*?(?=--" + changeSetName + ")", "gm");
-
-                var changeSetResponse = {
-                    name: changeSetName,
-                    responses: []
-                };
-
-                var changeSets = responseText.match(changeSetRegex);
-
-                for (var k = 0; k < changeSets.length; k++) {
-                    var response = new WebApiClient.Response({
-                        rawData: changeSets[k]
-                    });
-
-                    if (response.payload && response.payload.error) {
-                        isFaulted = true;
-                    }
-
-                    changeSetResponse.responses.push(response);
-                }
-
-                changeSetResponses.push(changeSetResponse);
-            }
-
-            // Find all batch responses in responseText
-            var batchRegex = new RegExp("--" + batchResponseName + "\\r\\nContent-Type: application\\/http[\\S\\s]*?(?=--" + batchResponseName + ")", "gm");
-            var batchResponsesRaw = responseText.match(batchRegex) || [];
-            var batchResponses = [];
-
-            for (var j = 0; j < batchResponsesRaw.length; j++) {
-                var batchResponse = new WebApiClient.Response({
-                    rawData: batchResponsesRaw[j]
-                });
-
-                if (batchResponse.payload && batchResponse.payload.error) {
-                    isFaulted = true;
-                }
-
-                batchResponses.push(batchResponse);
-            }
-
             return new WebApiClient.BatchResponse({
-                name: batchResponseName,
-                batchResponses: batchResponses,
-                changeSetResponses: changeSetResponses,
-                isFaulted: isFaulted
+                xhr: xhr
             });
         }
         else {
