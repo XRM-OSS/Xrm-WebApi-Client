@@ -38,6 +38,9 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [Execute](#execute)
       - [No parameter request](#no-parameter-request)
       - [Parametrized request](#parametrized-request)
+    + [Send Batch](#send-batch)
+      - [How to create batch requests](#how-to-create-batch-requests)
+      - [Request failures](#request-failures)
     + [Configuration](#configuration)
     + [Errors](#errors)
     + [Set Names](#set-names)
@@ -492,6 +495,74 @@ WebApiClient.Execute(request)
         // Handle error
     });
 ```
+
+### Send Batch
+There is support for sending multiple requests as a batch. Batch requests can contain retrieve requests and change sets, that can contain requests again.
+Requests directly attached to batch requests have to be GET requests, they must not be added to change sets, since those have to contain requests, that change data.
+Batch requests provide transactional functionality, so all operations contained in one change set will roll back, if any of them fails.
+You can read more about batch requests in general [here](https://msdn.microsoft.com/en-us/library/mt607719.aspx).
+
+#### How to create batch requests
+For creating requests for usage inside batches, you can either create a `WebApiClient.BatchRequest` object using its constructor, or easier, call one of the WebApiClient functions and pass `asBatch: true` as parameter.
+
+All functions, such as CRUD, Execute and so on support this parameter. The only exception to it is the Expand function.
+
+Below is an example for creating two tasks attached to an account in one change set, while returning the records created.
+Afterwards, the account they were attached to is returned:
+
+```JavaScript
+WebApiClient.Create({entityName: "account", entity: { name: "Test" }})
+    .then(function (account) {
+        var accountId = account.substring(account.indexOf("(")).replace("(", "").replace(")","");
+
+        var batch = new WebApiClient.Batch({
+            changeSets: [
+                new WebApiClient.ChangeSet({
+                    requests: [
+                        WebApiClient.Create({
+                           entityName: "task",
+                           entity: {
+                             subject: "Task 1 in batch",
+                             "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                           },
+                           headers: [{key: "Prefer", value:"return=representation"}],
+                           asBatch: true
+                        }),
+                        WebApiClient.Create({
+                           entityName: "task",
+                           entity: {
+                             subject: "Task 2 in batch",
+                             "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                           },
+                           headers: [{key: "Prefer", value:"return=representation"}],
+                           asBatch: true
+                        })
+                 ]
+             })],
+            requests: [
+                WebApiClient.Retrieve({
+                    entityName: "account",
+                    entityId: accountId,
+                    asBatch: true
+                })
+            ]
+        });
+        
+        return WebApiClient.SendBatch(batch);
+    })
+    .then(function(result) {
+        if(result.isFaulted) {
+            console.log(result.errors);
+        }
+        
+        // Logs BatchResponse with name, batchResponses array and changeSetResponses array
+        console.log(result);
+    });
+```
+
+#### Request failures
+If a request inside the batch requests or a change set fails, the batch response property `isFaulted` will have the value `true`.
+You can get a collection of all errors using the response property `errors`.
 
 ### Configuration
 When having to set multiple configuration settings for the WebApiClient, you can use the ```Configure``` function, which gets an object passed with keys and values, that get projected onto the WebApiClient:
