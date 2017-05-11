@@ -223,8 +223,8 @@
 
         var cookie = cookieXml.documentElement;
 
-        var pageNumber = cookie.getAttribute("pagenumber");
         var cookieValue = unescape(cookie.getAttribute("pagingcookie"));
+        var pageNumber = parseInt(/<cookie page="([\d]+)">/.exec(cookieValue)[1]) + 1;
 
         // Parse our original fetch XML, we will inject the paging information in here
         var fetchXml = parser.parseFromString(parameters.fetchXml, "text/xml");
