@@ -497,10 +497,12 @@ WebApiClient.Execute(request)
 ```
 
 ### Send Batch
-There is support for sending multiple requests as a batch. Batch requests can contain retrieve requests and change sets, that can contain requests again.
+There is support for sending multiple requests as a batch. Batch requests can contain retrieve requests and change sets. Change sets can contain requests themselves, however they must not contain other change sets.
+
 Requests directly attached to batch requests have to be GET requests, they must not be added to change sets, since those have to contain requests, that change data.
 Batch requests provide transactional functionality, so all operations contained in one change set will roll back, if any of them fails.
 You can read more about batch requests in general [here](https://msdn.microsoft.com/en-us/library/mt607719.aspx).
+There is also a useful [OData Reference](http://www.odata.org/documentation/odata-version-3-0/batch-processing/) covering this topic (albeit v3.0).
 
 #### How to create batch requests
 For creating requests for usage inside batches, you can either create a `WebApiClient.BatchRequest` object using its constructor, or easier, call one of the WebApiClient functions and pass `asBatch: true` as parameter.
@@ -557,12 +559,49 @@ WebApiClient.Create({entityName: "account", entity: { name: "Test" }})
         
         // Logs BatchResponse with name, batchResponses array and changeSetResponses array
         console.log(result);
+    })
+    .catch(function(error) {
+        // Handle network error or similar
     });
 ```
+
+#### Batch Responses
+Calls to `WebApiClient.SendBatch` will return a BatchResponse.
+A batch response consist of an array `batchResponses`, that contains all responses for GET requests, that were directly attached to the batch and an array `changeSetResponses`, that contains one change set response for each change set that was sent.
+Each change set response contains its own `responses` array, with responses for each request inside the changset.
+
+At the top level, each batch response also has a `name`, an `isFaulted` property that evaluates to true, if any of the requests failed and an `errors` array that contains all responses for failed requests.
+
+The lowest level responses all contain a `headers` object, so you can access headers easier (e.g. headers["OData-EntityId"]), a `payload` object, a `status` (such as "200") and a `contentId`, if the requests inside the change set had one set.
+
+Scheme of a batch response:
+- batchResponses (array)
+    - Response (WebApiClient.Response)
+        - contentId (string)
+        - headers (array of string * string)
+        - payload (object)
+        - status (string)
+    - ...
+- changeSetResponses (array)
+    - changeSetResponse (object)
+        - name (string)
+        - responses (array)
+            - Response (WebApiClient.Response)
+                - contentId (string)
+                - headers (array of string * string)
+                - payload (object)
+                - status (string)
+            - ...
+- errors (array of WebApiClient.Response)
+- isFaulted (bool)
+- name (string)
+  
 
 #### Request failures
 If a request inside the batch requests or a change set fails, the batch response property `isFaulted` will have the value `true`.
 You can get a collection of all errors using the response property `errors`.
+
+This is all inside the `then` handler, remember that you should still configure a `catch` handler, as this will be needed if a requests fails due to network errors or similar.
 
 ### Configuration
 When having to set multiple configuration settings for the WebApiClient, you can use the ```Configure``` function, which gets an object passed with keys and values, that get projected onto the WebApiClient:
