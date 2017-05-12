@@ -17,7 +17,7 @@
             var responseContentType = xhr.getResponseHeader("Content-Type");
             var batchResponseName = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
 
-            var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/);
+            var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/g);
 
             for (var i = 0; changeSetBoundaries && i < changeSetBoundaries.length; i++) {
                 var changeSetName = changeSetBoundaries[i].replace("boundary=", "");

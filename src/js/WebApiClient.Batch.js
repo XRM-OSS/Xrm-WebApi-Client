@@ -15,11 +15,9 @@
     Batch.prototype.buildPayload = function() {
         var payload = "";
 
-        if (this.changeSets && this.changeSets.length > 0) {
-            payload += "--" + this.name + "\nContent-Type: multipart/mixed;boundary=" + this.changeSets[0].name + "\n\n";
-        }
-
         for (var i = 0; i < this.changeSets.length; i++) {
+            payload += "--" + this.name + "\n";
+            payload += "Content-Type: multipart/mixed;boundary=" + this.changeSets[i].name + "\n\n";
             var changeSet = this.changeSets[i];
 
             payload += changeSet.stringify();
