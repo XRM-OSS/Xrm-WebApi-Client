@@ -40,6 +40,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
       - [Parametrized request](#parametrized-request)
     + [Send Batch](#send-batch)
       - [How to create batch requests](#how-to-create-batch-requests)
+      - [Batch Responses](#batch-responses)
       - [Request failures](#request-failures)
     + [Configuration](#configuration)
     + [Errors](#errors)
