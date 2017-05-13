@@ -726,8 +726,8 @@
     };
 
     WebApiClient.SendBatch = function(batch) {
-    /// <summary>Executes the passed request</summary>
-    /// <param name="request" type="Object">Request object that inherits from WebApiClient.Requests.Request</param>
+    /// <summary>Sends the passed batch</summary>
+    /// <param name="batch" type="Object">Instacnce of WebApiClient.Batch</param>
     /// <returns>Promise for sent request or result if sync</returns>
         if (!batch) {
             throw new Error("You need to pass a batch!");
