@@ -15,7 +15,7 @@
             var responseText = xhr.responseText;
 
             var responseContentType = xhr.getResponseHeader("Content-Type");
-            var batchResponseName = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
+            this.name = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
 
             var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/g);
 
@@ -49,8 +49,8 @@
             }
 
             // Find all batch responses in responseText
-            var batchRegex = new RegExp("--" + batchResponseName + "\\r\\nContent-Type: application\\/http[\\S\\s]*?(?=--" + batchResponseName + ")", "gm");
-            var batchResponsesRaw = responseText.match(batchRegex) || [];
+            var batchRegex = new RegExp("--" + this.name + "[\\r\\n]+Content-Type: application\\/http[\\S\\s]*?(?=--" + this.name + ")", "gm");
+            var batchResponsesRaw = responseText.match(batchRegex);
 
             for (var j = 0; j < batchResponsesRaw.length; j++) {
                 var batchResponse = new WebApiClient.Response({
