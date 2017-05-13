@@ -141,7 +141,7 @@
     	/// <summary>Appends the given headers to the default headers, where headers are passed as dynamic parameters.</summary>
 	    /// <param name="params" type="Key-Value Object">Pass an object with key property set to your key and value property set to your value.</param>
 	    /// <returns>Void.</returns>
-        if (!arguments) {
+        if (!arguments.length) {
             return;
         }
 

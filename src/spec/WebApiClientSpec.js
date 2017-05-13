@@ -1754,7 +1754,6 @@ describe("WebApiClient", function() {
         });
 
         it("should not fail on parameterless call", function(){
-            var testHeader = { value: "newValue" };
             expect(function() { WebApiClient.AppendToDefaultHeaders (); }).not.toThrow();
         });
     });
