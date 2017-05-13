@@ -1066,7 +1066,7 @@ describe("WebApiClient", function() {
             expect(actual).toEqual(expected);
         });
 
-        if("should add custom headers to payload", function() {
+        it("should add custom headers to payload", function() {
             var batchRequest = WebApiClient.Create({
                 entityName: "task",
                 entity: {
@@ -1080,6 +1080,18 @@ describe("WebApiClient", function() {
             var stringified = batchRequest.stringify();
 
             expect(stringified.indexOf("Prefer: return=representation") !== -1).toBe(true);
+        });
+
+        it("should add empty payload for delete batch", function() {
+            var batchRequest = WebApiClient.Delete({
+                entityName: "task",
+                entityId: "c1bd45c1-dd81-470d-b897-e965846aad2f",
+                asBatch: true
+            });
+
+            var stringified = batchRequest.stringify();
+
+            expect(stringified.indexOf("{}") !== -1).toBe(true);
         });
 
         it ("should parse response properly", function() {
@@ -1151,6 +1163,95 @@ describe("WebApiClient", function() {
               expect(batchResponse.changeSetResponses[0].responses.length).toBe(2);
 
               expect(batchResponse.batchResponses.length).toBe(1);
+        });
+
+        it ("should set isFaulted and errors array if requests failed", function() {
+            var responseText = "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87\n" +
+                "Content-Type: multipart/mixed; boundary=changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37\n" +
+                "\n" +
+                "--changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37\n" +
+                "Content-Type: application/http\n" +
+                "Content-Transfer-Encoding: binary\n" +
+                "Content-ID: 1\n" +
+                "\n" +
+                "HTTP/1.1 400 Bad Request\n" +
+                "Access-Control-Expose-Headers: Preference-Applied,OData-EntityId,Location,ETag,OData-Version,Content-Encoding,Transfer-Encoding,Content-Length,Retry-After\n" +
+                "Content-Type: application/json; odata.metadata=minimal\n" +
+                "OData-Version: 4.0\n" +
+                "\n" +
+                "{\n" +
+                "  \"error\":{\n" +
+                "    \"code\":\"\",\"message\":\"The property 'subjct' does not exist on type 'Microsoft.Dynamics.CRM.task'. Make sure to only use property names that are defined by the type.\",\"innererror\":{\n" +
+                "      \"message\":\"The property 'subjct' does not exist on type 'Microsoft.Dynamics.CRM.task'. Make sure to only use property names that are defined by the type.\",\"type\":\"Microsoft.Crm.CrmHttpException\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}\n" +
+                "--changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37--\n" +
+                "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87\n" +
+                "Content-Type: application/http\n" +
+                "Content-Transfer-Encoding: binary\n" +
+                "\n" +
+                "HTTP/1.1 404 Not Found\n" +
+                "Access-Control-Expose-Headers: Preference-Applied,OData-EntityId,Location,ETag,OData-Version,Content-Encoding,Transfer-Encoding,Content-Length,Retry-After\n" +
+                "Content-Type: application/json; odata.metadata=minimal\n" +
+                "OData-Version: 4.0\n" +
+                "\n" +
+                "{\n" +
+                "  \"error\":{\n" +
+                "    \"code\":\"\",\"message\":\"Resource not found for the segment 'acounts'.\",\"innererror\":{\n" +
+                "      \"message\":\"Resource not found for the segment 'acounts'.\",\"type\":\"Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}\n" +
+                "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87--\n" +
+                "\n";
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87"
+                    }
+                }
+              });
+
+              expect(batchResponse.isFaulted).toBe(true);
+
+              expect(batchResponse.errors.length).toBe(2);
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function(){
+                WebApiClient.SendBatch();
+            }).toThrow();
+        });
+
+        it ("should fail if batch is not of WebApiClient.Batch", function(){
+            expect(function(){
+                WebApiClient.SendBatch({name: "Test"});
+            }).toThrow();
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function(){
+                WebApiClient.SendBatch();
+            }).toThrow();
+        });
+
+        it("should be possible to initialize response without xhr", function() {
+            var expected = {
+                contentId: "1",
+                payload: {name: "Test"},
+                status: "200",
+                headers: {Prefer: "return=representation"}
+            };
+
+            var response = new WebApiClient.Response(expected);
+
+            expect(response.contentId).toBe(expected.contentId);
+            expect(response.payload).toBe(expected.payload);
+            expect(response.status).toBe(expected.status);
+            expect(response.headers).toBe(expected.headers);
         });
     });
 

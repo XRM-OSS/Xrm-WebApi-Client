@@ -739,14 +739,7 @@
 
         var url = WebApiClient.GetApiUrl() + "$batch";
 
-        if (!batch.name) {
-            throw new Error("You need to set a batchName on your batch");
-        }
-
-        if (!batch.headers) {
-            batch.headers = [];
-        }
-
+        batch.headers = batch.headers || [];
         batch.headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batch.name});
 
         var payload = batch.buildPayload();
