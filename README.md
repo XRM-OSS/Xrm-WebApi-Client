@@ -565,6 +565,7 @@ WebApiClient.Create({entityName: "account", entity: { name: "Test" }})
         // Handle network error or similar
     });
 ```
+Note: Above code is only an example, you could also create your batch and change sets separately and add the change sets to `batch.changeSets`, requests inside the change sets to `changeSet.requests` and plain batch requests to `batch.requests`, which are all arrays.
 
 #### Batch Responses
 Calls to `WebApiClient.SendBatch` will return a BatchResponse.
