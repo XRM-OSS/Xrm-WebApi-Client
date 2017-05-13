@@ -1029,7 +1029,7 @@ describe("WebApiClient", function() {
 
             var batch = new WebApiClient.Batch();
 
-            var changeSet = new WebApiClient.ChangeSet();
+            var changeSet = new WebApiClient.ChangeSet({name: "changeset_BBB456"});
 
             var task1 = WebApiClient.Create({
                 entityName: "task",
@@ -1236,6 +1236,22 @@ describe("WebApiClient", function() {
             expect(function(){
                 WebApiClient.SendBatch();
             }).toThrow();
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function() {
+              var response = new WebApiClient.Response({rawData: ""});
+            }).not.toThrow();
+        });
+
+        it ("should automatically increase change set name if none passed", function() {
+            var changeSet1 = new WebApiClient.ChangeSet();
+            var changeSet2 = new WebApiClient.ChangeSet();
+
+            expect(changeSet1.name.indexOf("changeset_")).toBe(0);
+            expect(changeSet2.name.indexOf("changeset_")).toBe(0);
+
+            expect(changeSet1.name).not.toBe(changeSet2.name);
         });
 
         it("should be possible to initialize response without xhr", function() {
@@ -1735,6 +1751,11 @@ describe("WebApiClient", function() {
         it("should throw on invalid header", function(){
             var testHeader = { value: "newValue" };
             expect(function() { WebApiClient.AppendToDefaultHeaders (testHeader); }).toThrow();
+        });
+
+        it("should not fail on parameterless call", function(){
+            var testHeader = { value: "newValue" };
+            expect(function() { WebApiClient.AppendToDefaultHeaders (); }).not.toThrow();
         });
     });
 

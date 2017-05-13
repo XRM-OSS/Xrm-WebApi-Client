@@ -1,10 +1,12 @@
 (function(undefined) {
     "use strict";
 
+    var instanceCount = 1;
+
     var ChangeSet = function (parameters) {
         var params = parameters || {};
 
-        this.name = params.name || "changeset_BBB456";
+        this.name = params.name || "changeset_" + instanceCount++;
         this.requests = params.requests || [];
     };
 
