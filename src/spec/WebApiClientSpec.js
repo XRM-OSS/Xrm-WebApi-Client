@@ -251,44 +251,44 @@ describe("WebApiClient", function() {
         // fetchXml Batch
         var fetchXmlBatch = RegExp.escape(fakeUrl + "/api/data/v8.0/$batch");
 
-        var batchResponse = '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9\n' +
-                            'Content-Type: application/http\n' +
-                            'Content-Transfer-Encoding: binary\n' +
-                            '\n' +
-                            'HTTP/1.1 200 OK\n' +
-                            'Content-Type: application/json; odata.metadata=minimal\n' +
-                            'OData-Version: 4.0\n' +
-                            '\n' +
-                            '{\n' +
-                            '  "@odata.context":"https://org/api/data/v8.0/$metadata#accounts(name,accountid)","value":[\n' +
-                            '    {\n' +
-                            '      "@odata.etag":"W633807","name":"Adventure GmbH (Beispiel)","accountid":"e3753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633809","name":"Blue Airlines (Beispiel)","accountid":"e7753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633811","name":"Contoso Pharma (Beispiel)","accountid":"eb753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633814","name":"Ein-Datum-Unternehmen (Beispiel)","accountid":"ef753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633808","name":"Fabrikam KG (Beispiel)","accountid":"e5753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633815","name":"Hanno Starker (Beispiel)","accountid":"f1753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633805","name":"Kaffee Viersen (Beispiel)","accountid":"df753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633806","name":"Litware KG (Beispiel)","accountid":"e1753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633812","name":"Ski und Sport (Beispiel)","accountid":"ed753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633810","name":"Stadtwerke (Beispiel)","accountid":"e9753e98-511d-e711-80fb-5065f38aba91"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633816","name":"Test1","accountid":"d91966c7-511d-e711-80fc-5065f38b0361"\n' +
-                            '    },{\n' +
-                            '      "@odata.etag":"W633817","name":"Test2","accountid":"95fb99d5-511d-e711-80fc-5065f38b0361"\n' +
-                            '    }\n' +
-                            '  ]\n' +
-                            '}\n' +
-                            '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9--\n';
+        var batchResponse = '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9\r\n' +
+                            'Content-Type: application/http\r\n' +
+                            'Content-Transfer-Encoding: binary\r\n' +
+                            '\r\n' +
+                            'HTTP/1.1 200 OK\r\n' +
+                            'Content-Type: application/json; odata.metadata=minimal\r\n' +
+                            'OData-Version: 4.0\r\n' +
+                            '\r\n' +
+                            '{\r\n' +
+                            '  "@odata.context":"https://org/api/data/v8.0/$metadata#accounts(name,accountid)","value":[\r\n' +
+                            '    {\r\n' +
+                            '      "@odata.etag":"W633807","name":"Adventure GmbH (Beispiel)","accountid":"e3753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633809","name":"Blue Airlines (Beispiel)","accountid":"e7753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633811","name":"Contoso Pharma (Beispiel)","accountid":"eb753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633814","name":"Ein-Datum-Unternehmen (Beispiel)","accountid":"ef753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633808","name":"Fabrikam KG (Beispiel)","accountid":"e5753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633815","name":"Hanno Starker (Beispiel)","accountid":"f1753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633805","name":"Kaffee Viersen (Beispiel)","accountid":"df753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633806","name":"Litware KG (Beispiel)","accountid":"e1753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633812","name":"Ski und Sport (Beispiel)","accountid":"ed753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633810","name":"Stadtwerke (Beispiel)","accountid":"e9753e98-511d-e711-80fb-5065f38aba91"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633816","name":"Test1","accountid":"d91966c7-511d-e711-80fc-5065f38b0361"\r\n' +
+                            '    },{\r\n' +
+                            '      "@odata.etag":"W633817","name":"Test2","accountid":"95fb99d5-511d-e711-80fc-5065f38b0361"\r\n' +
+                            '    }\r\n' +
+                            '  ]\r\n' +
+                            '}\r\n' +
+                            '--batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9--\r\n';
 
         xhr.respondWith("POST", new RegExp(fetchXmlBatch),
             [200, { "Content-Type": "multipart/mixed; boundary=batchresponse_a41f8ebb-a8c5-4723-9afa-27a673952fd9" }, batchResponse]
@@ -946,6 +946,417 @@ describe("WebApiClient", function() {
         });
     });
 
+    describe("Batch", function() {
+        /* MS Test example: https://msdn.microsoft.com/en-us/library/mt607719.aspx#Example
+
+        WebApiClient.Create({entityName: "account", entity: { name: "Test" }})
+        .then(function (account) {
+        	var accountId = account.substring(account.indexOf("(")).replace("(", "").replace(")","");
+
+        	var batch = new WebApiClient.Batch();
+            var changeSet = new WebApiClient.ChangeSet();
+
+        	var task1 = WebApiClient.Create({
+                        entityName: "task",
+                        entity: {
+                          subject: "Task 1 in batch",
+                          "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                        },
+                        asBatch: true
+            });
+            changeSet.requests.push(task1);
+
+            var task2 = WebApiClient.Create({
+                        entityName: "task",
+                        entity: {
+                          subject: "Task 2 in batch",
+                          "regardingobjectid_account_task@odata.bind": "/accounts(" + accountId + ")"
+                        },
+                        asBatch: true
+            });
+            changeSet.requests.push(task2);
+
+            batch.changeSets.push(changeSet);
+
+            var account = WebApiClient.Retrieve({
+                        entityName: "account",
+                        entityId: accountId,
+                        queryParams: "/Account_Tasks?$select=subject",
+                        asBatch: true
+            });
+            batch.requests.push(account);
+
+        	return WebApiClient.SendBatch(batch);
+        })
+        .then(function(result) {
+        	console.log(result);
+        });
+        */
+
+
+        it("should stringify batch with changeset and plain requests properly", function() {
+            var expected = '--batch_AAA123\n' +
+            'Content-Type: multipart/mixed;boundary=changeset_BBB456\n' +
+            '\n' +
+            '--changeset_BBB456\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            'Content-ID: 1\n' +
+            '\n' +
+            'POST ' + fakeUrl + '/api/data/v8.0/tasks HTTP/1.1\n' +
+            'Content-Type: application/json;type=entry\n' +
+            '\n' +
+            '{"subject":"Task 1 in batch","regardingobjectid_account_task@odata.bind":"' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"}\n' +
+            '--changeset_BBB456\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            'Content-ID: 2\n' +
+            '\n' +
+            'POST ' + fakeUrl + '/api/data/v8.0/tasks HTTP/1.1\n' +
+            'Content-Type: application/json;type=entry\n' +
+            '\n' +
+            '{"subject":"Task 2 in batch","regardingobjectid_account_task@odata.bind":"' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"}\n' +
+            '--changeset_BBB456--\n' +
+            '\n' +
+            '--batch_AAA123\n' +
+            'Content-Type: application/http\n' +
+            'Content-Transfer-Encoding:binary\n' +
+            '\n' +
+            'GET ' + fakeUrl + '/api/data/v8.0/accounts(00000000-0000-0000-000000000001)/Account_Tasks?$select=subject HTTP/1.1\n' +
+            'Accept: application/json\n' +
+            '\n' +
+            '--batch_AAA123--\n';
+
+            var batch = new WebApiClient.Batch();
+
+            var changeSet = new WebApiClient.ChangeSet({name: "changeset_BBB456"});
+
+            var task1 = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 1 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                asBatch: true
+            });
+            changeSet.requests.push(task1);
+
+            var task2 = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 2 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                asBatch: true
+            });
+            changeSet.requests.push(task2);
+
+            batch.changeSets.push(changeSet);
+
+            var account = WebApiClient.Retrieve({
+                entityName: "account",
+                entityId: "00000000-0000-0000-000000000001",
+                queryParams: "/Account_Tasks?$select=subject",
+                asBatch: true
+            });
+            batch.requests.push(account);
+
+            var actual = batch.buildPayload();
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should add custom headers to payload", function() {
+            var batchRequest = WebApiClient.Create({
+                entityName: "task",
+                entity: {
+                  subject: "Task 2 in batch",
+                  "regardingobjectid_account_task@odata.bind": fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-000000000001)"
+                },
+                headers: [{key: "Prefer", value: "return=representation"}],
+                asBatch: true
+            });
+
+            var stringified = batchRequest.stringify();
+
+            expect(stringified.indexOf("Prefer: return=representation") !== -1).toBe(true);
+        });
+
+        it("should add empty payload for delete batch", function() {
+            var batchRequest = WebApiClient.Delete({
+                entityName: "task",
+                entityId: "c1bd45c1-dd81-470d-b897-e965846aad2f",
+                asBatch: true
+            });
+
+            var stringified = batchRequest.stringify();
+
+            expect(stringified.indexOf("{}") !== -1).toBe(true);
+        });
+
+        it ("should parse response properly", function() {
+            var responseText = '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: multipart/mixed; boundary=changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 1\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 2\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc--\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                '\n' +
+                'HTTP/1.1 200 OK\n' +
+                'Content-Type: application/json; odata.metadata=minimal\n' +
+                'OData-Version: 4.0\n' +
+                '\n' +
+                '{\n' +
+                '  "@odata.context":"[Organization URI]/api/data/v8.2/$metadata#tasks(subject)","value":[\n' +
+                '    {\n' +
+                '      "@odata.etag":"W474122","subject":"Task Created with Test Account","activityid":"919c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474125","subject":"Task 1","activityid":"a29c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474128","subject":"Task 2","activityid":"a39c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474131","subject":"Task 3","activityid":"a49c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474134","subject":"Task 1 in batch","activityid":"a59c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474137","subject":"Task 2 in batch","activityid":"a69c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    }\n' +
+                '  ]\n' +
+                '}\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f--';
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f"
+                    }
+                }
+              });
+
+              expect(batchResponse.name).toBe("batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f");
+
+              expect(batchResponse.changeSetResponses.length).toBe(1);
+              expect(batchResponse.changeSetResponses[0].responses.length).toBe(2);
+
+              expect(batchResponse.batchResponses.length).toBe(1);
+        });
+
+        it ("should not fail if change sets only", function() {
+            var responseText = '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: multipart/mixed; boundary=changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 1\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 2\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc--\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f--';
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f"
+                    }
+                }
+              });
+
+              expect(batchResponse.name).toBe("batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f");
+
+              expect(batchResponse.changeSetResponses.length).toBe(1);
+              expect(batchResponse.changeSetResponses[0].responses.length).toBe(2);
+        });
+
+        it ("should not fail if batch request only", function() {
+            var responseText = '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                '\n' +
+                'HTTP/1.1 200 OK\n' +
+                'Content-Type: application/json; odata.metadata=minimal\n' +
+                'OData-Version: 4.0\n' +
+                '\n' +
+                '{\n' +
+                '  "@odata.context":"[Organization URI]/api/data/v8.2/$metadata#tasks(subject)","value":[\n' +
+                '    {\n' +
+                '      "@odata.etag":"W474122","subject":"Task Created with Test Account","activityid":"919c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474125","subject":"Task 1","activityid":"a29c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474128","subject":"Task 2","activityid":"a39c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474131","subject":"Task 3","activityid":"a49c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474134","subject":"Task 1 in batch","activityid":"a59c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474137","subject":"Task 2 in batch","activityid":"a69c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    }\n' +
+                '  ]\n' +
+                '}\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f--';
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f"
+                    }
+                }
+              });
+
+              expect(batchResponse.name).toBe("batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f");
+
+              expect(batchResponse.batchResponses.length).toBe(1);
+        });
+
+        it ("should set isFaulted and errors array if requests failed", function() {
+            var responseText = "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87\n" +
+                "Content-Type: multipart/mixed; boundary=changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37\n" +
+                "\n" +
+                "--changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37\n" +
+                "Content-Type: application/http\n" +
+                "Content-Transfer-Encoding: binary\n" +
+                "Content-ID: 1\n" +
+                "\n" +
+                "HTTP/1.1 400 Bad Request\n" +
+                "Access-Control-Expose-Headers: Preference-Applied,OData-EntityId,Location,ETag,OData-Version,Content-Encoding,Transfer-Encoding,Content-Length,Retry-After\n" +
+                "Content-Type: application/json; odata.metadata=minimal\n" +
+                "OData-Version: 4.0\n" +
+                "\n" +
+                "{\n" +
+                "  \"error\":{\n" +
+                "    \"code\":\"\",\"message\":\"The property 'subjct' does not exist on type 'Microsoft.Dynamics.CRM.task'. Make sure to only use property names that are defined by the type.\",\"innererror\":{\n" +
+                "      \"message\":\"The property 'subjct' does not exist on type 'Microsoft.Dynamics.CRM.task'. Make sure to only use property names that are defined by the type.\",\"type\":\"Microsoft.Crm.CrmHttpException\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}\n" +
+                "--changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37--\n" +
+                "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87\n" +
+                "Content-Type: application/http\n" +
+                "Content-Transfer-Encoding: binary\n" +
+                "\n" +
+                "HTTP/1.1 404 Not Found\n" +
+                "Access-Control-Expose-Headers: Preference-Applied,OData-EntityId,Location,ETag,OData-Version,Content-Encoding,Transfer-Encoding,Content-Length,Retry-After\n" +
+                "Content-Type: application/json; odata.metadata=minimal\n" +
+                "OData-Version: 4.0\n" +
+                "\n" +
+                "{\n" +
+                "  \"error\":{\n" +
+                "    \"code\":\"\",\"message\":\"Resource not found for the segment 'acounts'.\",\"innererror\":{\n" +
+                "      \"message\":\"Resource not found for the segment 'acounts'.\",\"type\":\"Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}\n" +
+                "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87--\n" +
+                "\n";
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87"
+                    }
+                }
+              });
+
+              expect(batchResponse.isFaulted).toBe(true);
+
+              expect(batchResponse.errors.length).toBe(2);
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function(){
+                WebApiClient.SendBatch();
+            }).toThrow();
+        });
+
+        it ("should fail if batch is not of WebApiClient.Batch", function(){
+            expect(function(){
+                WebApiClient.SendBatch({name: "Test"});
+            }).toThrow();
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function(){
+                WebApiClient.SendBatch();
+            }).toThrow();
+        });
+
+        it ("should fail if no batch passed", function(){
+            expect(function() {
+              var response = new WebApiClient.Response({rawData: ""});
+            }).not.toThrow();
+        });
+
+        it ("should automatically increase change set name if none passed", function() {
+            var changeSet1 = new WebApiClient.ChangeSet();
+            var changeSet2 = new WebApiClient.ChangeSet();
+
+            expect(changeSet1.name.indexOf("changeset_")).toBe(0);
+            expect(changeSet2.name.indexOf("changeset_")).toBe(0);
+
+            expect(changeSet1.name).not.toBe(changeSet2.name);
+        });
+
+        it("should be possible to initialize response without xhr", function() {
+            var expected = {
+                contentId: "1",
+                payload: {name: "Test"},
+                status: "200",
+                headers: {Prefer: "return=representation"}
+            };
+
+            var response = new WebApiClient.Response(expected);
+
+            expect(response.contentId).toBe(expected.contentId);
+            expect(response.payload).toBe(expected.payload);
+            expect(response.status).toBe(expected.status);
+            expect(response.headers).toBe(expected.headers);
+        });
+    });
+
     describe("Associate", function() {
         it("should fail if no target passed", function(){
             expect(function() {
@@ -1426,6 +1837,10 @@ describe("WebApiClient", function() {
         it("should throw on invalid header", function(){
             var testHeader = { value: "newValue" };
             expect(function() { WebApiClient.AppendToDefaultHeaders (testHeader); }).toThrow();
+        });
+
+        it("should not fail on parameterless call", function(){
+            expect(function() { WebApiClient.AppendToDefaultHeaders (); }).not.toThrow();
         });
     });
 

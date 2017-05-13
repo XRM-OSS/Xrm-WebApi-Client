@@ -48,7 +48,7 @@
   ],
   "scripts": {
     "clean": "rimraf Publish",
-    "lint": "jshint src/js/WebApiClient.Core.js src/js/WebApiClient.Requests.js src/js/WebApiClient.js",
+    "lint": "jshint src/js",
     "build-js": "browserify src/js/WebApiClient.js -s WebApiClient -o Publish/WebApiClient.js",
     "prebuild-js": "npm run lint && npm run clean && mkdir Publish",
     "test": "karma start karma.conf.js --single-run",
