@@ -52,7 +52,7 @@
             var batchRegex = new RegExp("--" + this.name + "[\\r\\n]+Content-Type: application\\/http[\\S\\s]*?(?=--" + this.name + ")", "gm");
             var batchResponsesRaw = responseText.match(batchRegex);
 
-            for (var j = 0; j < batchResponsesRaw.length; j++) {
+            for (var j = 0; batchResponsesRaw && j < batchResponsesRaw.length; j++) {
                 var batchResponse = new WebApiClient.Response({
                     rawData: batchResponsesRaw[j]
                 });

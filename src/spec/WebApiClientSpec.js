@@ -1165,6 +1165,92 @@ describe("WebApiClient", function() {
               expect(batchResponse.batchResponses.length).toBe(1);
         });
 
+        it ("should not fail if change sets only", function() {
+            var responseText = '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: multipart/mixed; boundary=changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 1\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a59c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                'Content-ID: 2\n' +
+                '\n' +
+                'HTTP/1.1 204 No Content\n' +
+                'OData-Version: 4.0\n' +
+                'Location: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                'OData-EntityId: [Organization URI]/api/data/v8.2/tasks(a69c24f3-fafc-e411-80dd-00155d2a68cb)\n' +
+                '\n' +
+                '\n' +
+                '--changesetresponse_ff83b4f1-ab48-430c-b81c-926a2c596abc--\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f--';
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f"
+                    }
+                }
+              });
+
+              expect(batchResponse.name).toBe("batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f");
+
+              expect(batchResponse.changeSetResponses.length).toBe(1);
+              expect(batchResponse.changeSetResponses[0].responses.length).toBe(2);
+        });
+
+        it ("should not fail if batch request only", function() {
+            var responseText = '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f\n' +
+                'Content-Type: application/http\n' +
+                'Content-Transfer-Encoding: binary\n' +
+                '\n' +
+                'HTTP/1.1 200 OK\n' +
+                'Content-Type: application/json; odata.metadata=minimal\n' +
+                'OData-Version: 4.0\n' +
+                '\n' +
+                '{\n' +
+                '  "@odata.context":"[Organization URI]/api/data/v8.2/$metadata#tasks(subject)","value":[\n' +
+                '    {\n' +
+                '      "@odata.etag":"W474122","subject":"Task Created with Test Account","activityid":"919c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474125","subject":"Task 1","activityid":"a29c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474128","subject":"Task 2","activityid":"a39c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474131","subject":"Task 3","activityid":"a49c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474134","subject":"Task 1 in batch","activityid":"a59c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    },{\n' +
+                '      "@odata.etag":"W474137","subject":"Task 2 in batch","activityid":"a69c24f3-fafc-e411-80dd-00155d2a68cb"\n' +
+                '    }\n' +
+                '  ]\n' +
+                '}\n' +
+                '--batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f--';
+
+              var batchResponse = new WebApiClient.BatchResponse({
+                xhr: {
+                    responseText: responseText,
+                    getResponseHeader: function() {
+                        return "multipart/mixed; boundary=batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f"
+                    }
+                }
+              });
+
+              expect(batchResponse.name).toBe("batchresponse_c1bd45c1-dd81-470d-b897-e965846aad2f");
+
+              expect(batchResponse.batchResponses.length).toBe(1);
+        });
+
         it ("should set isFaulted and errors array if requests failed", function() {
             var responseText = "--batchresponse_66693a11-1dce-4324-9f4d-f5be05effb87\n" +
                 "Content-Type: multipart/mixed; boundary=changesetresponse_e5e6ef31-a60c-4444-b290-5e75e2b2df37\n" +
