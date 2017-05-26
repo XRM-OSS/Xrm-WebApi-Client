@@ -87,7 +87,7 @@ For every build, you can just call ```npm run build```. You'll find the build ou
 Per default, all requests are sent asynchronously.
 This is the suggested way of sending requests, however, sometimes there is the need for using synchronous requests.
 
-For example if you want to use a function for hiding / enabling a ribbon bar button, it has to return either true or false for the visibility of the button. In this case, you would need to use a synchronous request for being able to directly return values.
+
 
 Be sure to avoid synchronous requests if it is possible and use asynchronous requests instead.
 
