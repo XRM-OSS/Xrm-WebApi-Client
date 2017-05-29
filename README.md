@@ -31,8 +31,10 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [Update](#update)
       - [Update by alternate key](#update-by-alternate-key)
       - [Return updated record in update response](#return-updated-record-in-update-response)
+      - [Clear lookup value](#clear-lookup-value)
     + [Delete](#delete)
       - [Delete by alternate key](#delete-by-alternate-key)
+      - [Delete single property](#delete-single-property)
     + [Associate](#associate)
     + [Disassociate](#disassociate)
     + [Execute](#execute)
@@ -341,6 +343,12 @@ WebApiClient.Update(request)
     });
 ```
 
+#### Clear Lookup value
+If you're trying to clear a lookup value using an update with a null value, it might very well be, that it simply does nothing, or fails with an error such as `Property _pub_field_value cannot be updated to null. The reference property can only be deleted`.
+In this case, you can not use an update request for clearing the lookup.
+
+Take a look at the [delete single property](#delete-single-property) section.
+
 ### Delete
 Delete requests are supported. You have to pass the entity logical name, and ID of the record to delete:
 
@@ -369,6 +377,26 @@ var request = {
             { property: "firstname", value: "Joe" },
             { property: "emailaddress1", value: "abc@example.com"}
         ]
+};
+
+WebApiClient.Delete(request)
+    .then(function(response){
+        // Process response
+    })
+    .catch(function(error) {
+        // Handle error
+    });
+```
+
+#### Delete single property
+You can delete single properties by passing the field to clear as queryParams with a preceding slash, like "/telephone1".
+If it is a lookup, you'll have to prepend "/$ref", such as "/primarycontactid/$ref".
+
+```JavaScript
+var request = {
+    entityName: "account",
+    entityId: "00000000-0000-0000-0000-000000000001",
+    queryParams: "/primarycontactid/$ref"
 };
 
 WebApiClient.Delete(request)
