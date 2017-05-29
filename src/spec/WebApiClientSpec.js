@@ -152,6 +152,12 @@ describe("WebApiClient", function() {
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
         );
 
+        // Respond to Retrieve by id Request for account
+        var deleteAccountPropertyUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000001)/primarycontactid/$ref");
+        xhr.respondWith("GET", new RegExp(deleteAccountPropertyUrl),
+            [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
+        );
+
         // Respond to Associate Request for account
         var associateAccountUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/accounts(00000000-0000-0000-0000-000000000002)/opportunity_customer_accounts/$ref");
         xhr.respondWith("POST", new RegExp(associateAccountUrl),
@@ -745,6 +751,24 @@ describe("WebApiClient", function() {
                     { property: "firstname", value: "Joe" },
                     { property: "emailaddress1", value: "abc@example.com"}
                 ]
+            })
+            .then(function(response){
+                expect(response).toBeDefined();
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            // Wait for promise
+            .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should append queryParams for deleting single properties", function(done){
+            WebApiClient.Delete({
+                entityName: "account",
+                entityId: "00000000-0000-0000-0000-000000000001",
+                queryParams: "/primarycontactid/$ref"
             })
             .then(function(response){
                 expect(response).toBeDefined();

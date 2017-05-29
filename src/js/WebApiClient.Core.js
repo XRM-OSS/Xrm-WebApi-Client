@@ -657,6 +657,10 @@
         var params = parameters || {};
         var url = GetRecordUrl(params);
 
+        if (params.queryParams) {
+            url += params.queryParams;
+        }
+
         return WebApiClient.SendRequest("DELETE", url, null, params);
     };
 
