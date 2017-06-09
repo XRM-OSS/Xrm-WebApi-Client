@@ -45,7 +45,7 @@
 
     // This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
-    var Promise = require("bluebird");
+    var Promise = require("bluebird").noConflict();
 
     function GetCrmContext() {
         if (typeof (GetGlobalContext) !== "undefined") {
