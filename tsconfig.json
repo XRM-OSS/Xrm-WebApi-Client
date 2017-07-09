@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "./Publish",
+        "allowJs": true,
+        "target": "es5",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "noEmitOnError": true,
+        "module": "commonjs"
+    },
+    "include": [
+        "./src/js/*"
+    ]
+}

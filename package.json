@@ -4,6 +4,7 @@
   "version": "v0.0.0",
   "license": "MIT",
   "main": "./Publish/WebApiClient.js",
+  "types": "./src/types/WebApiClient.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/DigitalFlow/Xrm-WebApi-Client"
