@@ -134,12 +134,10 @@ export module WebApiClient {
         constructor(parameters: ChangeSetParameters);
     }
 
-    interface BatchParameters {
+    interface BatchParameters extends BaseParameters {
         name: string;
         changeSets: Array<ChangeSet>;
         requests: Array<BatchRequest>;
-        headers: Array<Header>;
-        async: boolean;
         isOverLengthGet: boolean;
     }
 
@@ -171,16 +169,14 @@ export module WebApiClient {
     function SendBatch(batch: Batch): Promise<BatchResponse> | BatchResponse;
 
     namespace Requests {
-        interface RequestParameters {
+        interface RequestParameters extends BaseParameters {
             method: string;
             name: string;
             bound: boolean;
             entityName: boolean;
             entityId: string;
             payload: object;
-            headers: Array<Header>;
             urlParams: object;
-            async: boolean;
         }
 
         class Request implements RequestParameters {
