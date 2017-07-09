@@ -1,4 +1,4 @@
-declare namespace WebApiClient {
+export module WebApiClient {
     let ApiVersion: string;
     let ReturnAllPages: boolean;
     let PrettifyErrors: boolean;
