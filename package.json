@@ -4,7 +4,7 @@
   "version": "v0.0.0",
   "license": "MIT",
   "main": "./Publish/WebApiClient.js",
-  "types": "./src/types/WebApiClient.d.ts",
+  "types": "./Publish/WebApiClient.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/DigitalFlow/Xrm-WebApi-Client"
@@ -21,6 +21,7 @@
     "browserify-istanbul": "^2.0.0",
     "codecov.io": "^0.1.6",
     "coveralls": "^2.13.0",
+    "cpx": "latest",
     "jasmine-core": "*",
     "jshint": "latest",
     "karma": "^1.3.0",
@@ -55,7 +56,8 @@
     "test": "karma start karma.conf.js --single-run",
     "pretest": "npm run build-js",
     "uglify": "uglifyjs Publish/WebApiClient.js --no-dead-code --comments /@preserve.*/ -o Publish/WebApiClient.min.js",
-    "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js",
-    "build": "npm run test && npm run uglify && npm run zip"
+    "copyTypes": "cpx src/types/* Publish",
+    "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js Publish/WebApiClient.d.ts",
+    "build": "npm run test && npm run uglify && npm run copyTypes && npm run zip"
   }
 }
