@@ -43,6 +43,12 @@
     /// <summary>Set to false for sending all requests synchronously. True by default</summary>
     WebApiClient.Async = true;
 
+    /// <summary>Connection to use when being used in a single page app</summary>
+    WebApiClient.ClientUrl = null;
+
+    /// <summary>Token to use for authenticating when being used in a single page app</summary>
+    WebApiClient.Token = null;
+
     // This is for ensuring that we use bluebird internally, so that calls to WebApiClient have no differing set of
     // functions that can be applied to the Promise. For example Promise.finally would not be available without Bluebird.
     var Promise = require("bluebird").noConflict();
@@ -55,14 +61,21 @@
         if (typeof (Xrm) !== "undefined"){
             return Xrm.Page.context;
         }
-
-        throw new Error("Failed to retrieve context");
     }
 
     function GetClientUrl () {
         var context = GetCrmContext();
 
-        return context.getClientUrl();
+        if(context)
+        {
+            return context.getClientUrl();
+        }
+
+        if (WebApiClient.ClientUrl) {
+            return WebApiClient.ClientUrl;
+        }
+        
+        throw new Error("Failed to retrieve client url, is ClientGlobalContext.aspx available?");
     }
 
     function MergeResults (firstResponse, secondResponse) {
@@ -555,6 +568,11 @@
           params = {
               headers: params
           };
+      }
+
+      if (WebApiClient.Token) {
+          params.headers = params.headers || [];
+          params.headers.push({key: "Authorization", value: "Bearer " + WebApiClient.Token});
       }
 
       if (params.asBatch) {

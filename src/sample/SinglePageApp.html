@@ -1,0 +1,204 @@
+<!-- Disclaimer: This is a modified example taken from MSDN: https://msdn.microsoft.com/en-us/library/mt595797.aspx -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple SPA</title>
+    <meta charset="utf-8" />
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.0/js/adal.min.js"></script>
+    <script src="[PathToWebApiClient]"></script>
+    
+    <script type="text/javascript">
+    "use strict";
+
+    //Be sure to configure your Azure AD properly. It is described here: https://msdn.microsoft.com/en-us/library/mt595797.aspx
+    //Set these variables to match your environment
+    //You'll have to manually browse https://login.microsoftonline.com/tenant-id/oauth2/authorize?client_id=app-client-id&redirect_uri=encoded-reply-url&response_type=code&prompt=admin_consent
+    //for the app to be consented, it won't work otherwise. You can also grant permissions in the new azure portal
+    //You'll have to logout and login after that.
+    //The brackets below all have to be removed
+    var organizationURI = "https://[organization name].crm.dynamics.com"; //The URL to connect to CRM (online)
+    var tenant = "[xxx.onmicrosoft.com]"; //The name of the Azure AD organization you use
+    var clientId = "[client id]"; //The ClientId you got when you registered the application
+    var pageUrl = "http://localhost: [PORT #]/SimpleSPA.html"; //The URL of this page in your development environment when debugging.
+
+
+    var user, authContext, message, errorMessage, loginButton, logoutButton, getAccountsButton, accountsTable, accountsTableBody;
+
+    //Configuration data for AuthenticationContext
+    var endpoints = {
+        orgUri: organizationURI
+    };
+
+    window.config = {
+        tenant: tenant,
+        clientId: clientId,
+        postLogoutRedirectUri: pageUrl,
+        endpoints: endpoints,
+        cacheLocation: 'localStorage', // enable this for IE, as sessionStorage does not work for localhost.
+    };
+
+    document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+            //Set DOM elements referenced by scripts
+            message = document.getElementById("message");
+            errorMessage = document.getElementById("errorMessage");
+            loginButton = document.getElementById("login");
+            logoutButton = document.getElementById("logout");
+            getAccountsButton = document.getElementById("getAccounts");
+            accountsTable = document.getElementById("accountsTable");
+            accountsTableBody = document.getElementById("accountsTableBody");
+
+            //Event handlers on DOM elements
+            loginButton.addEventListener("click", login);
+            logoutButton.addEventListener("click", logout);
+            getAccountsButton.addEventListener("click", getAccounts);
+
+            //call authentication function
+            authenticate();
+
+            if (user) {
+                loginButton.style.display = "none";
+                logoutButton.style.display = "block";
+                getAccountsButton.style.display = "block";
+
+                var helloMessage = document.createElement("p");
+                helloMessage.textContent = "Hello " + user.profile.name;
+                message.appendChild(helloMessage)
+            }
+            else {
+                loginButton.style.display = "block";
+                logoutButton.style.display = "none";
+                getAccountsButton.style.display = "none";
+            }
+        }
+    }
+
+    // Function that manages authentication
+    function authenticate() {
+        //OAuth context
+        authContext = new AuthenticationContext(config);
+
+        // Check For & Handle Redirect From AAD After Login
+        var isCallback = authContext.isCallback(window.location.hash);
+        if (isCallback) {
+            authContext.handleWindowCallback();
+        }
+        var loginError = authContext.getLoginError();
+
+        if (isCallback && !loginError) {
+            window.location = authContext._getItem(authContext.CONSTANTS.STORAGE.LOGIN_REQUEST);
+        }
+        else {
+            errorMessage.textContent = loginError;
+        }
+        user = authContext.getCachedUser();
+    }
+
+    //function that logs in the user
+    function login() {
+        authContext.login();
+    }
+
+    //function that logs out the user
+    function logout() {
+        authContext.logOut();
+        accountsTable.style.display = "none";
+        accountsTableBody.innerHTML = "";
+    }
+
+    //function that initiates retrieval of accounts
+    function getAccounts() {
+        getAccountsButton.disabled = true;
+        var retrievingAccountsMessage = document.createElement("p");
+        retrievingAccountsMessage.textContent = "Retrieving 10 accounts from " + organizationURI + "/api/data/v8.0/accounts";
+        message.appendChild(retrievingAccountsMessage);
+
+        // Function to perform operation is passed as a parameter to the aquireToken method
+        authContext.acquireToken(organizationURI, configureClient);
+    }
+
+    function configureClient(error, token) {
+        // Handle ADAL Errors.
+        if (error || !token) {
+            errorMessage.textContent = 'ADAL error occurred: ' + error;
+            return;
+        }
+
+        WebApiClient.Configure({
+            Token: token,
+            ClientUrl: organizationURI
+        });
+
+        retrieveAccounts();
+    }
+
+
+    //Function that actually retrieves the accounts
+    function retrieveAccounts() {
+        WebApiClient.Retrieve({
+            entityName: "account",
+            queryParams: "?$select=name,address1_city&$top=10"
+        })
+        .then(renderAccounts)
+        .catch(function(error){
+            console.log(error.message);
+            errorMessage.textContent = error.message;
+        });
+    }
+
+    //Function that writes account data to the accountsTable
+    function renderAccounts(response) {
+        var accounts = response.value;
+        
+        accounts.forEach(function (account) {
+            var name = account.name;
+            var city = account.address1_city;
+            var nameCell = document.createElement("td");
+            nameCell.textContent = name;
+            var cityCell = document.createElement("td");
+            cityCell.textContent = city;
+            var row = document.createElement("tr");
+            row.appendChild(nameCell);
+            row.appendChild(cityCell);
+            accountsTableBody.appendChild(row);
+        });
+        
+        accountsTable.style.display = "block";
+  }
+
+ </script>
+ <style>
+  body {
+   font-family: 'Segoe UI';
+  }
+
+  table {
+   border-collapse: collapse;
+  }
+
+  td, th {
+   border: 1px solid black;
+  }
+
+  #errorMessage {
+   color: red;
+  }
+
+  #message {
+   color: green;
+  }
+ </style>
+</head>
+<body>
+ <button id="login">Login</button>
+ <button id="logout" style="display:none;">Logout</button>
+ <button id="getAccounts" style="display:none;">Get Accounts</button>
+ <div id="errorMessage"></div>
+ <div id="message"></div>
+ <table id="accountsTable" style="display:none;">
+  <thead><tr><th>Name</th><th>City</th></tr></thead>
+  <tbody id="accountsTableBody"></tbody>
+ </table>
+</body>
+</html>

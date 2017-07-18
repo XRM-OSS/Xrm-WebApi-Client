@@ -1,8 +1,14 @@
+import * as bluebird from "bluebird";
+
 export module WebApiClient {
     let ApiVersion: string;
     let ReturnAllPages: boolean;
     let PrettifyErrors: boolean;
     let Async: boolean;
+    let ClientUrl: string;
+    let Token: string;
+    
+    export type Promise<U> = bluebird<U>;
 
     interface Header {
         key: string;
