@@ -1835,12 +1835,16 @@ describe("WebApiClient", function() {
             WebApiClient.Configure({
                 ApiVersion: "8.2",
                 ReturnAllPages: true,
-                PrettifyErrors: false
+                PrettifyErrors: false,
+                Token: "123",
+                ClientUrl: "http://test.crm4.dynamics.local"
             });
 
             expect(WebApiClient.ApiVersion).toBe("8.2");
             expect(WebApiClient.ReturnAllPages).toBe(true);
             expect(WebApiClient.PrettifyErrors).toBe(false);
+            expect(WebApiClient.Token).toBe("123");
+            expect(WebApiClient.ClientUrl).toBe("http://test.crm4.dynamics.local");
         });
     });
 
