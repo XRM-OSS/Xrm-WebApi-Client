@@ -49,6 +49,8 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [Set Names](#set-names)
     + [Not yet implemented requests](#not-yet-implemented-requests)
     + [Promises](#promises)
+  * [External Access](#external-access)
+    + [Single Page Application](#single-page-application)
   * [Headers](#headers)
     + [Header Format](#header-format)
     + [Default Headers](#default-headers)
@@ -739,6 +741,17 @@ WebApiClient.Promise.all(requests)
         // Handle error
     });
 ```
+
+## External Access
+External access to CRM, that is accessing CRM without being on a CRM form or having a ClientGlobalContext.aspx is supported.
+As OAuth is required for authenticating, only CRM online and CRM On-Premises with IFD and Azure AD are supported.
+
+You'll have to register the WebApiClient as App in Azure AD, which is described in [MSDN](https://msdn.microsoft.com/en-us/library/mt595797.aspx).
+
+### Single Page Application
+There is support for using the client inside external single page applications.
+
+There is a minimal working example in the [sample folder](https://github.com/DigitalFlow/Xrm-WebApi-Client/blob/master/src/sample/SinglePageApp.html).
 
 ## Headers
 There is a defined set of default headers, which are sent on each request, as well as per-request headers.
