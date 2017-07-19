@@ -4,6 +4,7 @@
 This is a framework for easing working with the Dynamics CRM WebApi using JavaScript.
 It uses the awesome [BlueBird](https://github.com/petkaantonov/bluebird) framework for handling requests asynchronously based on promises.
 The framework is supposed to be executed on CRM forms or on CRM web ressources, where the CRM context is available.
+In addition to that, usage for single page applications outside of CRM is also possible.
 For running from custom web resources, be sure that the GetGlobalContext function is available, as the client will try to retrieve the context on its own.
 
 # Index
