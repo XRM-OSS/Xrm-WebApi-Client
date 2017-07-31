@@ -1,4 +1,76 @@
-/* @preserve
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Xrm-WebApi-Client Source: WebApiClient.Core.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.slate.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Xrm-WebApi-Client</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-WebApiClient.html">WebApiClient</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: WebApiClient.Core.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/* @preserve
  * MIT License
  *
  * Copyright (c) 2016 Florian Krönert
@@ -109,15 +181,15 @@
     }
 
     function MergeResults (firstResponse, secondResponse) {
-        if (!firstResponse && !secondResponse) {
+        if (!firstResponse &amp;&amp; !secondResponse) {
             return null;
         }
 
-        if (firstResponse && !secondResponse) {
+        if (firstResponse &amp;&amp; !secondResponse) {
             return firstResponse;
         }
 
-        if (!firstResponse && secondResponse) {
+        if (!firstResponse &amp;&amp; secondResponse) {
             return secondResponse;
         }
 
@@ -175,7 +247,7 @@
     /**
      * @description Returns array of default headers.
      * @method GetDefaultHeaders
-     * @return {Array<{key: String, value:String}>}
+     * @return {Array&lt;{key: String, value:String}>}
      * @memberof module:WebApiClient
      */
     WebApiClient.GetDefaultHeaders = function() {
@@ -200,7 +272,7 @@
             return;
         }
 
-        for(var i = 0; i < arguments.length; i++) {
+        for(var i = 0; i &lt; arguments.length; i++) {
             var argument = arguments[i];
 
             VerifyHeader(argument);
@@ -211,7 +283,7 @@
 
     function AppendHeaders(xhr, headers) {
         if (headers) {
-            for (var i = 0; i < headers.length; i++) {
+            for (var i = 0; i &lt; headers.length; i++) {
                 var header = headers[i];
 
                 VerifyHeader(header);
@@ -224,7 +296,7 @@
     function GetRecordUrl (parameters) {
         var params = parameters || {};
 
-        if ((!params.entityName && !params.overriddenSetName) || (!params.entityId && !params.alternateKey)) {
+        if ((!params.entityName &amp;&amp; !params.overriddenSetName) || (!params.entityId &amp;&amp; !params.alternateKey)) {
             throw new Error("Need entity name or overridden set name and entity id or alternate key for getting record url!");
         }
 
@@ -240,7 +312,7 @@
     }
 
     function FormatError (xhr) {
-        if (xhr && xhr.response) {
+        if (xhr &amp;&amp; xhr.response) {
             var json = JSON.parse(xhr.response);
 
             if (!WebApiClient.PrettifyErrors) {
@@ -279,7 +351,7 @@
         var cookie = cookieXml.documentElement;
 
         var cookieValue = unescape(cookie.getAttribute("pagingcookie"));
-        var pageNumber = parseInt(/<cookie page="([\d]+)">/.exec(cookieValue)[1]) + 1;
+        var pageNumber = parseInt(/&lt;cookie page="([\d]+)">/.exec(cookieValue)[1]) + 1;
 
         // Parse our original fetch XML, we will inject the paging information in here
         var fetchXml = parser.parseFromString(parameters.fetchXml, "text/xml");
@@ -305,20 +377,20 @@
             return headers;
         }
 
-        for(var i = 0; i < arguments.length; i++) {
+        for(var i = 0; i &lt; arguments.length; i++) {
             var headersToAdd = arguments[i];
 
             if (!headersToAdd || !Array.isArray(headersToAdd)) {
                 continue;
             }
 
-            for (var j = 0; j < headersToAdd.length; j++) {
+            for (var j = 0; j &lt; headersToAdd.length; j++) {
                 var header = headersToAdd[j];
                 VerifyHeader(header);
 
                 var addHeader = true;
 
-                for (var k = 0; k < headers.length; k++) {
+                for (var k = 0; k &lt; headers.length; k++) {
                   if (headers[k].key === header.key) {
                       addHeader = false;
                       break;
@@ -335,7 +407,7 @@
     }
 
     function IsBatch(responseText) {
-        return responseText && /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText);
+        return responseText &amp;&amp; /^--batchresponse_[a-fA-F0-9\-]+$/m.test(responseText);
     }
 
     function ParseResponse(xhr) {
@@ -353,7 +425,7 @@
     }
 
     function IsOverlengthGet (method, url) {
-        return method && method.toLowerCase() === "get" && url && url.length > 2048;
+        return method &amp;&amp; method.toLowerCase() === "get" &amp;&amp; url &amp;&amp; url.length > 2048;
     }
 
     function SendAsync(method, url, payload, parameters) {
@@ -385,12 +457,12 @@
                     response = MergeResults(parameters._previousResponse, response);
 
                     // Results are paged, we don't have all results at this point
-                    if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    if (nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         SetPreviousResponse(parameters, response);
 
                         resolve(SendAsync("GET", nextLink, null, parameters));
                     }
-                    else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    else if (pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         var nextPageFetch = SetCookie(pagingCookie, parameters);
 
                         SetPreviousResponse(parameters, response);
@@ -491,12 +563,12 @@
                 response = MergeResults(parameters._previousResponse, response);
 
                 // Results are paged, we don't have all results at this point
-                if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                if (nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                     SetPreviousResponse(parameters, response);
 
                     SendSync("GET", nextLink, null, parameters);
                 }
-                else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                else if (pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                     var nextPageFetch = SetCookie(pagingCookie, parameters);
 
                     SetPreviousResponse(parameters, response);
@@ -580,7 +652,7 @@
 
         var url = "(";
 
-        for (var i = 0; i < params.alternateKey.length; i++) {
+        for (var i = 0; i &lt; params.alternateKey.length; i++) {
             var key = params.alternateKey[i];
 
             url += key.property + "='" + key.value + "'";
@@ -604,9 +676,9 @@
      * @param {Object} [payload] Payload for request.
      * @param {Object} [parameters] - Parameters for sending the request
      * @param {Boolean} [parameters.async] - True for sending async, false for sync. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] - Headers for appending to request  
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] - Headers for appending to request  
      * @memberof module:WebApiClient
-     * @return {Promise<Object>|Object}
+     * @return {Promise&lt;Object>|Object}
      */
     WebApiClient.SendRequest = function (method, url, payload, parameters) {
       var params = parameters || {};
@@ -676,14 +748,14 @@
      * @param {String} [parameters.overriddenSetName] Plural name of entity, if not according to plural rules
      * @param {Object} parameters.entity Object containing record data
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<String>|Promise<object>|String|Object} - Returns Promise<Object> if return=representation header is set, otherwise Promise<String>. Just Object or String if sent synchronously.
+     * @return {Promise&lt;String>|Promise&lt;object>|String|Object} - Returns Promise&lt;Object> if return=representation header is set, otherwise Promise&lt;String>. Just Object or String if sent synchronously.
      */
     WebApiClient.Create = function(parameters) {
         var params = parameters || {};
 
-        if ((!params.entityName && !params.overriddenSetName) || !params.entity) {
+        if ((!params.entityName &amp;&amp; !params.overriddenSetName) || !params.entity) {
             throw new Error("Entity name and entity object have to be passed!");
         }
 
@@ -701,16 +773,16 @@
      * @param {String} [parameters.queryParams] Query Parameters to append to URL, such as ?$select=*
      * @param {String} [parameters.fetchXml] Fetch XML query
      * @param {String} [parameters.entityId] ID of entity to retrieve, will return single record
-     * @param {Array<property:string,value:string>} [parameters.alternateKey] Alternate key array for retrieving single record
+     * @param {Array&lt;property:string,value:string>} [parameters.alternateKey] Alternate key array for retrieving single record
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<object>|Object} - Returns Promise<Object> if asyncj, just Object if sent synchronously.
+     * @return {Promise&lt;object>|Object} - Returns Promise&lt;Object> if asyncj, just Object if sent synchronously.
      */
     WebApiClient.Retrieve = function(parameters) {
         var params = parameters || {};
 
-        if (!params.entityName && !params.overriddenSetName) {
+        if (!params.entityName &amp;&amp; !params.overriddenSetName) {
             throw new Error("Entity name has to be passed!");
         }
 
@@ -740,11 +812,11 @@
      * @param {String} parameters.entityName Entity name of records that should be updated
      * @param {String} [parameters.overriddenSetName] Plural name of entity, if not according to plural rules
      * @param {String} [parameters.entityId] ID of entity to update
-     * @param {Array<property:string,value:string>} [parameters.alternateKey] Alternate key array for updating record
+     * @param {Array&lt;property:string,value:string>} [parameters.alternateKey] Alternate key array for updating record
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<String>|Promise<object>|String|Object} - Returns Promise<Object> if return=representation header is set, otherwise Promise<String>. Just Object or String if sent synchronously.
+     * @return {Promise&lt;String>|Promise&lt;object>|String|Object} - Returns Promise&lt;Object> if return=representation header is set, otherwise Promise&lt;String>. Just Object or String if sent synchronously.
      */
     WebApiClient.Update = function(parameters) {
         var params = parameters || {};
@@ -765,11 +837,11 @@
      * @param {String} parameters.entityName Entity name of records that should be deleted
      * @param {String} [parameters.overriddenSetName] Plural name of entity, if not according to plural rules
      * @param {String} [parameters.entityId] ID of entity to delete
-     * @param {Array<property:string,value:string>} [parameters.alternateKey] Alternate key array for deleting record
+     * @param {Array&lt;property:string,value:string>} [parameters.alternateKey] Alternate key array for deleting record
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<String>|String} - Returns Promise<String> if async, just String if sent synchronously.
+     * @return {Promise&lt;String>|String} - Returns Promise&lt;String> if async, just String if sent synchronously.
      */
     WebApiClient.Delete = function(parameters) {
         var params = parameters || {};
@@ -796,9 +868,9 @@
      * @param {String} parameters.target.entityId ID of entity
      * @param {String} parameters.target.entityName Logical name of entity, such as "account"
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<String>|String} - Returns Promise<String> if async, just String if sent synchronously.
+     * @return {Promise&lt;String>|String} - Returns Promise&lt;String> if async, just String if sent synchronously.
      */
     WebApiClient.Associate = function(parameters) {
         var params = parameters || {};
@@ -835,9 +907,9 @@
      * @param {String} parameters.target.entityId ID of entity
      * @param {String} parameters.target.entityName Logical name of entity, such as "account"
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<String>|String} - Returns Promise<String> if async, just String if sent synchronously.
+     * @return {Promise&lt;String>|String} - Returns Promise&lt;String> if async, just String if sent synchronously.
      */
     WebApiClient.Disassociate = function(parameters) {
         var params = parameters || {};
@@ -867,9 +939,9 @@
      * @method Execute
      * @param {Object} request Request to send, must be in prototype chain of WebApiClient.Requests.Request.
      * @param {Boolean} [request.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [request.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [request.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<Object>|Object} - Returns Promise<Object> if async, just Object if sent synchronously.
+     * @return {Promise&lt;Object>|Object} - Returns Promise&lt;Object> if async, just Object if sent synchronously.
      */
     WebApiClient.Execute = function(request) {
         if (!request) {
@@ -888,9 +960,9 @@
      * @method SendBatch
      * @param {Object} batch Batch to send to CRM
      * @param {Boolean} [batch.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [batch.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [batch.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<Object>|Object} - Returns Promise<Object> if async, just Object if sent synchronously.
+     * @return {Promise&lt;Object>|Object} - Returns Promise&lt;Object> if async, just Object if sent synchronously.
      */
     WebApiClient.SendBatch = function(batch) {
         if (!batch) {
@@ -915,23 +987,23 @@
      * @description Expands all odata.nextLink (deferred) properties for an array of records.
      * @method Expand
      * @param {Object} parameters Configuration for expanding
-     * @param {Array<Object>} parameters.records Array of records to expand 
+     * @param {Array&lt;Object>} parameters.records Array of records to expand 
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
-     * @return {Promise<Object>|Object} - Returns Promise<Object> if async, just Object if sent synchronously.
+     * @return {Promise&lt;Object>|Object} - Returns Promise&lt;Object> if async, just Object if sent synchronously.
      */
     WebApiClient.Expand = function (parameters) {
-    /// <summary>Expands all odata.nextLink / deferred properties for an array of records</summary>
-    /// <param name="parameters" type="Object">Object that contains 'records' array or object. Optional 'headers'.</param>
-    /// <returns>Promise for sent request or result if sync.</returns>
+    /// &lt;summary>Expands all odata.nextLink / deferred properties for an array of records&lt;/summary>
+    /// &lt;param name="parameters" type="Object">Object that contains 'records' array or object. Optional 'headers'.&lt;/param>
+    /// &lt;returns>Promise for sent request or result if sync.&lt;/returns>
         var params = parameters || {};
         var records = params.records;
 
         var requests = [];
         var asynchronous = GetAsync(parameters);
 
-        for (var i = 0; i < records.length; i++) {
+        for (var i = 0; i &lt; records.length; i++) {
             var record = records[i];
 
             for (var attribute in record) {
@@ -966,3 +1038,140 @@
 
     module.exports = WebApiClient;
 } ());
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Florian Krönert
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a>
+	
+		on Mon Jul 31st 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

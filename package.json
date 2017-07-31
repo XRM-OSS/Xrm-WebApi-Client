@@ -22,9 +22,11 @@
     "browserify-istanbul": "^2.0.0",
     "codecov.io": "^0.1.6",
     "coveralls": "^2.13.0",
-    "cpx": "latest",
+    "cpx": "^1.5.0",
+    "ink-docstrap": "^1.3.0",
     "jasmine-core": "*",
-    "jshint": "latest",
+    "jsdoc": "^3.5.3",
+    "jshint": "^2.9.5",
     "karma": "^1.3.0",
     "karma-browserify": "^5.1.1",
     "karma-cli": "^1.0.1",
@@ -59,6 +61,11 @@
     "uglify": "uglifyjs Publish/WebApiClient.js --no-dead-code --comments /@preserve.*/ -o Publish/WebApiClient.min.js",
     "copyTypes": "cpx src/types/* Publish",
     "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js Publish/WebApiClient.d.ts",
-    "build": "npm run test && npm run uglify && npm run copyTypes && npm run zip"
+    "build": "npm run test && npm run uglify && npm run copyTypes && npm run zip",
+    "doc": "jsdoc -c ./conf.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src/js -d ./docs",
+    "postbuild": "npm run doc"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
   }
 }
