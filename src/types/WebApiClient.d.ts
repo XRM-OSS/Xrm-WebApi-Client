@@ -8,7 +8,7 @@ export module WebApiClient {
     let ClientUrl: string;
     let Token: string;
     
-    export type Promise<U> = bluebird<U>;
+    export let Promise: typeof bluebird;
 
     interface Header {
         key: string;
@@ -26,37 +26,39 @@ export module WebApiClient {
     }
 
     interface BaseParameters {
-        async: boolean;
-        headers: Array<Header>
+        async?: boolean;
+        headers?: Array<Header>
     }
 
     interface CreateParameters extends BaseParameters {
-        entityName: string;
+        entityName?: string;
+        overriddenSetName?: string;
         entity: object;
     }
 
     interface RetrieveParameters extends BaseParameters {
-        entityName: string;
-        entityId: string;
-        alternateKey: Array<Key>;
-        queryParams: string;
-        fetchXml: string;
-        returnAllPages: boolean;
+        entityName?: string;
+        overriddenSetName?: string;        
+        entityId?: string;
+        alternateKey?: Array<Key>;
+        queryParams?: string;
+        fetchXml?: string;
+        returnAllPages?: boolean;
     }
 
     interface UpdateParameters extends BaseParameters {
-        entityName: string;
-        entityId: string;
+        entityName?: string;
+        overriddenSetName?: string;        
+        entityId?: string;
         entity: object;
-        alternateKey: Array<Key>;
+        alternateKey?: Array<Key>;
     }
 
     interface DeleteParameters extends BaseParameters {
-        entityName: string;
-        entityId: string;
-        entity: object;
-        alternateKey: Array<Key>;
-        queryParams: string;
+        entityName?: string;
+        overriddenSetName?: string;        
+        entityId?: string;
+        alternateKey?: Array<Key>;
     }
 
     interface AssociationParameters extends BaseParameters {
@@ -67,102 +69,102 @@ export module WebApiClient {
 
     interface BatchRequestParameters {
         method: string;
-        url: string;
-        payload: string;
-        headers: Array<Header>;
-        contentId: string;
+        url?: string;
+        payload?: string;
+        headers?: Array<Header>;
+        contentId?: string;
     }
 
     class BatchRequest implements BatchRequestParameters {
         method: string;
-        url: string;
-        payload: string;
-        headers: Array<Header>;
-        contentId: string;
+        url?: string;
+        payload?: string;
+        headers?: Array<Header>;
+        contentId?: string;
 
         constructor(params: BatchRequestParameters);
     }
 
     interface ResponseParameters {
-        rawData: string;
-        contentId: string;
-        payload: object;
-        status: string;
+        rawData?: string;
+        contentId?: string;
+        payload?: object;
+        status?: string;
 
         // Basically an object = associative array, access headers by name and get the value
-        headers: object;
+        headers?: any;
     }
 
     class Response implements ResponseParameters {
-        rawData: string;
-        contentId: string;
-        payload: object;
-        status: string;
-        headers: object;
+        rawData?: string;
+        contentId?: string;
+        payload?: object;
+        status?: string;
+        headers?: any;
 
         constructor(parameters: ResponseParameters);
     }
 
     class ChangeSetResponse {
-        name: string;
-        responses: Array<Response>;
+        name?: string;
+        responses?: Array<Response>;
     }
 
     interface BatchResponseParameters {
-        name: string;
-        changeSetResponses: Array<ChangeSetResponse>;
-        batchResponses: Array<Response>;
-        isFaulted: boolean;
-        errors: Array<string>;
-        xhr: XMLHttpRequest;
+        name?: string;
+        changeSetResponses?: Array<ChangeSetResponse>;
+        batchResponses?: Array<Response>;
+        isFaulted?: boolean;
+        errors?: Array<string>;
+        xhr?: XMLHttpRequest;
     }
 
     class BatchResponse implements BatchResponseParameters {
-        name: string;
-        changeSetResponses: Array<ChangeSetResponse>;
-        batchResponses: Array<Response>;
-        isFaulted: boolean;
-        errors: Array<string>;
-        xhr: XMLHttpRequest;
+        name?: string;
+        changeSetResponses?: Array<ChangeSetResponse>;
+        batchResponses?: Array<Response>;
+        isFaulted?: boolean;
+        errors?: Array<string>;
+        xhr?: XMLHttpRequest;
 
         constructor(parameters: BatchResponseParameters);
     }
 
     interface ChangeSetParameters {
-        name: string;
-        requests: Array<BatchRequest>;
+        name?: string;
+        requests?: Array<BatchRequest>;
     }
 
     class ChangeSet implements ChangeSetParameters {
-        name: string;
-        requests: Array<BatchRequest>;
+        name?: string;
+        requests?: Array<BatchRequest>;
 
         constructor(parameters: ChangeSetParameters);
     }
 
     interface BatchParameters extends BaseParameters {
-        name: string;
-        changeSets: Array<ChangeSet>;
-        requests: Array<BatchRequest>;
-        isOverLengthGet: boolean;
+        name?: string;
+        changeSets?: Array<ChangeSet>;
+        requests?: Array<BatchRequest>;
+        isOverLengthGet?: boolean;
     }
 
     class Batch implements BatchParameters {
-        name: string;
-        changeSets: Array<ChangeSet>;
-        requests: Array<BatchRequest>;
-        headers: Array<Header>;
-        async: boolean;
-        isOverLengthGet: boolean;
+        name?: string;
+        changeSets?: Array<ChangeSet>;
+        requests?: Array<BatchRequest>;
+        headers?: Array<Header>;
+        async?: boolean;
+        isOverLengthGet?: boolean;
 
         constructor(parameters: BatchParameters);
     }
 
-    function Create(parameters: CreateParameters): Promise<string> | Promise<object> | string | object;
+    function Create(parameters: CreateParameters): Promise<string> | Promise<any> | string | any;
 
-    function Retrieve(parameters: RetrieveParameters): Promise<object> | object; 
+    function Retrieve(parameters: RetrieveParameters): Promise<any> | any; 
     
-    function Update(parameters: UpdateParameters): Promise<string> | Promise<object> | string | object;
+    function Update(parameters: UpdateParameters): Promise<string> | Promise<any> | string | any;
 
     function Delete(parameters: DeleteParameters): Promise<string> | string;
 
@@ -170,31 +172,31 @@ export module WebApiClient {
 
     function Disassociate(parameters: AssociationParameters): Promise<string> | string;
 
-    function Execute(request: object): Promise<object> | object;
+    function Execute(request: object): Promise<any> | any;
 
     function SendBatch(batch: Batch): Promise<BatchResponse> | BatchResponse;
 
     namespace Requests {
         interface RequestParameters extends BaseParameters {
-            method: string;
-            name: string;
-            bound: boolean;
-            entityName: boolean;
-            entityId: string;
-            payload: object;
-            urlParams: object;
+            method?: string;
+            name?: string;
+            bound?: boolean;
+            entityName?: boolean;
+            entityId?: string;
+            payload?: object;
+            urlParams?: object;
         }
 
         class Request implements RequestParameters {
-            method: string;
-            name: string;
-            bound: boolean;
-            entityName: boolean;
-            entityId: string;
-            payload: object;
-            headers: Array<Header>;
-            urlParams: object;
-            async: boolean;
+            method?: string;
+            name?: string;
+            bound?: boolean;
+            entityName?: boolean;
+            entityId?: string;
+            payload?: object;
+            headers?: Array<Header>;
+            urlParams?: object;
+            async?: boolean;
 
             with(param: RequestParameters): this; 
         }
