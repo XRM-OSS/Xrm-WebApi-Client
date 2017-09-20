@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,56 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    // Get WebApiClient core
+    var WebApiClient = require("./WebApiClient.Core.js");
 
+    /**
+     * This is the bundled version of bluebird for usage as polyfill in browsers that don't support promises natively
+     * @class
+     * @see https://github.com/petkaantonov/bluebird
+     * @memberof module:WebApiClient
+     * @alias WebApiClient.Promise
+     */
+    WebApiClient.Promise = require("bluebird").noConflict();
 
-<article>
-    <div class="container-overview">
-    
-        
+    // Attach requests to core
+    WebApiClient.Requests = require("./WebApiClient.Requests.js");
 
-        
-<dl class="details">
-    
+    // Attach batch to core
+    WebApiClient.Batch = require("./WebApiClient.Batch.js");
 
-	
+    // Attach changeSet to core
+    WebApiClient.ChangeSet = require("./WebApiClient.ChangeSet.js");
 
-	
+    // Attach batchRequest to core
+    WebApiClient.BatchRequest = require("./WebApiClient.BatchRequest.js");
 
-	
+    // Attach batchResponse to core
+    WebApiClient.BatchResponse = require("./WebApiClient.BatchResponse.js");
 
-    
+    // Attach response to core
+    WebApiClient.Response = require("./WebApiClient.Response.js");
 
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    // Export complete WebApiClient
+    module.exports = WebApiClient;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +126,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

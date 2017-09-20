@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.Batch.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,115 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.Batch.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    /**
+     * Batch to send using WebApiClient.SendBatch.
+     * Batches can be used for sending multiple requests at once.
+     * All requests inside a change set will be executed as a transaction, i.e. fail or succeed together.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_BatchRequests
+     * @param {Object} parameters
+     * @param {String} [parameters.name] Name to set for this batch. Will be set to a default name if ommitted
+     * @param {Array&lt;ChangeSet>} [parameters.changeSets] Change Sets to include in this batch. Defaults to an empty array
+     * @param {Array&lt;Request>} [parameters.requests] GET requests to include in this batch. GET requests must be contained in here and are forbidden in change sets. Defaults to an empty array 
+     * @param {Array&lt;{key:string,value:string}>} [parameters.headers] Headers to append to the batch.
+     * @param {bool} [parameters.async] True for sending async, false for sending sync. WebApiClient default is async
+     * @param {bool} [parameters.isOverLengthGet] Used internally for flagging a GET request that was originally not a batch but had to be transformed to a batch request automatically since the url was too long
+     * @memberof module:WebApiClient
+     */
+    var Batch = function (parameters) {
+        var params = parameters || {};
 
+        /**
+         * @property {String} name - Name of the batch
+         * @this {Batch}
+         */
+        this.name = params.name || "batch_AAA123";
 
-<article>
-    <div class="container-overview">
-    
-        
+        /**
+         * @property {Array&lt;ChangeSet>} changeSets - Change sets included in this batch. Only non GET requests may be included here. Each change set will execute as a separate transaction
+         * @this {Batch}
+         */
+        this.changeSets = params.changeSets || [];
 
-        
-<dl class="details">
-    
+        /**
+         * @property {Array&lt;Request>} requests - GET Requests included in this batch. GET request may only be included in here
+         * @this {Batch}
+         */
+        this.requests = params.requests || [];
 
-	
+        /**
+         * @property {Array&lt;{key:string,value:string}>} headers - Headers for the batch
+         * @this {Batch}
+         */
+        this.headers = params.headers || [];
 
-	
+        /**
+         * @property {bool} async - False for executing the batch synchronously, defaults to async
+         * @this {Batch}
+         */
+        this.async = params.async;
 
-	
+        /**
+         * @property {bool} isOverLengthGet - Used internally for flagging a GET request that was originally not a batch but had to be transformed to a batch request automatically since the url was too long
+         * @this {Batch}
+         */
+        this.isOverLengthGet = params.isOverLengthGet;
+    };
 
-    
+    /**
+     * @description Creates a text representation of the whole batch for sending as message body
+     * @return {String}
+     * @this {Batch}
+     */
+    Batch.prototype.buildPayload = function() {
+        var payload = "";
 
-    
+        for (var i = 0; i &lt; this.changeSets.length; i++) {
+            payload += "--" + this.name + "\n";
+            payload += "Content-Type: multipart/mixed;boundary=" + this.changeSets[i].name + "\n\n";
+            var changeSet = this.changeSets[i];
 
-    
+            payload += changeSet.stringify();
+        }
 
-    
+        for (var j = 0; j &lt; this.requests.length; j++) {
+            payload += "--" + this.name + "\n";
 
-	
+            payload += "Content-Type: application/http\n";
+            payload += "Content-Transfer-Encoding:binary\n\n";
 
-	
+            var request = this.requests[j];
 
-	
+            payload += request.stringify();
 
-	
+            // When all requests are stringified, we need a closing batch tag
+            if (j === this.requests.length - 1) {
+                payload += "--" + this.name + "--\n";
+            }
+        }
 
-	
+        return payload;
+    };
 
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    module.exports = Batch;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +185,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

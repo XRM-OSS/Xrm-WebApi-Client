@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.ChangeSet.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,83 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.ChangeSet.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    var instanceCount = 1;
 
+    /**
+     * Change sets are containers for requests inside batch requests.
+     * All requests inside a change set fail or succeed together.
+     * No GET requests are allowed inside change sets.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_ChangeSets
+     * @param {Object} [parameters]
+     * @param {String} [parameters.name] The name of the change set (should be unique for this batch). Auto generated if ommitted
+     * @param {Array&lt;Request>} [parameters.requests] Array of _POST_ requests for this change set. No get requests are allowed inside change sets. Initialized as empty array if ommitted
+     * @memberof module:WebApiClient
+     */
+    var ChangeSet = function (parameters) {
+        var params = parameters || {};
 
-<article>
-    <div class="container-overview">
-    
-        
+        /**
+         * @property {String} name - Name of the change set
+         * @this {ChangeSet}
+         */
+        this.name = params.name || "changeset_" + instanceCount++;
 
-        
-<dl class="details">
-    
+        /**
+         * @property {Array&lt;Request>} requests - Requests included in the change set. Only non GET requests are allowed.
+         * @this {ChangeSet}
+         */
+        this.requests = params.requests || [];
+    };
 
-	
+    /**
+     * @description Converts current change set into a string representation for including in the batch body
+     * @return {String}
+     * @this {ChangeSet}
+     */
+    ChangeSet.prototype.stringify = function () {
+        var payload = "";
+        var contentId = 1;
 
-	
+        for (var i = 0; i &lt; this.requests.length; i++) {
+            payload += "--" + this.name + "\n";
 
-	
+            payload += "Content-Type: application/http\n";
+            payload += "Content-Transfer-Encoding:binary\n";
 
-    
+            var request = this.requests[i];
+            request.contentId = request.contentId || contentId++;
 
-    
+            payload += request.stringify() + "\n";
 
-    
+            // When all requests are stringified, we need a closing changeSet tag
+            if (i === this.requests.length - 1) {
+                payload += "--" + this.name + "--\n\n";
+            }
+        }
 
-    
+        return payload;
+    };
 
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    module.exports = ChangeSet;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +153,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

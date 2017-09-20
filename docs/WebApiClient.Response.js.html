@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.Response.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,135 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.Response.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    function ParseContentId (rawData) {
+        var contentIdRaw = (/^Content-ID: ([0-9]+)$/m).exec(rawData);
 
+        if (contentIdRaw &amp;&amp; contentIdRaw.length > 1) {
+            return contentIdRaw[1];
+        }
 
-<article>
-    <div class="container-overview">
-    
-        
+        return null;
+    }
 
-        
-<dl class="details">
-    
+    function ParsePayload (rawData) {
+        var payloadRaw = (/^{[\s\S]*?(?=^}$)^}$/m).exec(rawData);
 
-	
+        if (payloadRaw &amp;&amp; payloadRaw.length > 0) {
+            return JSON.parse(payloadRaw[0]);
+        }
 
-	
+        return null;
+    }
 
-	
+    function ParseStatus (rawData) {
+        var statusRaw = (/^HTTP\/1\.1 ([0-9]{3,3}).*$/m).exec(rawData);
 
-    
+        if (statusRaw &amp;&amp; statusRaw.length > 1) {
+            return statusRaw[1];
+        }
 
-    
+        return null;
+    }
 
-    
+    function ParseHeaders (rawData) {
+        var headersRaw = (/HTTP\/1.1.*[\r\n]+([\S\s]*)?(?={|$)/g).exec(rawData);
 
-    
+        if (headersRaw &amp;&amp; headersRaw.length > 1) {
+            var headers = {};
 
-	
+            var headersSplit = headersRaw[1].split(/[\r\n]/);
 
-	
+            for (var i = 0; i &lt; headersSplit.length; i++) {
+                var line = headersSplit[i];
 
-	
+                var delimiterIndex = line.indexOf(": ");
 
-	
+                var key = line.substring(0, delimiterIndex);
 
-	
+                if (!key) {
+                    continue;
+                }
 
+                // Start after delimiterIndex (which is two chars long)
+                var value = line.substring(delimiterIndex + 2);
 
+                headers[key] = value;
+            }
 
-	
+            return headers;
+        }
 
-	
+        return null;
+    }
 
-	
+    /**
+     * Response returned for every requests inside a batch.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_Example
+     * @param {Object} [parameters]
+     * @param {String} [parameters.contentId] Content ID for this response. You can identify which request this response belongs to, if the Content-Id was set on the request as well
+     * @param {Object} [parameters.payload] Message body returned for this response, parsed JSON object
+     * @param {string} [parameters.status] HTTP status code returned for this response
+     * @param {Object} [parameters.headers] Headers returned for this response. Header keys are set as object keys with the corresponding values
+     * @param {string} [parameters.rawData] Text fragment returned for this response. Will be used for parsing other properties if passed
+     * @memberof module:WebApiClient
+     */
+     var Response = function (parameters) {
+        var params = parameters || {};
 
-	
-</dl>
+        if (!params.rawData) {
+            /**
+             * @property {String} contentId - Content ID for this response. You can identify which request this response belongs to, if the Content-Id was set on the request as well
+             * @this {Response}
+             */
+            this.contentId = params.contentId;
 
+            /**
+             * @property {Object} payload - Message body returned for this response, parsed JSON object
+             * @this {Response}
+             */
+            this.payload = params.payload;
 
-        
-    
-    </div>
+            /**
+             * @property {String} status - HTTP status code returned for this response
+             * @this {Response}
+             */
+            this.status = params.status;
 
-    
+            /**
+             * @property {String} headers - Headers returned for this response. Header keys are set as object keys with the corresponding values
+             * @this {Response}
+             */
+            this.headers = params.headers;
+        } else {
+            var rawData = params.rawData;
 
-    
+            this.contentId = ParseContentId(rawData);
+            this.payload = ParsePayload(rawData);
+            this.status = ParseStatus(rawData);
+            this.headers = ParseHeaders(rawData);
+        }
+    };
 
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    module.exports = Response;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +205,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

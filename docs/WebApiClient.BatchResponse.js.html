@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.BatchResponse.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,128 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.BatchResponse.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    /**
+     * Response returned from WebApiClient.SendBatch method. You will usually not instantiate this yourself.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_Example
+     * @param {Object} [parameters]
+     * @param {String} [parameters.name] The name of the batch response
+     * @param {Array&lt;{name:string, responses:Array&lt;Response>}>} [parameters.changeSetResponses] Array of responses for change sets, each change set has a separate response
+     * @param {Array&lt;Response>} [parameters.batchResponses] Array of responses for GET batch requests
+     * @param {bool} [parameters.isFaulted] Indicates whether any of the requests failed
+     * @param {Array&lt;string>} [parameters.errors] List of error messages if requests failed
+     * @param {XMLHttpRequest} [parameters.xhr] XMLHttpRequest to use for parsing the results and filling the other properties
+     * @memberof module:WebApiClient
+     */
+    var BatchResponse = function (parameters) {
+        var params = parameters || {};
 
+        /**
+         * @property {String} name - Name of the batch response
+         * @this {BatchResponse}
+         */
+        this.name = params.name;
 
-<article>
-    <div class="container-overview">
-    
-        
+        /**
+         * @property {Array&lt;{name:string, responses:Array&lt;Response>}>} changeSetResponses - Array of responses for change sets, each change set has a separate response
+         * @this {BatchResponse}
+         */
+        this.changeSetResponses = params.changeSetResponses || [];
 
-        
-<dl class="details">
-    
+        /**
+         * @property {Array&lt;Response>} batchResponses - Array of responses for GET batch requests
+         * @this {BatchResponse}
+         */
+        this.batchResponses = params.batchResponses || [];
 
-	
+        /**
+         * @property {bool} isFaulted - Indicates whether any of the requests failed
+         * @this {BatchResponse}
+         */
+        this.isFaulted = params.isFaulted || false;
 
-	
+        /**
+         * @property {Array&lt;string>} errors - List of error messages if requests failed
+         * @this {BatchResponse}
+         */
+        this.errors = params.errors || [];
 
-	
+        if (params.xhr) {
+            var xhr = params.xhr;
+            var responseText = xhr.responseText;
 
-    
+            var responseContentType = xhr.getResponseHeader("Content-Type");
+            this.name = responseContentType.substring(responseContentType.indexOf("boundary=")).replace("boundary=", "");
 
-    
+            var changeSetBoundaries = responseText.match(/boundary=changesetresponse.*/g);
 
-    
+            for (var i = 0; changeSetBoundaries &amp;&amp; i &lt; changeSetBoundaries.length; i++) {
+                var changeSetName = changeSetBoundaries[i].replace("boundary=", "");
 
-    
+                // Find all change set responses in responseText
+                var changeSetRegex = new RegExp("--" + changeSetName + "[\\S\\s]*?(?=--" + changeSetName + ")", "gm");
 
-	
+                var changeSetResponse = {
+                    name: changeSetName,
+                    responses: []
+                };
 
-	
+                var changeSets = responseText.match(changeSetRegex);
 
-	
+                for (var k = 0; k &lt; changeSets.length; k++) {
+                    var response = new WebApiClient.Response({
+                        rawData: changeSets[k]
+                    });
 
-	
+                    if (response.payload &amp;&amp; response.payload.error) {
+                        this.isFaulted = true;
+                        this.errors.push(response.payload.error);
+                    }
 
-	
+                    changeSetResponse.responses.push(response);
+                }
 
+                this.changeSetResponses.push(changeSetResponse);
+            }
 
+            // Find all batch responses in responseText
+            var batchRegex = new RegExp("--" + this.name + "[\\r\\n]+Content-Type: application\\/http[\\S\\s]*?(?=--" + this.name + ")", "gm");
+            var batchResponsesRaw = responseText.match(batchRegex);
 
-	
+            for (var j = 0; batchResponsesRaw &amp;&amp; j &lt; batchResponsesRaw.length; j++) {
+                var batchResponse = new WebApiClient.Response({
+                    rawData: batchResponsesRaw[j]
+                });
 
-	
+                if (batchResponse.payload &amp;&amp; batchResponse.payload.error) {
+                    this.isFaulted = true;
+                    this.errors.push(batchResponse.payload.error);
+                }
 
-	
+                this.batchResponses.push(batchResponse);
+            }
+        }
+    };
 
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    module.exports = BatchResponse;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +198,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

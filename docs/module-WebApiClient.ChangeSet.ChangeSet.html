@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Class: ChangeSet</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,14 +33,14 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-Requests.html">Requests</a></li><li><a href="module-WebApiClient.html">WebApiClient</a></li>
+					<li><a href="module-WebApiClient.html">WebApiClient</a></li><li><a href="WebApiClient.module_Batch.html">WebApiClient.Batch</a></li><li><a href="WebApiClient.module_BatchRequest.html">WebApiClient.BatchRequest</a></li><li><a href="WebApiClient.module_BatchResponse.html">WebApiClient.BatchResponse</a></li><li><a href="WebApiClient.module_ChangeSet.html">WebApiClient.ChangeSet</a></li><li><a href="WebApiClient.module_Requests.html">WebApiClient.Requests</a></li><li><a href="WebApiClient.module_Response.html">WebApiClient.Response</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-WebApiClient.Batch.html">WebApiClient.Batch</a></li><li><a href="module-WebApiClient.BatchRequest.html">WebApiClient.BatchRequest</a></li><li><a href="module-WebApiClient.BatchResponse.html">WebApiClient.BatchResponse</a></li><li><a href="module-WebApiClient.ChangeSet.html">WebApiClient.ChangeSet</a></li><li><a href="module-WebApiClient.Response.html">WebApiClient.Response</a></li><li><a href="WebApiClient.Promise.html">WebApiClient.Promise</a></li><li><a href="WebApiClient.Requests.Request.html">WebApiClient.Requests.Request</a></li>
+					<li><a href="module-WebApiClient.ChangeSet.ChangeSet.html">WebApiClient.ChangeSet.ChangeSet</a></li>
 				</ul>
 			</li>
 			
@@ -72,13 +72,13 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+	<h1 class="page-title">Class: ChangeSet</h1>
 <section>
 
 <header>
     
         <h2>
-        
+        ChangeSet
         </h2>
         
     
@@ -89,8 +89,186 @@
     <div class="container-overview">
     
         
+<hr>
+<dt>
+    <h4 class="name" id="ChangeSet"><span class="type-signature"></span>new ChangeSet( [parameters])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Class for Batch Request ChangeSet</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parameters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The name of the change set (should be unique for this batch). Auto generated if ommitted</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>requests</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Request></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Array of <em>POST</em> requests for this change set. No get requests are allowed inside change sets. Initialized as empty array if ommitted</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
 <dl class="details">
     
 
@@ -121,6 +299,16 @@
 
 
 	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="WebApiClient.ChangeSet.js.html">WebApiClient.ChangeSet.js</a>,
+				 <a href="WebApiClient.ChangeSet.js.html#sunlight-1-line-21">line 21</a>
+			</li>
+		</ul>
+	</dd>
+	
 
 	
 
@@ -130,7 +318,21 @@
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
     
     </div>
 
@@ -139,38 +341,128 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
+            
+<hr>
+<dt>
+    <h4 class="name" id="stringify"><span class="type-signature"></span>stringify()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Converts current change set into a string representation for including in the batch body</p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>This:</h5>
+        <ul><li>{ChangeSet}</li></ul>
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="WebApiClient.ChangeSet.js.html">WebApiClient.ChangeSet.js</a>,
+				 <a href="WebApiClient.ChangeSet.js.html#sunlight-1-line-33">line 33</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
         
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
         
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
+
+    
+</dd>
+
         </dl>
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -224,7 +516,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a>
 	
-		on Thu Sep 21st 2017
+		on Wed Sep 20th 2017
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

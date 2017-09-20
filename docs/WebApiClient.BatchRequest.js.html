@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Modules</title>
+	<title>Xrm-WebApi-Client Source: WebApiClient.BatchRequest.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,118 +67,110 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Modules</h1>
+		<h1 class="page-title">Source: WebApiClient.BatchRequest.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(undefined) {
+    "use strict";
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+    /**
+     * Request used inside batches, used for all HTTP methods
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_BatchRequests
+     * @param {Object} parameters
+     * @param {String} parameters.method The HTTP method such as GET, POST, ... for this request
+     * @param {String} parameters.url The url used for this request
+     * @param {Object} [parameters.payload] The request body for this request. Will be stringified and embedded.
+     * @param {Array&lt;{key:string,value:string}>} [parameters.headers] Headers to append to this request
+     * @param {String} parameters.contentId Content ID to set for this request
+     * @memberof module:WebApiClient
+     */
+    var BatchRequest = function (parameters) {
+        var params = parameters || {};
 
+        /**
+         * @property {String} method - Method of the request such as GET, POST, ...
+         * @this {BatchRequest}
+         */
+        this.method = params.method;
 
-<article>
-    <div class="container-overview">
-    
-        
+        /**
+         * @property {String} url - URL for this request
+         * @this {BatchRequest}
+         */
+        this.url = params.url;
 
-        
-<dl class="details">
-    
+        /**
+         * @property {Object} payload - Payload to send with this request
+         * @this {BatchRequest}
+         */
+        this.payload = params.payload;
 
-	
+        /**
+         * @property {Array&lt;{key: string, value:string}>} headers - Headers to append to this request
+         * @this {BatchRequest}
+         */
+        this.headers = params.headers || [];
 
-	
+        /**
+         * @property {String} contentId - Content ID for this request. Will be set on the responses as well, to match responses with requests
+         * @this {BatchRequest}
+         */
+        this.contentId = params.contentId;
+    };
 
-	
+    /**
+     * @description Converts current batch request into a string representation for including in the batch body
+     * @return {String}
+     * @this {BatchRequest}
+     */
+    BatchRequest.prototype.stringify = function () {
+        var payload = "";
 
-    
+        if (this.contentId) {
+            payload += "Content-ID: " + this.contentId + "\n\n";
+        }
 
-    
+        payload += this.method + " " + this.url + " HTTP/1.1\n";
 
-    
+        for (var i = 0; i &lt; this.headers.length; i++) {
+            var header = this.headers[i];
 
-    
+            if (["accept", "content-type"].indexOf(header.key.toLowerCase()) === -1) {
+                payload += header.key + ": " + header.value + "\n";
+            }
+        }
 
-	
+        if (this.method.toLowerCase() === "get") {
+            payload += "Accept: application/json\n\n";
+        } else {
+            payload += "Content-Type: application/json;type=entry\n\n";
+        }
 
-	
+        if (this.payload) {
+            payload += JSON.stringify(this.payload);
+        }
+        else if (this.method.toLowerCase() === "delete") {
+            // Delete requests need an empty payload, pass it if not already set
+            payload += JSON.stringify({});
+        }
 
-	
+        return payload;
+    };
 
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-WebApiClient.Batch.html">Batch</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-WebApiClient.Response.html">Response</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Promise.html">Promise</a></dt>
-            <dd></dd>
-        
-            <dt><a href="WebApiClient.Requests.Request.html">Request</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    module.exports = BatchRequest;
+} ());
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -188,10 +180,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
