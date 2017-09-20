@@ -63,7 +63,6 @@
     "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js Publish/WebApiClient.d.ts",
     "build": "npm run test && npm run uglify && npm run copyTypes && npm run zip",
     "doc": "jsdoc -c ./conf.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src/js -d ./docs",
-    "postbuild": "npm run doc"
   },
   "dependencies": {
     "minimist": "^1.2.0"
