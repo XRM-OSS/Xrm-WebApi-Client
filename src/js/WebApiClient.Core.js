@@ -582,8 +582,13 @@
 
         for (var i = 0; i < params.alternateKey.length; i++) {
             var key = params.alternateKey[i];
+            var value = key.value;
+            
+            if (typeof(key.value) !== "number") {
+                value = "'" + key.value + "'";
+            }
 
-            url += key.property + "='" + key.value + "'";
+            url += key.property + "=" + value;
 
             if (i + 1 === params.alternateKey.length) {
                 url += ")";

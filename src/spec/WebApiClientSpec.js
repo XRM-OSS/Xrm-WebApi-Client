@@ -124,6 +124,12 @@ describe("WebApiClient", function() {
             [200, { "Content-Type": "application/json" }, JSON.stringify(contact)]
         );
 
+        // Respond to Retrieve Request for contact with alternate key that contains numbers
+        var retrieveByAlternateKeyNumberUrl = RegExp.escape(fakeUrl + "/api/data/v8.0/contacts(firstname='Joe',contactnumber=1)");
+        xhr.respondWith("GET", new RegExp(retrieveByAlternateKeyNumberUrl),
+            [200, { "Content-Type": "application/json" }, JSON.stringify(contact)]
+        );
+
         // Respond to update Request for contact with alternate key
         xhr.respondWith("PATCH", new RegExp(retrieveByAlternateKeyUrl),
             [204, { "Content-Type": "application/json" }, JSON.stringify(successMock)]
@@ -610,6 +616,29 @@ describe("WebApiClient", function() {
 
             xhr.respond();
         });
+
+        it("should not use hyphens in alternate key url value if value is number", function(done){
+            WebApiClient.Retrieve(
+            {
+                entityName: "contact",
+                alternateKey:
+                    [
+                        { property: "firstname", value: "Joe" },
+                        { property: "contactnumber", value: 1}
+                    ]
+            })
+            .then(function(response){
+                expect(response).toEqual(contact);
+            })
+            .catch(function(error) {
+                expect(error).toBeUndefined();
+            })
+            // Wait for promise
+            .finally(done);
+
+            xhr.respond();
+        });
+
 
         it("should retrieve by fetch", function(done){
         	var fetchXml = "<fetch mapping='logical'>" +
