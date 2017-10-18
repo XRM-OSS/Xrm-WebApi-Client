@@ -1,13 +1,50 @@
 (function(undefined) {
     "use strict";
 
+    /**
+     * Response returned from WebApiClient.SendBatch method. You will usually not instantiate this yourself.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_Example
+     * @param {Object} [parameters]
+     * @param {String} [parameters.name] The name of the batch response
+     * @param {Array<{name:string, responses:Array<Response>}>} [parameters.changeSetResponses] Array of responses for change sets, each change set has a separate response
+     * @param {Array<Response>} [parameters.batchResponses] Array of responses for GET batch requests
+     * @param {bool} [parameters.isFaulted] Indicates whether any of the requests failed
+     * @param {Array<string>} [parameters.errors] List of error messages if requests failed
+     * @param {XMLHttpRequest} [parameters.xhr] XMLHttpRequest to use for parsing the results and filling the other properties
+     * @memberof module:WebApiClient
+     */
     var BatchResponse = function (parameters) {
         var params = parameters || {};
 
+        /**
+         * @property {String} name - Name of the batch response
+         * @this {BatchResponse}
+         */
         this.name = params.name;
+
+        /**
+         * @property {Array<{name:string, responses:Array<Response>}>} changeSetResponses - Array of responses for change sets, each change set has a separate response
+         * @this {BatchResponse}
+         */
         this.changeSetResponses = params.changeSetResponses || [];
+
+        /**
+         * @property {Array<Response>} batchResponses - Array of responses for GET batch requests
+         * @this {BatchResponse}
+         */
         this.batchResponses = params.batchResponses || [];
+
+        /**
+         * @property {bool} isFaulted - Indicates whether any of the requests failed
+         * @this {BatchResponse}
+         */
         this.isFaulted = params.isFaulted || false;
+
+        /**
+         * @property {Array<string>} errors - List of error messages if requests failed
+         * @this {BatchResponse}
+         */
         this.errors = params.errors || [];
 
         if (params.xhr) {

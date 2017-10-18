@@ -4,7 +4,13 @@
     // Get WebApiClient core
     var WebApiClient = require("./WebApiClient.Core.js");
 
-    // Attach bluebird to WebApiClient
+    /**
+     * This is the bundled version of bluebird for usage as polyfill in browsers that don't support promises natively
+     * @class
+     * @see https://github.com/petkaantonov/bluebird
+     * @memberof module:WebApiClient
+     * @alias WebApiClient.Promise
+     */
     WebApiClient.Promise = require("bluebird").noConflict();
 
     // Attach requests to core

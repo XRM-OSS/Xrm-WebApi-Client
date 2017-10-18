@@ -62,13 +62,44 @@
         return null;
     }
 
-    var Response = function (parameters) {
+    /**
+     * Response returned for every requests inside a batch.
+     * @constructor
+     * @see https://msdn.microsoft.com/en-us/library/mt607719.aspx#bkmk_Example
+     * @param {Object} [parameters]
+     * @param {String} [parameters.contentId] Content ID for this response. You can identify which request this response belongs to, if the Content-Id was set on the request as well
+     * @param {Object} [parameters.payload] Message body returned for this response, parsed JSON object
+     * @param {string} [parameters.status] HTTP status code returned for this response
+     * @param {Object} [parameters.headers] Headers returned for this response. Header keys are set as object keys with the corresponding values
+     * @param {string} [parameters.rawData] Text fragment returned for this response. Will be used for parsing other properties if passed
+     * @memberof module:WebApiClient
+     */
+     var Response = function (parameters) {
         var params = parameters || {};
 
         if (!params.rawData) {
+            /**
+             * @property {String} contentId - Content ID for this response. You can identify which request this response belongs to, if the Content-Id was set on the request as well
+             * @this {Response}
+             */
             this.contentId = params.contentId;
+
+            /**
+             * @property {Object} payload - Message body returned for this response, parsed JSON object
+             * @this {Response}
+             */
             this.payload = params.payload;
+
+            /**
+             * @property {String} status - HTTP status code returned for this response
+             * @this {Response}
+             */
             this.status = params.status;
+
+            /**
+             * @property {String} headers - Headers returned for this response. Header keys are set as object keys with the corresponding values
+             * @this {Response}
+             */
             this.headers = params.headers;
         } else {
             var rawData = params.rawData;
