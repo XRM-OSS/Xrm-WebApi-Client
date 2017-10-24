@@ -667,6 +667,9 @@
      * @description Gets the current base API url that is used.
      * @method GetApiUrl
      * @memberof module:WebApiClient
+     * @example
+     * // apiUrl is something like https://yourorg.crmX.dynamics.com/api/data/v8.2/
+     * var apiUrl = WebApiClient.GetApiUrl();
      * @return {String}
      */
     WebApiClient.GetApiUrl = function() {
@@ -710,6 +713,73 @@
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
      * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
+     * @example
+     * // Retrieve by ID
+     * var request = {
+     *     entityName: "account",
+     *     entityId: "00000000-0000-0000-0000-000000000001"
+     * };
+     * 
+     * WebApiClient.Retrieve(request)
+     *     .then(function(response){
+     *         // Process response
+     *     })
+     *     .catch(function(error) {
+     *         // Handle error
+     *     });
+     * 
+     * // Retrieve by alternate key
+     * var request = {
+     *     entityName: "contact",
+     *     alternateKey:
+     *         [
+     *             { property: "firstname", value: "Joe" },
+     *             { property: "emailaddress1", value: "abc@example.com"}
+     *         ]
+     * };
+     * 
+     * WebApiClient.Retrieve(request)
+     *     .then(function(response){
+     *         // Process response
+     *     })
+     *     .catch(function(error) {
+     *         // Handle error
+     *     });
+     * 
+     * // Retrieve by query expression
+     * 
+     * var request = {
+     *     entityName: "account",
+     *     queryParams: "?$select=name,revenue,&$orderby=revenue asc,name desc&$filter=revenue ne null"
+     * };
+     * 
+     * WebApiClient.Retrieve(request)
+     *     .then(function(response){
+     *         // Process response
+     *     })
+     *     .catch(function(error) {
+     *         // Handle error
+     *     });
+     *     
+     * // Retrieve by FetchXml
+     * 
+     * var request = {
+     *     entityName: "account",
+     *     fetchXml: "<fetch mapping='logical'>" +
+     *                 "<entity name='account'>" +
+     *                     "<attribute name='accountid'/>" +
+     *                     "<attribute name='name'/>" +
+     *                 "</entity>" +
+     *               "</fetch>"
+     * };
+     * 
+     * WebApiClient.Retrieve(request)
+     *     .then(function(response){
+     *         // Process response
+     *     })
+     *     .catch(function(error) {
+     *         // Handle error
+     *     });
      * @return {Promise<object>|Object} - Returns Promise<Object> if asyncj, just Object if sent synchronously.
      */
     WebApiClient.Retrieve = function(parameters) {
