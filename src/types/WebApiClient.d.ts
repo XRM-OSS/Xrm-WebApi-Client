@@ -27,7 +27,8 @@ export module WebApiClient {
 
     interface BaseParameters {
         async?: boolean;
-        headers?: Array<Header>
+        headers?: Array<Header>;
+        asBatch?: boolean;
     }
 
     interface CreateParameters extends BaseParameters {
@@ -160,21 +161,23 @@ export module WebApiClient {
         constructor(parameters: BatchParameters);
     }
 
-    function Create(parameters: CreateParameters): Promise<string> | Promise<any> | string | any;
+    function Create(parameters: CreateParameters): Promise<string> | Promise<any> | string | any | BatchRequest;
 
-    function Retrieve(parameters: RetrieveParameters): Promise<any> | any; 
+    function Retrieve(parameters: RetrieveParameters): Promise<any> | any | BatchRequest; 
     
-    function Update(parameters: UpdateParameters): Promise<string> | Promise<any> | string | any;
+    function Update(parameters: UpdateParameters): Promise<string> | Promise<any> | string | any | BatchRequest;
 
-    function Delete(parameters: DeleteParameters): Promise<string> | string;
+    function Delete(parameters: DeleteParameters): Promise<string> | string | BatchRequest;
 
-    function Associate(parameters: AssociationParameters): Promise<string> | string;
+    function Associate(parameters: AssociationParameters): Promise<string> | string | BatchRequest;
 
-    function Disassociate(parameters: AssociationParameters): Promise<string> | string;
+    function Disassociate(parameters: AssociationParameters): Promise<string> | string | BatchRequest;
 
-    function Execute(request: object): Promise<any> | any;
+    function Execute(request: object): Promise<any> | any | BatchRequest;
 
     function SendBatch(batch: Batch): Promise<BatchResponse> | BatchResponse;
+
+    function SendRequest(method: string, url: string, payload: object, parameters?: BaseParameters) : Promise<any> | any | BatchRequest;
 
     namespace Requests {
         interface RequestParameters extends BaseParameters {

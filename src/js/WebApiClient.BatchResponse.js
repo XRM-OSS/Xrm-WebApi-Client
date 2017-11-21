@@ -1,5 +1,7 @@
 (function(undefined) {
     "use strict";
+    
+    var WebApiClient = require("./WebApiClient.Core.js");
 
     /**
      * Response returned from WebApiClient.SendBatch method. You will usually not instantiate this yourself.
