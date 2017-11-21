@@ -1792,6 +1792,15 @@ describe("WebApiClient", function() {
             xhr.respond();
         });
 
+        it("should be possible to catch on sync requests", function(done){
+            try {
+              WebApiClient.Retrieve({entityName: "notexisting", async: false});
+            } catch (e){
+              expect(e).toBeDefined();
+              done();
+            }
+        });
+
         it("should return the response json as error when prettifying is deactivated", function(done){
             WebApiClient.PrettifyErrors = false;
 

@@ -104,7 +104,7 @@
         if (WebApiClient.ClientUrl) {
             return WebApiClient.ClientUrl;
         }
-        
+
         throw new Error("Failed to retrieve client url, is ClientGlobalContext.aspx available?");
     }
 
@@ -141,7 +141,7 @@
      * @description Builds the set name of a given entity name.
      * @method GetSetName
      * @param {String} entityName Logical name of the entity, such as "account"
-     * @param {String}[overriddenSetName] Override set name if it can't be infered from plural rules 
+     * @param {String}[overriddenSetName] Override set name if it can't be infered from plural rules
      * @memberof module:WebApiClient
      * @return {String}
      */
@@ -466,66 +466,6 @@
     function SendSync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
         var response;
-
-        xhr.onload = function() {
-            if(xhr.readyState !== 4) {
-                return;
-            }
-
-            if(xhr.status === 200){
-                response = ParseResponse(xhr);
-
-                // If we received multiple responses, it was a custom batch. Just resolve all matches
-                if (response instanceof WebApiClient.BatchResponse) {
-                  // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
-                  if (parameters.isOverLengthGet) {
-                        response = response.batchResponses[0].payload;
-                    } else {
-                        return;
-                    }
-                }
-
-                var nextLink = GetNextLink(response);
-                var pagingCookie = GetPagingCookie(response);
-
-                response = MergeResults(parameters._previousResponse, response);
-
-                // Results are paged, we don't have all results at this point
-                if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                    SetPreviousResponse(parameters, response);
-
-                    SendSync("GET", nextLink, null, parameters);
-                }
-                else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                    var nextPageFetch = SetCookie(pagingCookie, parameters);
-
-                    SetPreviousResponse(parameters, response);
-
-                    parameters.fetchXml = nextPageFetch;
-
-                    WebApiClient.Retrieve(parameters);
-                }
-            }
-            else if (xhr.status === 201) {
-                response = ParseResponse(xhr);
-            }
-            else if (xhr.status === 204) {
-                if (method.toLowerCase() === "post") {
-                    response = xhr.getResponseHeader("OData-EntityId");
-                }
-                // No content returned for delete, update, ...
-                else {
-                    response = xhr.statusText;
-                }
-            }
-            else {
-                throw new Error(FormatError(xhr));
-            }
-        };
-        xhr.onerror = function() {
-            throw new Error(FormatError(xhr));
-        };
-
         var headers = [];
 
         if (IsOverlengthGet(method, url)) {
@@ -560,6 +500,60 @@
             }
         } else {
             xhr.send();
+        }
+
+        if(xhr.readyState !== 4) {
+            return;
+        }
+
+        if(xhr.status === 200){
+            response = ParseResponse(xhr);
+
+            // If we received multiple responses, it was a custom batch. Just resolve all matches
+            if (response instanceof WebApiClient.BatchResponse) {
+              // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
+              if (parameters.isOverLengthGet) {
+                    response = response.batchResponses[0].payload;
+                } else {
+                    return;
+                }
+            }
+
+            var nextLink = GetNextLink(response);
+            var pagingCookie = GetPagingCookie(response);
+
+            response = MergeResults(parameters._previousResponse, response);
+
+            // Results are paged, we don't have all results at this point
+            if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                SetPreviousResponse(parameters, response);
+
+                SendSync("GET", nextLink, null, parameters);
+            }
+            else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                var nextPageFetch = SetCookie(pagingCookie, parameters);
+
+                SetPreviousResponse(parameters, response);
+
+                parameters.fetchXml = nextPageFetch;
+
+                WebApiClient.Retrieve(parameters);
+            }
+        }
+        else if (xhr.status === 201) {
+            response = ParseResponse(xhr);
+        }
+        else if (xhr.status === 204) {
+            if (method.toLowerCase() === "post") {
+                response = xhr.getResponseHeader("OData-EntityId");
+            }
+            // No content returned for delete, update, ...
+            else {
+                response = xhr.statusText;
+            }
+        }
+        else {
+            throw new Error(FormatError(xhr));
         }
 
         return response;
@@ -604,7 +598,7 @@
      * @param {Object} [payload] Payload for request.
      * @param {Object} [parameters] - Parameters for sending the request
      * @param {Boolean} [parameters.async] - True for sending async, false for sync. Defaults to true.
-     * @param {Array<key:string,value:string>} [parameters.headers] - Headers for appending to request  
+     * @param {Array<key:string,value:string>} [parameters.headers] - Headers for appending to request
      * @memberof module:WebApiClient
      * @return {Promise<Object>|Object}
      */
@@ -644,7 +638,7 @@
     /**
      * @description Applies configuration to WebApiClient.
      * @method Configure
-     * @param {Object} configuration Object with keys named after WebApiClient Members, such as "Token"s 
+     * @param {Object} configuration Object with keys named after WebApiClient Members, such as "Token"s
      * @memberof module:WebApiClient
      * @return {void}
      */
@@ -915,7 +909,7 @@
      * @description Expands all odata.nextLink (deferred) properties for an array of records.
      * @method Expand
      * @param {Object} parameters Configuration for expanding
-     * @param {Array<Object>} parameters.records Array of records to expand 
+     * @param {Array<Object>} parameters.records Array of records to expand
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
      * @param {Array<key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
