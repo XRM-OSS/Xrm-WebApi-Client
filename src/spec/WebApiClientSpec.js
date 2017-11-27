@@ -1737,6 +1737,23 @@ describe("WebApiClient", function() {
           expect(response.value.length).toBe(12);
         });
 
+        it("should send batch sync", function(){
+          var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\"><entity name=\"account\"><attribute name=\"name\" /><order attribute=\"name\" descending=\"false\" /><filter type=\"and\"><condition attribute=\"name\" operator=\"like\" value=\"%\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /></filter></entity></fetch>";
+          var batch = new WebApiClient.Batch({
+            requests: [
+              WebApiClient.Retrieve({
+                    entityName: "account",
+                    fetchXml: fetchXml,
+                    asBatch: true
+                })
+            ],
+            async: false
+          });
+
+          var response = WebApiClient.SendBatch(batch);
+          expect(response.batchResponses[0].payload.value.length).toBe(12);
+        });
+
         it("should update record and return", function(){
             var response = WebApiClient.Update({entityName: "account", entityId: "00000000-0000-0000-0000-000000000001",  entity: account, async: false});
 
