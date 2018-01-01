@@ -62,6 +62,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [CRM App](#crm-app)
   * [FAQ](#faq)
     + [Payloads](#payloads)
+    + [Logical Names](#logical-names)
 
 ## Requirements
 ### CRM
@@ -847,3 +848,8 @@ var update = {
  "regardingobjectid_account@odata.bind": "/accounts(4acc8857-fbb8-42d1-a5c5-24d83c9d1380)"
 };
 ```
+
+### Logical Names
+Sometimes requests fail, due to the Web API not finding the attributes you included in your payload in the entity definition.
+Most often this is because you got the name wrong.
+For finding the proper names, you can head to Settings > Customizations > Developer Resources and click on the "Download OData Metadata" link. You will be provided with a XML file, which contains all entities that are exposed in the Web API, with their set names and all of their attributes.
