@@ -60,6 +60,9 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [API Version](#api-version)
   * [Remarks](#remarks)
     + [CRM App](#crm-app)
+  * [FAQ](#faq)
+    + [Payloads](#payloads)
+    + [Logical Names](#logical-names)
 
 ## Requirements
 ### CRM
@@ -808,3 +811,45 @@ WebApiClient.ApiVersion = "8.1";
 ### CRM App
 For using WebApiClient with the CRM App, you'll have to use the normal (= not uglified) version.
 When using uglified JS in the CRM App, you might receive invalid character errors. This is not only valid for the WebApiClient, but also for some other uglified code.
+
+## FAQ
+### Payloads
+When sending data for entity records, there often arise questions, on how to pass specific values.
+Some attributes can be directly set, some need a special format for the Web API to recognize them.
+
+Simple Attributes (Just use native values in payload):
+- Single Line of Text
+- Multiple Lines of Text
+- Number
+- Decimal
+- Float
+- Boolean
+- OptionSet (Just use the option set value)
+- DateTime
+
+Complex Attributes:
+- Lookups: When setting lookups, you use the attribute logical name, followed by "@odata.bind". As value, you need to pass a special format of the id, which is "/entityListName(id)".
+So for setting the parent account of an account, the payload would look like this:
+
+```JavaScript
+var update = {
+ "parentaccountid@odata.bind": "/accounts(4acc8857-fbb8-42d1-a5c5-24d83c9d1380)"
+};
+```
+For getting the entity list name, you can use `WebApiClient.GetSetName`.
+
+Special case: 
+A special case are lookups, which target multiple entities, such as customer lookups or regarding object ids.
+Those apply the same rules as plain lookups, but in addition to that, the entity logical name of the target related entity is appended to the field name, preceeded by an underscore.
+For example to set the regardingobject of an appointment to our previous parent account, we would have to use the following payload:
+
+```JavaScript
+var update = {
+ "regardingobjectid_account@odata.bind": "/accounts(4acc8857-fbb8-42d1-a5c5-24d83c9d1380)"
+};
+```
+
+### Logical Names
+Sometimes requests fail, due to the Web API not finding the attributes you included in your payload in the entity definition.
+Most often this is because you got the name wrong.
+For finding the proper names, you can head to Settings > Customizations > Developer Resources and click on the "Download OData Metadata" link. You will be provided with a XML file, which contains all entities that are exposed in the Web API, with their set names and all of their attributes.
