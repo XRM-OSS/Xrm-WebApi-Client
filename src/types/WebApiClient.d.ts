@@ -179,12 +179,14 @@ export module WebApiClient {
 
     function SendRequest(method: string, url: string, payload: object, parameters?: BaseParameters) : Promise<any> | any | BatchRequest;
 
+    function GetApiUrl (): string;
+    
     namespace Requests {
         interface RequestParameters extends BaseParameters {
             method?: string;
             name?: string;
             bound?: boolean;
-            entityName?: boolean;
+            entityName?: string;
             entityId?: string;
             payload?: object;
             urlParams?: object;
@@ -194,7 +196,7 @@ export module WebApiClient {
             method?: string;
             name?: string;
             bound?: boolean;
-            entityName?: boolean;
+            entityName?: string;
             entityId?: string;
             payload?: object;
             headers?: Array<Header>;
