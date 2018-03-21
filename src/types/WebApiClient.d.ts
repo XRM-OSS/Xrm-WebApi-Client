@@ -1,6 +1,6 @@
 import * as bluebird from "bluebird";
 
-export module WebApiClient {
+export default module WebApiClient {
     let ApiVersion: string;
     let ReturnAllPages: boolean;
     let PrettifyErrors: boolean;
