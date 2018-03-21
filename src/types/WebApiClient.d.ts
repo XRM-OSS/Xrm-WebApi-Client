@@ -1,6 +1,6 @@
 import * as bluebird from "bluebird";
 
-export default module WebApiClient {
+declare module WebApiClient {
     let ApiVersion: string;
     let ReturnAllPages: boolean;
     let PrettifyErrors: boolean;
@@ -443,3 +443,5 @@ export default module WebApiClient {
         class WinQuoteRequest extends Request { }
     }
 }
+
+export default WebApiClient;
