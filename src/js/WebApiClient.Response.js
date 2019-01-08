@@ -12,7 +12,7 @@
     }
 
     function ParsePayload (rawData) {
-        var payloadRaw = (/^{[\s\S]*?(?=^}$)^}$/m).exec(rawData);
+        var payloadRaw = (/^{[\s\S]*}/m).exec(rawData);
 
         if (payloadRaw && payloadRaw.length > 0) {
             return JSON.parse(payloadRaw[0]);
