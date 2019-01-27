@@ -36,7 +36,9 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "rimraf": "^2.6.2",
     "sinon": "^1.17.6",
-    "uglify-js": "^2.8.29"
+    "uglify-js": "^2.8.29",
+    "hoek": "^5.0.3",
+    "minimist": "^1.2.0"
   },
   "files": [
     "src",
@@ -63,9 +65,5 @@
     "zip": "bestzip Publish/release.zip Publish/WebApiClient.js Publish/WebApiClient.min.js Publish/WebApiClient.d.ts",
     "build": "npm run test && npm run uglify && npm run copyTypes && npm run zip",
     "doc": "jsdoc -c ./conf.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src/js -d ./docs"
-  },
-  "dependencies": {
-    "hoek": "^5.0.3",
-    "minimist": "^1.2.0"
   }
 }
