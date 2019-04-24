@@ -99,6 +99,23 @@ describe("WebApiClient", function() {
             })]
         );
 
+        var singleEscapedFirstPagingCookie = RegExp.escape(fakeUrl + '/api/data/v8.0/accounts?fetchXml='
+        + escape('<fetch count="12" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>'));
+        xhr.respondWith("GET", new RegExp(singleEscapedFirstPagingCookie),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({
+                value: [ { Name: "Adventure Works1" } ],
+                "@Microsoft.Dynamics.CRM.fetchxmlpagingcookie": '<cookie pagenumber="2" pagingcookie="%3ccookie%20page%3d%221%22%3e%3cname%20last%3d%22Test1%22%20first%3d%22Adventure%20GmbH%20%28Beispiel%29%22%20%2f%3e%3caccountid%20last%3d%22%7bD91966C7-511D-E711-80FC-5065F38B0361%7d%22%20first%3d%22%7bE3753E98-511D-E711-80FB-5065F38ABA91%7d%22%20%2f%3e%3c%2fcookie%3e" istracking="False" />'
+            })]
+        );
+
+        var singleEscapedSecondPagingCookie = RegExp.escape(fakeUrl + '/api/data/v8.0/accounts?fetchXml='
+        + escape('<fetch count="12" version="1.0" output-format="xml-platform" mapping="logical" distinct="false" page="2" paging-cookie="&lt;cookie page=&quot;1&quot;&gt;&lt;name last=&quot;Test1&quot; first=&quot;Adventure GmbH (Beispiel)&quot; /&gt;&lt;accountid last=&quot;{D91966C7-511D-E711-80FC-5065F38B0361}&quot; first=&quot;{E3753E98-511D-E711-80FB-5065F38ABA91}&quot; /&gt;&lt;/cookie&gt;">  <entity name="account">    <attribute name="name"/>    <attribute name="primarycontactid"/>    <attribute name="telephone1"/>    <attribute name="accountid"/>    <order attribute="name" descending="false"/>  </entity></fetch>'));
+        xhr.respondWith("GET", new RegExp(singleEscapedSecondPagingCookie),
+            [200, { "Content-Type": "application/json" }, JSON.stringify({
+                value: [ { Name: "Adventure Works2" } ]
+            })]
+        );
+
         // Respond with paging cookie in results
         var retrieveAccountUrlFirstPageCookie = RegExp.escape(fakeUrl + '/api/data/v8.0/accounts?fetchXml='
         + escape('<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>'));
@@ -579,6 +596,26 @@ describe("WebApiClient", function() {
             var request = {
                 entityName: "account",
                 fetchXml: '<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
+                returnAllPages: true
+            };
+
+            WebApiClient.Retrieve(request)
+                .then(function(response){
+                    expect(response.value.length).toEqual(2);
+                })
+                .catch(function(error) {
+                    expect(error).toBeUndefined();
+                })
+                // Wait for promise
+                .finally(done);
+
+            xhr.respond();
+        });
+
+        it("should retrieve all pages with single escaped fetchXml cookies async", function(done){
+            var request = {
+                entityName: "account",
+                fetchXml: '<fetch count="12" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
                 returnAllPages: true
             };
 
@@ -1723,6 +1760,18 @@ describe("WebApiClient", function() {
             var request = {
                 entityName: "account",
                 fetchXml: '<fetch count="11" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
+                returnAllPages: true,
+                async: false
+            };
+
+            var response = WebApiClient.Retrieve(request);
+            expect(response.value.length).toEqual(2);
+        });
+
+        it("should retrieve all pages with single escaped fetchXml cookies sync", function(){
+            var request = {
+                entityName: "account",
+                fetchXml: '<fetch count="12" version="1.0" output-format="xml-platform" mapping="logical" distinct="false">  <entity name="account">    <attribute name="name" />    <attribute name="primarycontactid" />    <attribute name="telephone1" />    <attribute name="accountid" />    <order attribute="name" descending="false" />  </entity></fetch>',
                 returnAllPages: true,
                 async: false
             };

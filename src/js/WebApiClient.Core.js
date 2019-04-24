@@ -270,15 +270,22 @@
     }
 
     function SetCookie (pagingCookie, parameters) {
-        var unescapedCookie = unescape(pagingCookie);
-
         // Parse cookie that we retrieved with response
         var parser = new DOMParser();
-        var cookieXml = parser.parseFromString(unescapedCookie, "text/xml");
+        var cookieXml = parser.parseFromString(pagingCookie, "text/xml");
 
         var cookie = cookieXml.documentElement;
 
-        var cookieValue = unescape(cookie.getAttribute("pagingcookie"));
+        var cookieAttribute = cookie.getAttribute("pagingcookie");
+
+        // In CRM 8.X orgs, fetch cookies where escaped twice. Since 9.X, they are only escaped once.
+        // Below indexOf check checks for the double escaped cookie string '<cookie page'.
+        // In CRM 9.X this will lead to no matches, as cookies start as '%3ccookie%20page'.
+        if (cookieAttribute && cookieAttribute.indexOf("%253ccookie%2520page") === 0) {
+            cookieAttribute = unescape(cookieAttribute);
+        }
+
+        var cookieValue = unescape(cookieAttribute);
         var pageNumber = parseInt(/<cookie page="([\d]+)">/.exec(cookieValue)[1]) + 1;
 
         // Parse our original fetch XML, we will inject the paging information in here
