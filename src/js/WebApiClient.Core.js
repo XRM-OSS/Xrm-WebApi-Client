@@ -388,16 +388,21 @@
 
                     var nextLink = GetNextLink(response);
                     var pagingCookie = GetPagingCookie(response);
+                    
+                    // Since 9.X paging cookie is always added to response, even in queryParams retrieves
+                    // In 9.X the morerecords flag can signal whether there are more records to be found
+                    // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
+                    var moreRecords = "@Microsoft.Dynamics.CRM.morerecords" in response ? response["@Microsoft.Dynamics.CRM.morerecords"] : true;
 
                     response = MergeResults(parameters._previousResponse, response);
 
                     // Results are paged, we don't have all results at this point
-                    if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    if (moreRecords && nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         SetPreviousResponse(parameters, response);
 
                         resolve(SendAsync("GET", nextLink, null, parameters));
                     }
-                    else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    else if (parameters.fetchXml && moreRecords && pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         var nextPageFetch = SetCookie(pagingCookie, parameters);
 
                         SetPreviousResponse(parameters, response);
@@ -528,16 +533,21 @@
 
             var nextLink = GetNextLink(response);
             var pagingCookie = GetPagingCookie(response);
+            
+            // Since 9.X paging cookie is always added to response, even in queryParams retrieves
+            // In 9.X the morerecords flag can signal whether there are more records to be found
+            // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
+            var moreRecords = "@Microsoft.Dynamics.CRM.morerecords" in response ? response["@Microsoft.Dynamics.CRM.morerecords"] : true;
 
             response = MergeResults(parameters._previousResponse, response);
 
             // Results are paged, we don't have all results at this point
-            if (nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+            if (moreRecords && nextLink && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                 SetPreviousResponse(parameters, response);
 
                 SendSync("GET", nextLink, null, parameters);
             }
-            else if (pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+            else if (parameters.fetchXml && moreRecords && pagingCookie && (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                 var nextPageFetch = SetCookie(pagingCookie, parameters);
 
                 SetPreviousResponse(parameters, response);
