@@ -18,7 +18,6 @@ deploy:
   - provider: npm
     skip_cleanup: true
     email: "Florian.Kroenert@gmx.de"
-    api_key:
-      secure: "NEIH3WpAFLCXR3tj3cJnW8MeAEa3ICvoZhtepLu2IyBMXAwoII+e50VtTuG+X+jaaB0xMTyFrAMjrlmGRaRYlOs+6YkQ594tFbm4QKe92OuEDhJXz3+NYyoc24w/IRyG3MIVsJjNV3l5b6x291Jz+UEZnjzlYiAU/ixj9yaZ0bOxunrXSiN16gg2uRgpKn8bGt7ExbCYY/Ad5v5xH3hac75SIJ6I4JMNUkm6HAT6BA52+/M/hqw5vsR3cW9u8FspHKFy636/sJ3R8YAUufEuN8kXLu5mOUQzhkm2EQnNaimH7IsEUUaCk2QITZY4t9QaZfe0kr1f2194iullIhaLlWGEjK9nXEsu9SN/BSTpA+g4oKUN9MiYrY6DgQJUBVb8caW7MHH7Y7HjCkiW7PrRcx8MMPl23W5ZcCDmqO/eTEcYzFI807Cwq4Uc7WwhehhDypBeL2GTXTfru5G5OkITt6xFvX1SZglivRzwMFW9CGW4Vqbge6w13zZ9uDCUQfCNkz5tOCJu8EHxzbh+Sou+Sbelzp5fYLv5f3uLaWL1uZ499U43WSj2MNWKDRaa4GVPbEqcDEn5LKczx9cKH8DPffkjSSrXJNYxGbGe7esJvi5mWqrRnydui+FxpfSU6Z+LTQ1gB/bKRTg2ABLmH0i/o+u9UHHHulCRE77aRySNddQ="
+    api_key: "$NPM_TOKEN"
     on:
       tags: true
