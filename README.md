@@ -83,6 +83,7 @@ The package name is xrm-webapi-client, check it out:
 
 When using it in TypeScript, import it using this line:
 `import { default as WebApiClient } from "xrm-webapi-client";`
+In your tsconfig.json, `module` should be `es6` and `moduleResolution` should be `node`.
 
 ### GitHub Release
 You can always download the browserified version of this framework by downloading the release.zip file from the latest [release](https://github.com/DigitalFlow/Xrm-WebApi-Client/releases).
