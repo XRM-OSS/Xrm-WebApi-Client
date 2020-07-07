@@ -17,6 +17,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [NPM](#npm)
     + [GitHub Release](#github-release)
   * [How to build it](#how-to-build-it)
+  * [Import](#import)
   * [Operations](#operations)
     + [Synchronous vs Asynchronous](#synchronous-vs-asynchronous)
     + [Create](#create)
@@ -94,6 +95,12 @@ You'll have to install [npm](https://www.npmjs.com/) on your machine.
 
 For bootstrapping, simply run ```npm install``` once initially.
 For every build, you can just call ```npm run build```. You'll find the build output in the Publish directory.
+
+## Import
+You can import this library inside your code like this:
+```JS
+import * as WebApiClient from "xrm-webapi-client";
+```
 
 ## Operations
 ### Synchronous vs Asynchronous
