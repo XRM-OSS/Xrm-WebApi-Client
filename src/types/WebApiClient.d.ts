@@ -444,4 +444,4 @@ declare module WebApiClient {
     }
 }
 
-export default WebApiClient;
+export = WebApiClient;
