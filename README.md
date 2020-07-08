@@ -83,7 +83,7 @@ The package name is xrm-webapi-client, check it out:
 [![NPM version](https://img.shields.io/npm/v/xrm-webapi-client.svg?style=flat)](https://www.npmjs.com/package/xrm-webapi-client)
 
 When using it in TypeScript, import it using this line:
-`import { default as WebApiClient } from "xrm-webapi-client";`
+`import * as WebApiClient from "xrm-webapi-client";`
 
 In your tsconfig.json, `module` should be `es6` and `moduleResolution` should be `node`.
 
