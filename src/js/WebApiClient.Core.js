@@ -241,6 +241,19 @@
 
     function FormatError (xhr) {
         if (xhr && xhr.response) {
+			var response = ParseResponse(xhr);
+
+			if (response instanceof WebApiClient.BatchResponse) {
+				var errors = "";
+				if (response.errors.length > 0) {
+					errors = response.errors.map(function(e) {
+						return e.code + ": " + e.message;
+					}).join("\n\r");
+				}
+
+				return xhr.status + " - " + errors;
+			}
+
             var json = JSON.parse(xhr.response);
 
             if (!WebApiClient.PrettifyErrors) {
@@ -388,7 +401,7 @@
 
                     var nextLink = GetNextLink(response);
                     var pagingCookie = GetPagingCookie(response);
-                    
+
                     // Since 9.X paging cookie is always added to response, even in queryParams retrieves
                     // In 9.X the morerecords flag can signal whether there are more records to be found
                     // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
@@ -533,7 +546,7 @@
 
             var nextLink = GetNextLink(response);
             var pagingCookie = GetPagingCookie(response);
-            
+
             // Since 9.X paging cookie is always added to response, even in queryParams retrieves
             // In 9.X the morerecords flag can signal whether there are more records to be found
             // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
