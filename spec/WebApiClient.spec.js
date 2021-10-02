@@ -1,7 +1,7 @@
 describe("WebApiClient", function() {
     // Use loaded lib for tests in browser, require for node
     if (typeof(require) !== "undefined") {
-        WebApiClient = require('../js/WebApiClient.js');
+        WebApiClient = require('../src/js/WebApiClient.js');
         sinon = require('sinon');
    }
 
@@ -356,7 +356,7 @@ describe("WebApiClient", function() {
 
     describe("Context", function() {
         it("should throw error if no context is available", function() {
-            delete Xrm;
+            Xrm = null;
 
             expect(function() { WebApiClient.GetApiUrl() }).toThrow();
 
