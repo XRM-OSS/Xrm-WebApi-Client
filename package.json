@@ -48,7 +48,7 @@
     "test": "jest --coverage",
     "pretest": "npm run build-js",
     "copyTypes": "cp src/types/* dist",
-    "zip": "bestzip dist/release.zip dist/WebApiClient.min.js dist/WebApiClient.d.ts",
+    "zip": "bestzip dist/release.zip dist/WebApiClient.min.js dist/WebApiClient.d.ts dist/WebApiClient.LICENSE.txt",
     "build": "npm run test && npm run copyTypes && npm run zip",
     "doc": "jsdoc -c ./jsdoc.json -R README.md -d ./docs"
   }

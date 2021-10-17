@@ -19,7 +19,7 @@ module.exports = {
         },
         extractComments: {
           condition: /^\**!|@preserve|@license|@cc_on/i,
-          filename: "extracted-comments.js",
+          filename: "WebApiClient.LICENSE.txt",
           banner: (licenseFile) => {
             return `License information can be found in ${licenseFile}`;
           }
