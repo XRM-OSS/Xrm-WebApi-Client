@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 describe("WebApiClient", function() {
     // Use loaded lib for tests in browser, require for node
     if (typeof(require) !== "undefined") {
@@ -374,7 +378,7 @@ describe("WebApiClient", function() {
 
             expect(WebApiClient.GetApiUrl()).toBe(fakeUrl + "Global" + "/api/data/v" + WebApiClient.ApiVersion + "/");
 
-            delete GetGlobalContext;
+            GetGlobalContext = undefined; 
         });
 
         it("should use Xrm.Page.context if global context not available", function() {
@@ -1691,7 +1695,7 @@ describe("WebApiClient", function() {
                 name: "Adventure Works"
             };
 
-            spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
+            jest.spyOn(XMLHttpRequest.prototype, 'send');
 
             WebApiClient.Expand({records: [account]})
                 .then(function (result) {
@@ -1845,7 +1849,7 @@ describe("WebApiClient", function() {
 
     describe("Send Request", function() {
         it("should handle legacy headers array as fourth parameter", function(done){
-            spyOn(XMLHttpRequest.prototype, 'setRequestHeader').and.callThrough();
+            jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
 
             WebApiClient.SendRequest("POST", WebApiClient.GetApiUrl() + "accounts", {}, [{key: "MSCRM.MergeLabels", value: "true"}])
             .then(function (result) {
