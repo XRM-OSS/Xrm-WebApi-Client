@@ -1,83 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Source: WebApiClient.Core.js</title>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.slate.css">
-
+    
+    <meta charset="utf-8">
+    <title>WebApiClient.Core.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Xrm-WebApi-Client</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-Requests.html">Requests</a></li><li><a href="module-WebApiClient.html">WebApiClient</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-WebApiClient.Batch.html">WebApiClient.Batch</a></li><li><a href="module-WebApiClient.BatchRequest.html">WebApiClient.BatchRequest</a></li><li><a href="module-WebApiClient.BatchResponse.html">WebApiClient.BatchResponse</a></li><li><a href="module-WebApiClient.ChangeSet.html">WebApiClient.ChangeSet</a></li><li><a href="module-WebApiClient.Response.html">WebApiClient.Response</a></li><li><a href="WebApiClient.Promise.html">WebApiClient.Promise</a></li><li><a href="WebApiClient.Requests.Request.html">WebApiClient.Requests.Request</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-        
-            <div class="col-sm-3 col-md-3">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        
-	</div>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-</div>
-</div>
+<label for="nav-trigger" class="overlay"></label>
 
-
-<div class="container" id="toc-content">
-<div class="row">
-
-	
-	<div class="col-md-12">
-	
-		<div id="main">
-			
-
-		<h1 class="page-title">Source: WebApiClient.Core.js</h1>
+<nav >
     
-<section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">/* @preserve
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-WebApiClient.Batch.html">Batch</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.Batch.html#buildPayload">buildPayload</a></li></ul></li><li><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.BatchRequest.html#stringify">stringify</a></li></ul></li><li><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></li><li><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.ChangeSet.html#stringify">stringify</a></li></ul></li><li><a href="module-WebApiClient.Response.html">Response</a></li><li><a href="WebApiClient.Promise.html">Promise</a></li><li><a href="WebApiClient.Requests.Request.html">Request</a></li></ul><h3>Modules</h3><ul><li><a href="module-Requests.html">Requests</a><ul class='methods'><li data-type='method'><a href="module-Requests.html#.Requests.Request#with">Requests.Request#with</a></li></ul></li><li><a href="module-WebApiClient.html">WebApiClient</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.html#.AppendToDefaultHeaders">AppendToDefaultHeaders</a></li><li data-type='method'><a href="module-WebApiClient.html#.Associate">Associate</a></li><li data-type='method'><a href="module-WebApiClient.html#.Configure">Configure</a></li><li data-type='method'><a href="module-WebApiClient.html#.Create">Create</a></li><li data-type='method'><a href="module-WebApiClient.html#.Delete">Delete</a></li><li data-type='method'><a href="module-WebApiClient.html#.Disassociate">Disassociate</a></li><li data-type='method'><a href="module-WebApiClient.html#.Execute">Execute</a></li><li data-type='method'><a href="module-WebApiClient.html#.Expand">Expand</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetApiUrl">GetApiUrl</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetDefaultHeaders">GetDefaultHeaders</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetSetName">GetSetName</a></li><li data-type='method'><a href="module-WebApiClient.html#.Retrieve">Retrieve</a></li><li data-type='method'><a href="module-WebApiClient.html#.SendBatch">SendBatch</a></li><li data-type='method'><a href="module-WebApiClient.html#.SendRequest">SendRequest</a></li><li data-type='method'><a href="module-WebApiClient.html#.Update">Update</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">WebApiClient.Core.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* @preserve
  * MIT License
  *
  * Copyright (c) 2016 Florian Krönert
@@ -183,7 +148,7 @@
         if (WebApiClient.ClientUrl) {
             return WebApiClient.ClientUrl;
         }
-        
+
         throw new Error("Failed to retrieve client url, is ClientGlobalContext.aspx available?");
     }
 
@@ -220,7 +185,7 @@
      * @description Builds the set name of a given entity name.
      * @method GetSetName
      * @param {String} entityName Logical name of the entity, such as "account"
-     * @param {String}[overriddenSetName] Override set name if it can't be infered from plural rules 
+     * @param {String}[overriddenSetName] Override set name if it can't be infered from plural rules
      * @memberof module:WebApiClient
      * @return {String}
      */
@@ -247,7 +212,7 @@
         { key: "OData-Version", value: "4.0" },
         { key: "OData-MaxVersion", value: "4.0" },
         // Prevent caching since it sometimes sends old data as unmodified
-        { key: "If-None-Match", value: null },
+        { key: "If-None-Match", value: "*" },
         { key: "Content-Type", value: "application/json; charset=utf-8" }
     ];
 
@@ -264,6 +229,14 @@
     function VerifyHeader(header) {
         if (!header.key || typeof(header.value) === "undefined") {
             throw new Error("Each request header needs a key and a value!");
+        }
+
+        if(typeof(header.key) !== "string") {
+            throw new Error("Header key " + header.key + " is not a string");
+        }
+
+        if(typeof(header.value) !== "string") {
+            throw new Error("Header value " + header.value + " for key " + header.key + " is not a string");
         }
     }
 
@@ -320,6 +293,19 @@
 
     function FormatError (xhr) {
         if (xhr &amp;&amp; xhr.response) {
+			var response = ParseResponse(xhr);
+
+			if (response instanceof WebApiClient.BatchResponse) {
+				var errors = "";
+				if (response.errors.length > 0) {
+					errors = response.errors.map(function(e) {
+						return e.code + ": " + e.message;
+					}).join("\n\r");
+				}
+
+				return xhr.status + " - " + errors;
+			}
+
             var json = JSON.parse(xhr.response);
 
             if (!WebApiClient.PrettifyErrors) {
@@ -349,15 +335,22 @@
     }
 
     function SetCookie (pagingCookie, parameters) {
-        var unescapedCookie = unescape(pagingCookie);
-
         // Parse cookie that we retrieved with response
         var parser = new DOMParser();
-        var cookieXml = parser.parseFromString(unescapedCookie, "text/xml");
+        var cookieXml = parser.parseFromString(pagingCookie, "text/xml");
 
         var cookie = cookieXml.documentElement;
 
-        var cookieValue = unescape(cookie.getAttribute("pagingcookie"));
+        var cookieAttribute = cookie.getAttribute("pagingcookie");
+
+        // In CRM 8.X orgs, fetch cookies where escaped twice. Since 9.X, they are only escaped once.
+        // Below indexOf check checks for the double escaped cookie string '&lt;cookie page'.
+        // In CRM 9.X this will lead to no matches, as cookies start as '%3ccookie%20page'.
+        if (cookieAttribute &amp;&amp; cookieAttribute.indexOf("%253ccookie%2520page") === 0) {
+            cookieAttribute = unescape(cookieAttribute);
+        }
+
+        var cookieValue = unescape(cookieAttribute);
         var pageNumber = parseInt(/&lt;cookie page="([\d]+)">/.exec(cookieValue)[1]) + 1;
 
         // Parse our original fetch XML, we will inject the paging information in here
@@ -461,15 +454,20 @@
                     var nextLink = GetNextLink(response);
                     var pagingCookie = GetPagingCookie(response);
 
+                    // Since 9.X paging cookie is always added to response, even in queryParams retrieves
+                    // In 9.X the morerecords flag can signal whether there are more records to be found
+                    // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
+                    var moreRecords = "@Microsoft.Dynamics.CRM.morerecords" in response ? response["@Microsoft.Dynamics.CRM.morerecords"] : true;
+
                     response = MergeResults(parameters._previousResponse, response);
 
                     // Results are paged, we don't have all results at this point
-                    if (nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    if (moreRecords &amp;&amp; nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         SetPreviousResponse(parameters, response);
 
                         resolve(SendAsync("GET", nextLink, null, parameters));
                     }
-                    else if (pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                    else if (parameters.fetchXml &amp;&amp; moreRecords &amp;&amp; pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
                         var nextPageFetch = SetCookie(pagingCookie, parameters);
 
                         SetPreviousResponse(parameters, response);
@@ -545,66 +543,6 @@
     function SendSync(method, url, payload, parameters) {
         var xhr = new XMLHttpRequest();
         var response;
-
-        xhr.onload = function() {
-            if(xhr.readyState !== 4) {
-                return;
-            }
-
-            if(xhr.status === 200){
-                response = ParseResponse(xhr);
-
-                // If we received multiple responses, it was a custom batch. Just resolve all matches
-                if (response instanceof WebApiClient.BatchResponse) {
-                  // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
-                  if (parameters.isOverLengthGet) {
-                        response = response.batchResponses[0].payload;
-                    } else {
-                        return;
-                    }
-                }
-
-                var nextLink = GetNextLink(response);
-                var pagingCookie = GetPagingCookie(response);
-
-                response = MergeResults(parameters._previousResponse, response);
-
-                // Results are paged, we don't have all results at this point
-                if (nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                    SetPreviousResponse(parameters, response);
-
-                    SendSync("GET", nextLink, null, parameters);
-                }
-                else if (pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
-                    var nextPageFetch = SetCookie(pagingCookie, parameters);
-
-                    SetPreviousResponse(parameters, response);
-
-                    parameters.fetchXml = nextPageFetch;
-
-                    WebApiClient.Retrieve(parameters);
-                }
-            }
-            else if (xhr.status === 201) {
-                response = ParseResponse(xhr);
-            }
-            else if (xhr.status === 204) {
-                if (method.toLowerCase() === "post") {
-                    response = xhr.getResponseHeader("OData-EntityId");
-                }
-                // No content returned for delete, update, ...
-                else {
-                    response = xhr.statusText;
-                }
-            }
-            else {
-                throw new Error(FormatError(xhr));
-            }
-        };
-        xhr.onerror = function() {
-            throw new Error(FormatError(xhr));
-        };
-
         var headers = [];
 
         if (IsOverlengthGet(method, url)) {
@@ -641,6 +579,65 @@
             xhr.send();
         }
 
+        if(xhr.readyState !== 4) {
+            return;
+        }
+
+        if(xhr.status === 200){
+            response = ParseResponse(xhr);
+
+            // If we received multiple responses, it was a custom batch. Just resolve all matches
+            if (response instanceof WebApiClient.BatchResponse) {
+              // If it was an overlength fetchXml, that was sent as batch automatically, we don't want it to behave as a batch
+              if (parameters.isOverLengthGet) {
+                    response = response.batchResponses[0].payload;
+                } else {
+                    return response;
+                }
+            }
+
+            var nextLink = GetNextLink(response);
+            var pagingCookie = GetPagingCookie(response);
+
+            // Since 9.X paging cookie is always added to response, even in queryParams retrieves
+            // In 9.X the morerecords flag can signal whether there are more records to be found
+            // In 8.X the flag was not present and instead the pagingCookie was only set if more records were available
+            var moreRecords = "@Microsoft.Dynamics.CRM.morerecords" in response ? response["@Microsoft.Dynamics.CRM.morerecords"] : true;
+
+            response = MergeResults(parameters._previousResponse, response);
+
+            // Results are paged, we don't have all results at this point
+            if (moreRecords &amp;&amp; nextLink &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                SetPreviousResponse(parameters, response);
+
+                SendSync("GET", nextLink, null, parameters);
+            }
+            else if (parameters.fetchXml &amp;&amp; moreRecords &amp;&amp; pagingCookie &amp;&amp; (WebApiClient.ReturnAllPages || parameters.returnAllPages)) {
+                var nextPageFetch = SetCookie(pagingCookie, parameters);
+
+                SetPreviousResponse(parameters, response);
+
+                parameters.fetchXml = nextPageFetch;
+
+                WebApiClient.Retrieve(parameters);
+            }
+        }
+        else if (xhr.status === 201) {
+            response = ParseResponse(xhr);
+        }
+        else if (xhr.status === 204) {
+            if (method.toLowerCase() === "post") {
+                response = xhr.getResponseHeader("OData-EntityId");
+            }
+            // No content returned for delete, update, ...
+            else {
+                response = xhr.statusText;
+            }
+        }
+        else {
+            throw new Error(FormatError(xhr));
+        }
+
         return response;
     }
 
@@ -662,7 +659,7 @@
         for (var i = 0; i &lt; params.alternateKey.length; i++) {
             var key = params.alternateKey[i];
             var value = key.value;
-            
+
             if (typeof(key.value) !== "number") {
                 value = "'" + key.value + "'";
             }
@@ -688,7 +685,7 @@
      * @param {Object} [payload] Payload for request.
      * @param {Object} [parameters] - Parameters for sending the request
      * @param {Boolean} [parameters.async] - True for sending async, false for sync. Defaults to true.
-     * @param {Array&lt;key:string,value:string>} [parameters.headers] - Headers for appending to request  
+     * @param {Array&lt;key:string,value:string>} [parameters.headers] - Headers for appending to request
      * @memberof module:WebApiClient
      * @return {Promise&lt;Object>|Object}
      */
@@ -728,7 +725,7 @@
     /**
      * @description Applies configuration to WebApiClient.
      * @method Configure
-     * @param {Object} configuration Object with keys named after WebApiClient Members, such as "Token"s 
+     * @param {Object} configuration Object with keys named after WebApiClient Members, such as "Token"s
      * @memberof module:WebApiClient
      * @return {void}
      */
@@ -999,7 +996,7 @@
      * @description Expands all odata.nextLink (deferred) properties for an array of records.
      * @method Expand
      * @param {Object} parameters Configuration for expanding
-     * @param {Array&lt;Object>} parameters.records Array of records to expand 
+     * @param {Array&lt;Object>} parameters.records Array of records to expand
      * @param {Boolean} [parameters.async] True for sending asynchronous, false for synchronous. Defaults to true.
      * @param {Array&lt;key:string,value:string>} [parameters.headers] Headers to attach to request
      * @memberof module:WebApiClient
@@ -1050,139 +1047,27 @@
 
     module.exports = WebApiClient;
 } ());
-</pre>
-    </article>
-</section>
+</code></pre>
+        </article>
+    </section>
 
 
 
 
-
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-
-</div>
+    
+    
 </div>
 
-
-    <div class="modal fade" id="searchResults">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Search results</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-
+<br class="clear">
 
 <footer>
-
-
-	<span class="copyright">
-	Copyright © 2016 Florian Krönert
-	</span>
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a>
-	
-		on Wed Oct 18th 2017
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Oct 18 2021 01:04:22 GMT+0200 (Mitteleuropäische Sommerzeit) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
 
-    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : true,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            SearcherDisplay.init();
-        });
-    </script>
 
 
 </body>
