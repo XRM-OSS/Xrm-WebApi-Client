@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "./Publish",
+        "outDir": "./dist",
         "allowJs": true,
         "target": "es5",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "strictNullChecks": true,
-        "noImplicitThis": true,
+        "noImplicitThis": false,
         "noEmitOnError": true,
         "module": "commonjs"
     },
