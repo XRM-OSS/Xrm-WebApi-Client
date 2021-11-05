@@ -21,6 +21,10 @@ jobs:
           sed -i "s/v0.0.0/${{ github.event.release.tag_name }}/g" src/js/WebApiClient.Core.js
       - run: npm ci
       - run: npm test
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ github.token }}
 
   publish-npm:
     needs: build
