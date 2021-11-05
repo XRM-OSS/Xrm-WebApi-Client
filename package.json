@@ -3,8 +3,8 @@
   "description": "Dynamics CRM WebApi Client",
   "version": "v0.0.0",
   "license": "MIT",
-  "main": "./dist/WebApiClient.min.js",
-  "types": "./dist/WebApiClient.d.ts",
+  "main": "dist/WebApiClient.min.js",
+  "types": "dist/WebApiClient.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/XRM-OSS/Xrm-WebApi-Client"
