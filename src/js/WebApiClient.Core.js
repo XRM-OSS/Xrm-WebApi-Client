@@ -22,9 +22,6 @@
  * SOFTWARE.
  *
 */
-/** @preserve
- * WebApiClient build version v0.0.0
-*/
 
 /**
  * This is the core functionality of Xrm-WebApi-Client
@@ -43,6 +40,13 @@
      * @memberof module:WebApiClient
      */
     WebApiClient.ApiVersion = "8.0";
+
+    /**
+     * @description Informs about which version of WebApiClient you're using
+     * @param {string}
+     * @memberof module:WebApiClient
+     */
+    WebApiClient.Version = "v0.0.0";
 
     /**
      * @description Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.
