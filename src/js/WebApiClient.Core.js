@@ -168,7 +168,7 @@
         { key: "OData-Version", value: "4.0" },
         { key: "OData-MaxVersion", value: "4.0" },
         // Prevent caching since it sometimes sends old data as unmodified
-        { key: "If-None-Match", value: null },
+        { key: "If-None-Match", value: "*" },
         { key: "Content-Type", value: "application/json; charset=utf-8" }
     ];
 
@@ -185,6 +185,14 @@
     function VerifyHeader(header) {
         if (!header.key || typeof(header.value) === "undefined") {
             throw new Error("Each request header needs a key and a value!");
+        }
+
+        if(typeof(header.key) !== "string") {
+            throw new Error("Header key " + header.key + " is not a string");
+        }
+
+        if(typeof(header.value) !== "string") {
+            throw new Error("Header value " + header.value + " for key " + header.key + " is not a string");
         }
     }
 

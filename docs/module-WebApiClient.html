@@ -1,145 +1,145 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Xrm-WebApi-Client Module: WebApiClient</title>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.slate.css">
-
+    
+    <meta charset="utf-8">
+    <title>WebApiClient - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Xrm-WebApi-Client</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-Requests.html">Requests</a></li><li><a href="module-WebApiClient.html">WebApiClient</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-WebApiClient.Batch.html">WebApiClient.Batch</a></li><li><a href="module-WebApiClient.BatchRequest.html">WebApiClient.BatchRequest</a></li><li><a href="module-WebApiClient.BatchResponse.html">WebApiClient.BatchResponse</a></li><li><a href="module-WebApiClient.ChangeSet.html">WebApiClient.ChangeSet</a></li><li><a href="module-WebApiClient.Response.html">WebApiClient.Response</a></li><li><a href="WebApiClient.Promise.html">WebApiClient.Promise</a></li><li><a href="WebApiClient.Requests.Request.html">WebApiClient.Requests.Request</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-        
-            <div class="col-sm-3 col-md-3">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        
-	</div>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-</div>
-</div>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-WebApiClient.Batch.html">Batch</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.Batch.html#buildPayload">buildPayload</a></li></ul></li><li><a href="module-WebApiClient.BatchRequest.html">BatchRequest</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.BatchRequest.html#stringify">stringify</a></li></ul></li><li><a href="module-WebApiClient.BatchResponse.html">BatchResponse</a></li><li><a href="module-WebApiClient.ChangeSet.html">ChangeSet</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.ChangeSet.html#stringify">stringify</a></li></ul></li><li><a href="module-WebApiClient.Response.html">Response</a></li><li><a href="WebApiClient.Promise.html">Promise</a></li><li><a href="WebApiClient.Requests.Request.html">Request</a></li></ul><h3>Modules</h3><ul><li><a href="module-Requests.html">Requests</a><ul class='methods'><li data-type='method'><a href="module-Requests.html#.Requests.Request#with">Requests.Request#with</a></li></ul></li><li><a href="module-WebApiClient.html">WebApiClient</a><ul class='methods'><li data-type='method'><a href="module-WebApiClient.html#.AppendToDefaultHeaders">AppendToDefaultHeaders</a></li><li data-type='method'><a href="module-WebApiClient.html#.Associate">Associate</a></li><li data-type='method'><a href="module-WebApiClient.html#.Configure">Configure</a></li><li data-type='method'><a href="module-WebApiClient.html#.Create">Create</a></li><li data-type='method'><a href="module-WebApiClient.html#.Delete">Delete</a></li><li data-type='method'><a href="module-WebApiClient.html#.Disassociate">Disassociate</a></li><li data-type='method'><a href="module-WebApiClient.html#.Execute">Execute</a></li><li data-type='method'><a href="module-WebApiClient.html#.Expand">Expand</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetApiUrl">GetApiUrl</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetDefaultHeaders">GetDefaultHeaders</a></li><li data-type='method'><a href="module-WebApiClient.html#.GetSetName">GetSetName</a></li><li data-type='method'><a href="module-WebApiClient.html#.Retrieve">Retrieve</a></li><li data-type='method'><a href="module-WebApiClient.html#.SendBatch">SendBatch</a></li><li data-type='method'><a href="module-WebApiClient.html#.SendRequest">SendRequest</a></li><li data-type='method'><a href="module-WebApiClient.html#.Update">Update</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">WebApiClient</h1>
+    
+
+    
 
 
-<div class="container" id="toc-content">
-<div class="row">
 
-	
-	<div class="col-md-8">
-	
-		<div id="main">
-			
 
-	<h1 class="page-title">Module: WebApiClient</h1>
 <section>
 
 <header>
     
+        
+            
+        
+    
 </header>
 
-
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
-            <div class="description"><p>This is the core functionality of Xrm-WebApi-Client<br>No instantiation needed, it's a singleton.</p></div>
-        
+            
+                <div class="description usertext"><p>This is the core functionality of Xrm-WebApi-Client<br>
+No instantiation needed, it's a singleton.</p></div>
+            
 
-        
+            
+                
+
+
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line29">line 29</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-29">line 29</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
         
+        </div>
     
-    </div>
 
     
 
@@ -165,466 +165,474 @@
             <dd></dd>
         </dl>
     
-
     
+    
+
+     
 
     
 
     
         <h3 class="subsection-title">Members</h3>
 
-        <dl>
+        
             
-<hr>
-<dt class="name" id=".WebApiClient.ApiVersion">
-    <h4 id=".WebApiClient.ApiVersion"><span class="type-signature">&lt;static> </span>WebApiClient.ApiVersion<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.ApiVersion"><span class="type-signature">(static) </span>WebApiClient.ApiVersion<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The API version that will be used when sending requests. Default is &quot;8.0&quot;</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line45">line 45</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-45">line 45</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
+
+
+
+<div class="description usertext">
+    <p>The API version that will be used when sending requests. Default is &quot;8.0&quot;</p>
+</div>
+
+
+
+
+
+
+
 
         
             
-<hr>
-<dt class="name" id=".WebApiClient.Async">
-    <h4 id=".WebApiClient.Async"><span class="type-signature">&lt;static> </span>WebApiClient.Async<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.Async"><span class="type-signature">(static) </span>WebApiClient.Async<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Set to false for sending all requests synchronously. True by default.</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line66">line 66</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-66">line 66</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
+
+
+
+<div class="description usertext">
+    <p>Set to false for sending all requests synchronously. True by default.</p>
+</div>
+
+
+
+
+
+
+
 
         
             
-<hr>
-<dt class="name" id=".WebApiClient.ClientUrl">
-    <h4 id=".WebApiClient.ClientUrl"><span class="type-signature">&lt;static> </span>WebApiClient.ClientUrl<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.ClientUrl"><span class="type-signature">(static) </span>WebApiClient.ClientUrl<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Connection to use when being used in a single page app.</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line73">line 73</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-73">line 73</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
+
+
+
+<div class="description usertext">
+    <p>Connection to use when being used in a single page app.</p>
+</div>
+
+
+
+
+
+
+
 
         
             
-<hr>
-<dt class="name" id=".WebApiClient.PrettifyErrors">
-    <h4 id=".WebApiClient.PrettifyErrors"><span class="type-signature">&lt;static> </span>WebApiClient.PrettifyErrors<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.PrettifyErrors"><span class="type-signature">(static) </span>WebApiClient.PrettifyErrors<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line59">line 59</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-59">line 59</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
+
+
+
+<div class="description usertext">
+    <p>Set to true for retrieving formatted error in style 'xhr.statusText: xhr.error.Message'. If set to false, error json will be returned.</p>
+</div>
+
+
+
+
+
+
+
 
         
             
-<hr>
-<dt class="name" id=".WebApiClient.ReturnAllPages">
-    <h4 id=".WebApiClient.ReturnAllPages"><span class="type-signature">&lt;static> </span>WebApiClient.ReturnAllPages<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.ReturnAllPages"><span class="type-signature">(static) </span>WebApiClient.ReturnAllPages<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line52">line 52</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-52">line 52</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
+
+
+
+<div class="description usertext">
+    <p>Checks for more pages when retrieving results. If set to true, all pages will be retrieved, if set to false, only the first page will be retrieved.</p>
+</div>
+
+
+
+
+
+
+
 
         
             
-<hr>
-<dt class="name" id=".WebApiClient.Token">
-    <h4 id=".WebApiClient.Token"><span class="type-signature">&lt;static> </span>WebApiClient.Token<span class="type-signature"></span></h4>
+<h4 class="name" id=".WebApiClient.Token"><span class="type-signature">(static) </span>WebApiClient.Token<span class="type-signature"></span></h4>
 
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Token to use for authenticating when being used in a single page app.</p>
-    </div>
-    
 
-    
 
-    
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line80">line 80</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-80">line 80</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-</dd>
 
-        </dl>
+
+
+<div class="description usertext">
+    <p>Token to use for authenticating when being used in a single page app.</p>
+</div>
+
+
+
+
+
+
+
+
+        
     
 
     
         <h3 class="subsection-title">Methods</h3>
 
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id=".AppendToDefaultHeaders"><span class="type-signature">&lt;static> </span>AppendToDefaultHeaders(var_args)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Function for building the set name of a given entity name.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
         
+            
 
-<table class="params table table-striped">
+    
+
+    <h4 class="name" id=".AppendToDefaultHeaders"><span class="type-signature">(static) </span>AppendToDefaultHeaders<span class="signature">(&hellip;var_args)</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line199">line 199</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Function for building the set name of a given entity name.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -634,7 +642,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -655,7 +663,6 @@
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -682,75 +689,27 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-191">line 191</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -759,42 +718,87 @@
 <span class="param-type">void</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Associate"><span class="type-signature">&lt;static> </span>Associate(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Associates given records in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Associate"><span class="type-signature">(static) </span>Associate<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;String>|String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line822">line 822</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Associates given records in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -825,7 +829,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -834,10 +837,10 @@
             
 
             <td class="description last"><p>Parameters for associating records</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -847,7 +850,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -868,7 +871,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -902,7 +904,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -919,10 +920,10 @@
             
 
             <td class="description last"><p>Source entity for disassociating</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -932,7 +933,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -953,7 +954,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -989,7 +989,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -1019,7 +1018,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -1060,7 +1058,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1077,10 +1074,10 @@
             
 
             <td class="description last"><p>Target entity for disassociating</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1090,7 +1087,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -1111,7 +1108,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -1147,7 +1143,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -1177,7 +1172,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -1218,7 +1212,6 @@
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -1252,7 +1245,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -1284,72 +1276,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-790">line 790</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<String> if async, just String if sent synchronously.</li>
@@ -1358,7 +1302,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1370,42 +1314,87 @@
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Configure"><span class="type-signature">&lt;static> </span>Configure(configuration)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Applies configuration to WebApiClient.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Configure"><span class="type-signature">(static) </span>Configure<span class="signature">(configuration)</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line681">line 681</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Applies configuration to WebApiClient.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -1436,7 +1425,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1451,75 +1439,27 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-649">line 649</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1528,42 +1468,87 @@
 <span class="param-type">void</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Create"><span class="type-signature">&lt;static> </span>Create(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Creates a given record in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Create"><span class="type-signature">(static) </span>Create<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;String>|Promise.&lt;object>|String|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line708">line 708</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Creates a given record in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -1594,7 +1579,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1603,10 +1587,10 @@
             
 
             <td class="description last"><p>Parameters for creating record</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1616,7 +1600,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -1637,7 +1621,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -1669,7 +1652,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -1705,7 +1687,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1735,7 +1716,6 @@
             
                 
 <span class="param-type">Boolean</span>
-
 
 
             
@@ -1771,7 +1751,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -1803,72 +1782,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-676">line 676</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if return=representation header is set, otherwise Promise<String>. Just Object or String if sent synchronously.</li>
@@ -1877,7 +1808,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1895,42 +1826,87 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Delete"><span class="type-signature">&lt;static> </span>Delete(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Deletes a given record in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Delete"><span class="type-signature">(static) </span>Delete<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;String>|String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line798">line 798</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Deletes a given record in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -1961,7 +1937,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1970,10 +1945,10 @@
             
 
             <td class="description last"><p>Parameters for deleting record</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1983,7 +1958,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2004,7 +1979,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2038,7 +2012,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -2070,7 +2043,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2106,7 +2078,6 @@
 <span class="param-type">Array.&lt;property:string, value:string></span>
 
 
-
             
             </td>
 
@@ -2138,7 +2109,6 @@
             
                 
 <span class="param-type">Boolean</span>
-
 
 
             
@@ -2174,7 +2144,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -2206,72 +2175,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-766">line 766</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<String> if async, just String if sent synchronously.</li>
@@ -2280,7 +2201,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2292,42 +2213,87 @@
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Disassociate"><span class="type-signature">&lt;static> </span>Disassociate(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Disassociates given records in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Disassociate"><span class="type-signature">(static) </span>Disassociate<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;String>|String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line861">line 861</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Disassociates given records in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -2358,7 +2324,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2367,10 +2332,10 @@
             
 
             <td class="description last"><p>Parameters for disassociating records</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2380,7 +2345,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2401,7 +2366,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2435,7 +2399,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2452,10 +2415,10 @@
             
 
             <td class="description last"><p>Source entity for disassociating</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2465,7 +2428,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2486,7 +2449,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2522,7 +2484,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -2552,7 +2513,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2593,7 +2553,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2610,10 +2569,10 @@
             
 
             <td class="description last"><p>Target entity for disassociating</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2623,7 +2582,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2644,7 +2603,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2680,7 +2638,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -2710,7 +2667,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -2751,7 +2707,6 @@
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -2785,7 +2740,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -2817,72 +2771,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-829">line 829</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<String> if async, just String if sent synchronously.</li>
@@ -2891,7 +2797,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2903,42 +2809,87 @@
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Execute"><span class="type-signature">&lt;static> </span>Execute(request)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Executes the given request in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Execute"><span class="type-signature">(static) </span>Execute<span class="signature">(request)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line902">line 902</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Executes the given request in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -2969,7 +2920,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2978,10 +2928,10 @@
             
 
             <td class="description last"><p>Request to send, must be in prototype chain of WebApiClient.Requests.Request.</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2991,7 +2941,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3012,7 +2962,6 @@
             
                 
 <span class="param-type">Boolean</span>
-
 
 
             
@@ -3048,7 +2997,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -3080,72 +3028,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-870">line 870</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if async, just Object if sent synchronously.</li>
@@ -3154,7 +3054,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3166,42 +3066,87 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Expand"><span class="type-signature">&lt;static> </span>Expand(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Expands all odata.nextLink (deferred) properties for an array of records.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Expand"><span class="type-signature">(static) </span>Expand<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line951">line 951</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Expands all odata.nextLink (deferred) properties for an array of records.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3232,7 +3177,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -3241,10 +3185,10 @@
             
 
             <td class="description last"><p>Configuration for expanding</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -3254,7 +3198,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3275,7 +3219,6 @@
             
                 
 <span class="param-type">Array.&lt;Object></span>
-
 
 
             
@@ -3309,7 +3252,6 @@
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -3343,7 +3285,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -3375,72 +3316,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-919">line 919</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if async, just Object if sent synchronously.</li>
@@ -3449,7 +3342,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3461,106 +3354,103 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".GetApiUrl"><span class="type-signature">&lt;static> </span>GetApiUrl()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Gets the current base API url that is used.</p>
-    </div>
-    
 
     
 
-    
+    <h4 class="name" id=".GetApiUrl"><span class="type-signature">(static) </span>GetApiUrl<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
 
     
-    
 
-    
+
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line698">line 698</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-666">line 666</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+<div class="description usertext">
+    <p>Gets the current base API url that is used.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3569,106 +3459,103 @@
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".GetDefaultHeaders"><span class="type-signature">&lt;static> </span>GetDefaultHeaders()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns array of default headers.</p>
-    </div>
-    
 
     
 
-    
+    <h4 class="name" id=".GetDefaultHeaders"><span class="type-signature">(static) </span>GetDefaultHeaders<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;{key: String, value:String}>}</span></h4>
 
     
-    
 
-    
+
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line175">line 175</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-175">line 175</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+<div class="description usertext">
+    <p>Returns array of default headers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3677,42 +3564,87 @@
 <span class="param-type">Array.&lt;{key: String, value:String}></span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".GetSetName"><span class="type-signature">&lt;static> </span>GetSetName(entityName [, overriddenSetName])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Builds the set name of a given entity name.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".GetSetName"><span class="type-signature">(static) </span>GetSetName<span class="signature">(entityName, overriddenSetName<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line140">line 140</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Builds the set name of a given entity name.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3722,7 +3654,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3743,7 +3675,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -3777,7 +3708,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -3802,75 +3732,27 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-140">line 140</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3879,42 +3761,87 @@
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Retrieve"><span class="type-signature">&lt;static> </span>Retrieve(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Retrieves records from CRM</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Retrieve"><span class="type-signature">(static) </span>Retrieve<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line732">line 732</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Retrieves records from CRM</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3945,7 +3872,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -3954,10 +3880,10 @@
             
 
             <td class="description last"><p>Parameters for retrieving records</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -3967,7 +3893,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3988,7 +3914,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -4020,7 +3945,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -4056,7 +3980,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -4088,7 +4011,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -4124,7 +4046,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -4156,7 +4077,6 @@
             
                 
 <span class="param-type">Array.&lt;property:string, value:string></span>
-
 
 
             
@@ -4192,7 +4112,6 @@
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -4226,7 +4145,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -4258,72 +4176,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-700">line 700</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if asyncj, just Object if sent synchronously.</li>
@@ -4332,7 +4202,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4344,42 +4214,87 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".SendBatch"><span class="type-signature">&lt;static> </span>SendBatch(batch)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Sends the given batch to CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".SendBatch"><span class="type-signature">(static) </span>SendBatch<span class="signature">(batch)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line923">line 923</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Sends the given batch to CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -4410,7 +4325,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -4419,10 +4333,10 @@
             
 
             <td class="description last"><p>Batch to send to CRM</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -4432,7 +4346,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4453,7 +4367,6 @@
             
                 
 <span class="param-type">Boolean</span>
-
 
 
             
@@ -4489,7 +4402,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -4521,72 +4433,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-891">line 891</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if async, just Object if sent synchronously.</li>
@@ -4595,7 +4459,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4607,42 +4471,87 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".SendRequest"><span class="type-signature">&lt;static> </span>SendRequest(method, url [, payload] [, parameters])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Sends request using given parameters.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".SendRequest"><span class="type-signature">(static) </span>SendRequest<span class="signature">(method, url, payload<span class="signature-attributes">opt</span>, parameters<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line636">line 636</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Sends request using given parameters.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -4652,7 +4561,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4673,7 +4582,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -4707,7 +4615,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -4737,7 +4644,6 @@
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4773,7 +4679,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -4792,10 +4697,10 @@
             
 
             <td class="description last"><p>Parameters for sending the request</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -4805,7 +4710,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4826,7 +4731,6 @@
             
                 
 <span class="param-type">Boolean</span>
-
 
 
             
@@ -4862,7 +4766,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -4894,75 +4797,27 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-604">line 604</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
 
 
-<dl>
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4974,42 +4829,87 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".Update"><span class="type-signature">&lt;static> </span>Update(parameters)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Updates a given record in CRM.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".Update"><span class="type-signature">(static) </span>Update<span class="signature">(parameters)</span><span class="type-signature"> &rarr; {Promise.&lt;String>|Promise.&lt;object>|String|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>, <a href="WebApiClient.Core.js.html#line773">line 773</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Updates a given record in CRM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -5040,7 +4940,6 @@
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -5049,10 +4948,10 @@
             
 
             <td class="description last"><p>Parameters for updating record</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                <h6>Properties</h6>
                 
 
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -5062,7 +4961,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -5083,7 +4982,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -5115,7 +5013,6 @@
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -5151,7 +5048,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -5183,7 +5079,6 @@
             
                 
 <span class="param-type">Array.&lt;property:string, value:string></span>
-
 
 
             
@@ -5219,7 +5114,6 @@
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -5253,7 +5147,6 @@
 <span class="param-type">Array.&lt;key:string, value:string></span>
 
 
-
             
             </td>
 
@@ -5285,72 +5178,24 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="WebApiClient.Core.js.html">WebApiClient.Core.js</a>,
-				 <a href="WebApiClient.Core.js.html#sunlight-1-line-741">line 741</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <ul>
 <li>Returns Promise<Object> if return=representation header is set, otherwise Promise<String>. Just Object or String if sent synchronously.</li>
@@ -5359,7 +5204,7 @@
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -5377,17 +5222,14 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
+    
+
+
 
         
-
-    
-</dd>
-
-        </dl>
     
 
     
@@ -5400,135 +5242,20 @@
 
 
 
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
-	
-
-</div>
+    
+    
 </div>
 
-
-    <div class="modal fade" id="searchResults">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Search results</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-
+<br class="clear">
 
 <footer>
-
-
-	<span class="copyright">
-	Copyright © 2016 Florian Krönert
-	</span>
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a>
-	
-		on Wed Oct 18th 2017
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Oct 18 2021 01:04:22 GMT+0200 (Mitteleuropäische Sommerzeit) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
 
-    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : true,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            SearcherDisplay.init();
-        });
-    </script>
 
 
 </body>
