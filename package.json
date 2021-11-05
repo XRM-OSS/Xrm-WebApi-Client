@@ -46,10 +46,10 @@
     "build-js": "webpack",
     "prebuild-js": "npm run lint && npm run clean",
     "test": "jest --coverage",
-    "pretest": "npm run build-js",
+    "pretest": "npm run build",
     "copyTypes": "cp src/types/* dist",
     "zip": "bestzip dist/release.zip dist/WebApiClient.min.js dist/WebApiClient.d.ts dist/WebApiClient.LICENSE.txt",
-    "build": "npm run test && npm run copyTypes && npm run zip",
+    "build": "npm run build-js && npm run copyTypes && npm run zip",
     "doc": "jsdoc -c ./jsdoc.json -R README.md -d ./docs"
   }
 }
