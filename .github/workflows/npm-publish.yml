@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
+          registry-url: https://registry.npmjs.org/
           node-version: 14
       - run: |
           sed -i "s/v0.0.0/${{ github.event.release.tag_name }}/g" package.json
