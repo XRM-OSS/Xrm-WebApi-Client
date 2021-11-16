@@ -7,6 +7,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'WebApiClient.min.js',
+    globalObject: "this",
+    library: {
+      name: "WebApiClient",
+      type: "umd"
+    }
   },
   optimization: {
     minimize: true,

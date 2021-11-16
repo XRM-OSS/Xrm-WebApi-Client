@@ -58,4 +58,3 @@ WebApiClient.Response = require("./WebApiClient.Response.js");
 
 // Export complete WebApiClient
 module.exports = WebApiClient;
-window.WebApiClient = window.WebApiClient || WebApiClient;
