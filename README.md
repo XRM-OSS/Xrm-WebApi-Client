@@ -64,6 +64,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
   * [FAQ](#faq)
     + [Payloads](#payloads)
     + [Logical Names](#logical-names)
+    + [MultiSelect Optionsets](#multiselect-optionsets)
 
 ## Requirements
 ### CRM
@@ -865,3 +866,33 @@ var update = {
 Sometimes requests fail, due to the Web API not finding the attributes you included in your payload in the entity definition.
 Most often this is because you got the name wrong.
 For finding the proper names, you can head to Settings > Customizations > Developer Resources and click on the "Download OData Metadata" link. You will be provided with a XML file, which contains all entities that are exposed in the Web API, with their set names and all of their attributes.
+
+### Multiselect OptionSets
+Multi Select option sets are typed as Edm.String instead of Edm.Int.
+You should not use "eq" for filtering on them, as this would fail if multiple options are selected.
+
+Filtering on multi select option sets works as follows: 
+`?$filter=Microsoft.Dynamics.CRM.ContainValues(PropertyName='oss_multiselect',PropertyValues=['0','1'])`
+
+or in fetchXML:
+```XML
+<filter>
+  <condition attribute="oss_multiselect" condition="contain-values">
+    <value>0</value>
+    <value>1</value>
+  </condition>
+</filter>
+```
+
+there's similarly `not-contain-values` as well:
+`?$filter=Microsoft.Dynamics.CRM.NotContainValues(PropertyName='oss_multiselect',PropertyValues=['0','1'])`
+
+or in fetchXML:
+```XML
+<filter>
+  <condition attribute="oss_multiselect" condition="not-contain-values">
+    <value>0</value>
+    <value>1</value>
+  </condition>
+</filter>
+```
