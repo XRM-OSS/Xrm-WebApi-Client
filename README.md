@@ -885,7 +885,7 @@ or in fetchXML:
 ```
 
 there's similarly `not-contain-values` as well:
-`?$filter=Microsoft.Dynamics.CRM.NotContainValues(PropertyName='oss_multiselect',PropertyValues=['0','1'])`
+`?$filter=Microsoft.Dynamics.CRM.DoesNotContainValues(PropertyName='oss_multiselect',PropertyValues=['0','1'])`
 
 or in fetchXML:
 ```XML
