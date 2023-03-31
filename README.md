@@ -12,6 +12,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
 - [Dynamics CRM JavaScript Web API Client](#dynamics-crm-javascript-web-api-client)
   * [Requirements](#requirements)
     + [CRM](#crm)
+    + [Power Pages](#power-pages)
     + [Browser](#browser)
   * [How to obtain it](#how-to-obtain-it)
     + [NPM](#npm)
@@ -68,7 +69,16 @@ For running from custom web resources, be sure that the GetGlobalContext functio
 
 ## Requirements
 ### CRM
-This framework targets the Dynamics CRM WebApi, therefore CRM 2016 (>= v8.0) is needed.
+This framework targets the Dynamics CRM WebApi, therefore CRM 2016 (>= v8.0) is needed. 
+
+### Power Pages
+Power Pages aka PowerApps portals are supported since v4.1.0.
+
+To use this package on Power Pages, be sure to set the ClientUrl property once initially before issuing requests, like below:
+
+```JavaScript
+WebApiClient.ClientUrl = "/_api/";
+```
 
 ### Browser
 Although using Promises, some legacy browsers are still supported, since bluebird is used as Promise polyfill.
