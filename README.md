@@ -80,6 +80,11 @@ To use this package on Power Pages, be sure to set the ClientUrl property once i
 WebApiClient.ClientUrl = "/_api/";
 ```
 
+For TypeScript you currently have to use a workaround in v4.1.0, we're working on a fix:
+```TypeScript
+(WebApiClient as any).ClientUrl = "/_api/";
+```
+
 ### Browser
 Although using Promises, some legacy browsers are still supported, since bluebird is used as Promise polyfill.
 Bluebird is automatically included in the bundled release, no additional steps required.
