@@ -105,10 +105,6 @@
             return context.getClientUrl();
         }
 
-        if (WebApiClient.ClientUrl) {
-            return WebApiClient.ClientUrl;
-        }
-
         throw new Error("Failed to retrieve client url, is ClientGlobalContext.aspx available?");
     }
 
@@ -704,6 +700,10 @@
      * @return {String}
      */
     WebApiClient.GetApiUrl = function() {
+    	if (WebApiClient.ClientUrl) {
+            return WebApiClient.ClientUrl;
+        }
+
         return GetClientUrl() + "/api/data/v" + WebApiClient.ApiVersion + "/";
     };
 
