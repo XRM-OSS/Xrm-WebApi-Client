@@ -85,6 +85,15 @@ For TypeScript you currently have to use a workaround in v4.1.0, we're working o
 (WebApiClient as any).ClientUrl = "/_api/";
 ```
 
+For sending updates for Power Pages WebAPI, be sure to also set the CSRF token as default request header once initially:
+```TypeScript
+const csrfToken = await shell.getTokenDeferred();
+
+WebApiClient.AppendToDefaultHeaders ({ key: "__RequestVerificationToken", value: csrfToken });
+
+await WebApiClient.Update({ entityName: "account", entityId: "c73d9add-dead-beef-babe-0022489a947a", entity: { name: "Update from WA" } })
+```
+
 ### Browser
 Although using Promises, some legacy browsers are still supported, since bluebird is used as Promise polyfill.
 Bluebird is automatically included in the bundled release, no additional steps required.
