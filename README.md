@@ -66,6 +66,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [Payloads](#payloads)
     + [Logical Names](#logical-names)
     + [MultiSelect Optionsets](#multiselect-optionsets)
+    + [Alternate Key with Lookup property](#alternate-key-with-lookup-property)
 
 ## Requirements
 ### CRM
@@ -364,6 +365,8 @@ WebApiClient.Update(request)
         // Handle error
     });
 ```
+
+> If you just issue update via alternate key without additional headers, it is always an upsert operation. If you only want to update records, you can send a header `If-Match: *`. To only create records, you can send a header `If-None-Match: *`. Read more about this in the [official documentation](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/use-upsert-insert-update-record?tabs=webapi#using-web-api).
 
 #### Return updated record in update response
 This feature is available from Dynamics365 v8.2 upwards.
@@ -919,4 +922,22 @@ or in fetchXML:
     <value>1</value>
   </condition>
 </filter>
+```
+
+### Alternate Key with Lookup property
+
+If you want to use alternate keys which contain lookup properties, make sure you use the _${logicalName}_value syntax for referencing the field.
+It can look something like this:
+
+```JavaScript
+var request = {
+    entityName: "oss_customentity",
+    alternateKey:
+        [
+            { property: "_oss_contactid_value", value: "30cc3c62-87cf-ed11-b597-000d3ab693ef" }
+        ],
+    entity: {  }
+};
+
+await WebApiClient.Update(request);
 ```
