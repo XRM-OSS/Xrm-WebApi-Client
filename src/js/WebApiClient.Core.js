@@ -614,7 +614,8 @@
             var key = params.alternateKey[i];
             var value = key.value;
 
-            if (typeof(key.value) !== "number") {
+	    // Numbers and lookups may not have enclosing single quotes, other types do
+            if (typeof(key.value) !== "number" && key.property != null && !key.property.startsWith("_") && !key.property.endsWith("_value")) {
                 value = "'" + key.value + "'";
             }
 
