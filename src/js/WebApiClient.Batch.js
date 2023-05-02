@@ -54,6 +54,12 @@
          * @this {Batch}
          */
         this.isOverLengthGet = params.isOverLengthGet;
+        
+        /**
+         * @property {string} apiVersion - API Version to use for URLs
+         * @this {Batch}
+         */
+        this.apiVersion = params.apiVersion;
     };
 
     /**
