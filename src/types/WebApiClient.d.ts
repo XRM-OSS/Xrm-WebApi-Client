@@ -183,7 +183,7 @@ declare module WebApiClient {
 
     function GetApiUrl (): string;
             
-    function GetSetName (): string;
+    function GetSetName (entity: string): string;
     
     namespace Requests {
         interface RequestParameters extends BaseParameters {
