@@ -30,6 +30,7 @@ declare module WebApiClient {
         async?: boolean;
         headers?: Array<Header>;
         asBatch?: boolean;
+        apiVersion?: string;
     }
 
     interface CreateParameters extends BaseParameters {
@@ -181,6 +182,8 @@ declare module WebApiClient {
     function SendRequest(method: string, url: string, payload: object, parameters?: BaseParameters) : Promise<any> | any | BatchRequest;
 
     function GetApiUrl (): string;
+            
+    function GetSetName (): string;
     
     namespace Requests {
         interface RequestParameters extends BaseParameters {
