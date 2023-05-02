@@ -234,7 +234,7 @@
             throw new Error("Need entity name or overridden set name and entity id or alternate key for getting record url!");
         }
 
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
+        var url = WebApiClient.GetApiUrl(params) + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
 
         if (params.alternateKey) {
             url += BuildAlternateKeyUrl(params);
@@ -700,12 +700,12 @@
      * @memberof module:WebApiClient
      * @return {String}
      */
-    WebApiClient.GetApiUrl = function() {
+    WebApiClient.GetApiUrl = function(parameters) {
     	if (WebApiClient.ClientUrl) {
             return WebApiClient.ClientUrl;
         }
 
-        return GetClientUrl() + "/api/data/v" + WebApiClient.ApiVersion + "/";
+        return GetClientUrl() + "/api/data/v" + ((parameters && parameters.apiVersion) || WebApiClient.ApiVersion) + "/";
     };
 
     /**
@@ -727,7 +727,7 @@
             throw new Error("Entity name and entity object have to be passed!");
         }
 
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
+        var url = WebApiClient.GetApiUrl(params) + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
 
         return WebApiClient.SendRequest("POST", url, params.entity, params);
     };
@@ -754,7 +754,7 @@
             throw new Error("Entity name has to be passed!");
         }
 
-        var url = WebApiClient.GetApiUrl() + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
+        var url = WebApiClient.GetApiUrl(params) + WebApiClient.GetSetName(params.entityName, params.overriddenSetName);
 
         if (params.entityId) {
             url += "(" + RemoveIdBrackets(params.entityId) + ")";
@@ -941,7 +941,7 @@
             throw new Error("Batch for execution must be a WebApiClient.Batch object");
         }
 
-        var url = WebApiClient.GetApiUrl() + "$batch";
+        var url = WebApiClient.GetApiUrl(params) + "$batch";
 
         batch.headers = batch.headers || [];
         batch.headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batch.name});
