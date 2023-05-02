@@ -523,7 +523,7 @@
         // Bugfix for IE. If payload is undefined, IE would send "undefined" as request body
         if (payload) {
             // For batch requests, we just want to send a string body
-            if (typeof(payload) === "string") {
+            if (typeof(payload) === "string" || ('File' in window && payload instanceof File)) {
                 xhr.send(payload);
             }
             else {
