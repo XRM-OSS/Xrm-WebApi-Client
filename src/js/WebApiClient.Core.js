@@ -941,7 +941,7 @@
             throw new Error("Batch for execution must be a WebApiClient.Batch object");
         }
 
-        var url = WebApiClient.GetApiUrl(params) + "$batch";
+        var url = WebApiClient.GetApiUrl(batch) + "$batch";
 
         batch.headers = batch.headers || [];
         batch.headers.push({key: "Content-Type", value: "multipart/mixed;boundary=" + batch.name});
