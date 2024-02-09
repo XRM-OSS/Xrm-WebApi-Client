@@ -43,6 +43,7 @@ For running from custom web resources, be sure that the GetGlobalContext functio
     + [Execute](#execute)
       - [No parameter request](#no-parameter-request)
       - [Parametrized request](#parametrized-request)
+      - [Component Types](#component-types)
     + [Send Batch](#send-batch)
       - [How to create batch requests](#how-to-create-batch-requests)
       - [Batch Responses](#batch-responses)
@@ -570,6 +571,12 @@ WebApiClient.Execute(request)
         // Handle error
     });
 ```
+
+#### Component Types
+Sometimes you need to pass a "Component Type" parameter, especially with metadata requests.
+If you don't know the proper value, use this request to list all the available Component Types and their values in your org:
+
+`await WebApiClient.Retrieve({ overriddenSetName: "GlobalOptionSetDefinitions(Name='componenttype')" })`
 
 ### Send Batch
 There is support for sending multiple requests as a batch. Batch requests can contain retrieve requests and change sets. Change sets can contain requests themselves, however they must not contain other change sets.
