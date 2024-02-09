@@ -576,7 +576,9 @@ WebApiClient.Execute(request)
 Sometimes you need to pass a "Component Type" parameter, especially with metadata requests.
 If you don't know the proper value, use this request to list all the available Component Types and their values in your org:
 
-`await WebApiClient.Retrieve({ overriddenSetName: "GlobalOptionSetDefinitions(Name='componenttype')" })`
+```JavaScript
+await WebApiClient.Retrieve({ overriddenSetName: "GlobalOptionSetDefinitions(Name='componenttype')" })
+```
 
 ### Send Batch
 There is support for sending multiple requests as a batch. Batch requests can contain retrieve requests and change sets. Change sets can contain requests themselves, however they must not contain other change sets.
